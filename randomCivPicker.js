@@ -61,9 +61,10 @@ function getTeamCivs(playerCount, swapDepthLevel, ...playerArgs){
         if(usedCivs.includes(playerCivs[i])){
            i--;
         }
-        else usedCivs.push(playerCivs[i]);
-
-        if(greatCivs.includes(playerCivs[i])) teamOneGreatCivs++;     
+        else {
+           usedCivs.push(playerCivs[i]);
+           if(greatCivs.includes(playerCivs[i])) teamOneGreatCivs++;     
+        }
     }
 
     function buildTeamTwo(greatCivCount){
@@ -99,4 +100,4 @@ function getTeamCivs(playerCount, swapDepthLevel, ...playerArgs){
     assignCivsToPlayers(swappedPlayerNames, playerCivs);
 }
 
-getTeamCivs(8, 1, "Protox", "Firehawk", "Hawk", "Maniac", "Kuroko", "Kronos", "Gunjack", "Lezionare");
+getTeamCivs(8, 2, "Protox", "Firehawk", "Hawk", "Maniac", "Kuroko", "Kronos", "Gunjack", "Lezionare");
