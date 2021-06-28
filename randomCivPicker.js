@@ -12,8 +12,28 @@ function getRandomCiv(civPool){
     if(civPool === "Rest") return restCivs[Math.floor(Math.random()*restCivs.length)]
 }
 
+function swapPlayers(playerNamesArr, swapDepthArg){
+     
+    let teamOnePlayers = playerNamesArr.slice(0, playerNamesArr.length/2);
+    let teamTwoPlayers = playerNamesArr.slice(playerNamesArr.length/2, playerNamesArr.length);
+
+    if(swapDepthArg === 0) return playerNamesArr;
+
+    else if(swapDepthArg > 0){
+        for(let m=0; m<swapDepthArg; m++){
+
+            if(Math.floor((Math.random() * 100) + 1) % 2 !== 0){
+                
+                [teamTwoPlayers[m], teamOnePlayers[m]] = [teamOnePlayers[m], teamTwoPlayers[m]]
+            }
+        }
+    }
+    return teamOnePlayers.concat(teamTwoPlayers);
+}
+
 function assignCivsToPlayers(playerNamesArr, playerCivsArr){
     //array.sort(() => Math.random() - 0.5);
+
     let teamOnePlayers = playerNamesArr.slice(0, playerNamesArr.length/2);
     let teamTwoPlayers = playerNamesArr.slice(playerNamesArr.length/2, playerNamesArr.length);
     
@@ -24,12 +44,13 @@ function assignCivsToPlayers(playerNamesArr, playerCivsArr){
     console.log(teamTwoPlayers, teamTwoCivs);
 }
 
-function getTeamCivs(playerCount, ...playerArgs){
+function getTeamCivs(playerCount, swapDepthLevel, ...playerArgs){
      
     let usedCivs = [];
     let teamOneGreatCivs = 0;
     let playerCivs = [];
     let playerNames = playerArgs
+    let swappedPlayerNames = [];
     
     //Team 1 Logic
     for(let i=0; i<playerCount/2; i++){
@@ -74,7 +95,8 @@ function getTeamCivs(playerCount, ...playerArgs){
     }
     //console.log(teamOneGreatCivs);
     buildTeamTwo(teamOneGreatCivs);
-    assignCivsToPlayers(playerNames, playerCivs);
+    swappedPlayerNames = swapPlayers(playerNames, swapDepthLevel);
+    assignCivsToPlayers(swappedPlayerNames, playerCivs);
 }
 
-getTeamCivs(8, "Protox", "Firehawk", "Hawk", "Maniac", "Kuroko", "Kronos", "Gunjack", "Lezionare");
+getTeamCivs(8, 1, "Protox", "Firehawk", "Hawk", "Maniac", "Kuroko", "Kronos", "Gunjack", "Lezionare");
