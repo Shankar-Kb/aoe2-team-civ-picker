@@ -37,6 +37,25 @@ function swapPlayerColors(playerColorsArr){
     return playerColorsArr.sort(() => Math.random() - 0.5);
 }
 
+function displayGeneratedTeams(teamOnePlayersArr, teamTwoPlayersArr, teamOneCivsArr, teamTwoCivsArr, teamOneColorsArr = false, teamTwoColorsArr = false){
+
+    function createHtmlElement(element,  className='', id=''){
+        let elem = document.createElement(element);
+        elem.setAttribute('class', className);
+        elem.setAttribute('id', id);
+        return elem;
+    }
+
+    let displayBox = document.getElementById('displayBox');
+    let teamsBox = createHtmlElement('div', 'teams-box');
+    displayBox.appendChild(teamsBox);
+
+    if(!teamOneColorsArr && !teamTwoColorsArr){
+        //console.log(teamOnePlayersArr, teamTwoPlayersArr, teamOneCivsArr, teamTwoCivsArr, teamOneColorsArr, teamTwoColorsArr);
+        teamsBox.innerHTML=`${teamOnePlayersArr[0]}`
+    }
+}
+
 function assignCivsToPlayers(playerNamesArr, playerCivsArr, playerColorsArr, applyPlayerColorArg){
     
     //array.sort(() => Math.random() - 0.5);
@@ -52,15 +71,16 @@ function assignCivsToPlayers(playerNamesArr, playerCivsArr, playerColorsArr, app
       let teamOneColors = playerColorsArr.slice(0, playerCivsArr.length/2).sort(() => Math.random() - 0.5);
       let teamTwoColors = playerColorsArr.slice(playerCivsArr.length/2, playerCivsArr.length).sort(() => Math.random() - 0.5);
 
-      console.log(teamOnePlayers, teamOneColors, teamOneCivs);
-      console.log(teamTwoPlayers, teamTwoColors, teamTwoCivs);
+      //console.log(teamOnePlayers, teamOneColors, teamOneCivs);
+      //console.log(teamTwoPlayers, teamTwoColors, teamTwoCivs);
+      displayGeneratedTeams(teamOnePlayers, teamTwoPlayers, teamOneCivs, teamTwoCivs, teamOneColors, teamTwoColors);
 
     }
     else if(!applyPlayerColorArg){
 
-        console.log(teamOnePlayers, teamOneCivs);
-        console.log(teamTwoPlayers, teamTwoCivs);
-
+        //console.log(teamOnePlayers, teamOneCivs);
+        //console.log(teamTwoPlayers, teamTwoCivs);
+        displayGeneratedTeams(teamOnePlayers, teamTwoPlayers, teamOneCivs, teamTwoCivs);
     }
 }
 
@@ -127,7 +147,7 @@ function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPl
     assignCivsToPlayers(swappedPlayerNames, playerCivs, playerColors, applyPlayerColor);
 }
 
-function displayGeneratedTeams(){
+function getInputsFromUser(){
 
         let teamOneNames = document.getElementById('teamOneNames').value.split(" ");
         let teamTwoNames = document.getElementById('teamTwoNames').value.split(" ");
@@ -162,5 +182,5 @@ function displayGeneratedTeams(){
 }
 
 function clearGeneratedTeams(){
-    console.log('Generated teams will be cleared!')
+    console.log('Generated teams will be cleared!');
 }
