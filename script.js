@@ -46,21 +46,20 @@ function assignCivsToPlayers(playerNamesArr, playerCivsArr, playerColorsArr, app
     let teamOneCivs = playerCivsArr.slice(0, playerCivsArr.length/2);
     let teamTwoCivs = playerCivsArr.slice(playerCivsArr.length/2, playerCivsArr.length).sort(() => Math.random() - 0.5);
 
-    if(applyPlayerColorArg === "Yes"){
+    if(applyPlayerColorArg){
 
       playerColorsArr = swapPlayerColors(playerColorsArr);
       let teamOneColors = playerColorsArr.slice(0, playerCivsArr.length/2).sort(() => Math.random() - 0.5);
       let teamTwoColors = playerColorsArr.slice(playerCivsArr.length/2, playerCivsArr.length).sort(() => Math.random() - 0.5);
 
-      console.log(teamOneColors, "      ",teamTwoColors);
-      console.log(teamOnePlayers, "  VS  ",teamTwoPlayers);
-      console.log(teamOneCivs, "     ",teamTwoCivs);
+      console.log(teamOnePlayers, teamOneColors, teamOneCivs);
+      console.log(teamTwoPlayers, teamTwoColors, teamTwoCivs);
 
     }
-    else if(applyPlayerColorArg === "No"){
+    else if(!applyPlayerColorArg){
 
-        console.log(teamOnePlayers, "  VS  ",teamTwoPlayers);
-        console.log(teamOneCivs, "     ",teamTwoCivs);
+        console.log(teamOnePlayers, teamOneCivs);
+        console.log(teamTwoPlayers, teamTwoCivs);
 
     }
 }
@@ -73,7 +72,7 @@ function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPl
     let playerNames = playerNamesArgs;
     let swappedPlayerNames = [];
     
-    if(applyCivBalance === "Yes"){
+    if(applyCivBalance){
 
       //Team 1 Logic
       for(let i=0; i<playerCount/2; i++){
@@ -117,7 +116,7 @@ function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPl
       }
       buildTeamTwo(teamOneGreatCivs);
     }
-    else if(applyCivBalance==="No"){
+    else if(!applyCivBalance){
         for(let m=0; m<playerCount; m++){
             playerCivs[m] = getRandomCiv("All");
             if(usedCivs.includes(playerCivs[m])) m--;
@@ -128,5 +127,40 @@ function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPl
     assignCivsToPlayers(swappedPlayerNames, playerCivs, playerColors, applyPlayerColor);
 }
 
-generateTeamCivs(6, "Yes", "Yes", 0, "Protox", "Glitch", "Killer", "Maniac", "Kuroko", "Kronos");
-//generateTeamCivs(8, "Yes", "Yes", 2, "Protox", "Hawk", "Kronos", "Gunjack", "Firehawk", "Maniac", "Glitch", "Lezionare");
+function displayGeneratedTeams(){
+
+        let teamOneNames = document.getElementById('teamOneNames').value.split(" ");
+        let teamTwoNames = document.getElementById('teamTwoNames').value.split(" ");
+        
+        let playerNames = teamOneNames.concat(teamTwoNames);
+        
+        let playerCountInput = document.querySelectorAll('input[name="playerCount"]');
+        let selectedPlayerCount = "";
+        for (const elem of playerCountInput) {
+            if (elem.checked) {
+                selectedPlayerCount = elem.value;
+                break;
+            }
+        }
+        let swapDepthInput = document.querySelectorAll('input[name="swapDepthLevel"]');
+        let selectedSwapDepth = "";
+        for (const elem of swapDepthInput) {
+            if (elem.checked) {
+                selectedSwapDepth = elem.value;
+                break;
+            }
+        }
+
+        let teamColorsInput = document.getElementById('teamColors');
+        let selectedTeamColors = teamColorsInput.checked;
+
+        let civBalanceInput = document.getElementById('civBalance');
+        let selectedCivBalance = civBalanceInput.checked;
+
+        //console.log(selectedPlayerCount, selectedTeamColors, selectedCivBalance, selectedSwapDepth, playerNames);
+        generateTeamCivs(selectedPlayerCount, selectedTeamColors, selectedCivBalance, selectedSwapDepth, ...playerNames);
+}
+
+function clearGeneratedTeams(){
+    console.log('Generated teams will be cleared!')
+}
