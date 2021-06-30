@@ -91,7 +91,6 @@ function displayGeneratedTeams(teamOnePlayersArr, teamTwoPlayersArr, teamOneCivs
         teamOneBox.appendChild(teamOnePlayerBox);
 
         let teamOneCivIcon = createHtmlElement('img', 'civ-icon-box');
-        //teamOneCivIcon.src = `assets/icons/CivIcon-${teamOneCivsArr[a]}.webp`;
         teamOneCivIcon.src = `assets/img/icons/${teamOneCivsArr[a]}.png`;
         let teamOnePlayerName  = createHtmlElement('div', 'player-name-box', teamOnePlayersArr[a]);
         teamOnePlayerName.innerHTML = `${teamOnePlayersArr[a]}`
@@ -108,8 +107,7 @@ function displayGeneratedTeams(teamOnePlayersArr, teamTwoPlayersArr, teamOneCivs
         teamTwoBox.appendChild(teamTwoPlayerBox);
 
         let teamTwoCivIcon = createHtmlElement('img', 'civ-icon-box');
-        teamTwoCivIcon.src = `assets/icons/CivIcon-${teamTwoCivsArr[a]}.webp`;
-        //teamTwoCivIcon.src = `assets/img/icons/${teamTwoCivsArr[a]}.png`;
+        teamTwoCivIcon.src = `assets/img/icons/${teamTwoCivsArr[a]}.png`;
         let teamTwoPlayerName  = createHtmlElement('div', 'player-name-box', teamTwoPlayersArr[a]);
         teamTwoPlayerName.innerHTML = `${teamTwoPlayersArr[a]}`
         
