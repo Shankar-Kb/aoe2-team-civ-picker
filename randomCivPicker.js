@@ -11,6 +11,19 @@ function getRandomCiv(civPool){
     if(civPool === "Great") return greatCivs[Math.floor(Math.random()*greatCivs.length)];
 
     if(civPool === "Rest") return restCivs[Math.floor(Math.random()*restCivs.length)];
+
+    if(civPool === "All-DLC"){
+        let allCivsWithDlc = allCivs.concat(dlcCivs);
+        return allCivsWithDlc[Math.floor(Math.random()*allCivsWithDlc.length)];
+    }
+    if(civPool === "Great-DLC"){
+        let greatCivsWithDlc = greatCivs.concat(dlcCivs);
+        return greatCivsWithDlc[Math.floor(Math.random()*greatCivsWithDlc.length)];
+    }
+    if(civPool === "Rest-DLC"){
+        let restCivsWithDlc = restCivs.concat(dlcCivs);
+        return restCivsWithDlc[Math.floor(Math.random()*restCivsWithDlc.length)];
+    }
 }
 
 function swapPlayers(playerNamesArr, swapDepthArg){
