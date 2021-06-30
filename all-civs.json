@@ -1,8 +1,9 @@
 {
     "civilizations": [
       {
-        "id": 1, 
+        "id": 1,
         "name": "Aztecs", 
+        "civilization_link": "",
         "expansion": "The Conquerors", 
         "army_type": "Infantry and Monk", 
         "unique_unit": [
@@ -20,8 +21,9 @@
         ]
       }, 
       {
-        "id": 2, 
+        "id": 2,
         "name": "Britons", 
+        "civilization_link": "",
         "expansion": "Age of Kings", 
         "army_type": "Foot Archer", 
         "unique_unit": [
@@ -38,8 +40,9 @@
         ]
       }, 
       {
-        "id": 3, 
+        "id": 3,
         "name": "Byzantines", 
+        "civilization_link": "",
         "expansion": "Age of Kings", 
         "army_type": "Defensive", 
         "unique_unit": [
@@ -58,8 +61,9 @@
         ]
       }, 
       {
-        "id": 4, 
+        "id": 4,
         "name": "Celts", 
+        "civilization_link": "",
         "expansion": "Age of Kings", 
         "army_type": "Infantry", 
         "unique_unit": [
@@ -77,8 +81,9 @@
         ]
       }, 
       {
-        "id": 5, 
+        "id": 5,
         "name": "Chinese", 
+        "civilization_link": "",
         "expansion": "Age of Kings", 
         "army_type": "Archer", 
         "unique_unit": [
@@ -96,8 +101,9 @@
         ]
       }, 
       {
-        "id": 6, 
+        "id": 6,
         "name": "Franks", 
+        "civilization_link": "",
         "expansion": "Age of Kings", 
         "army_type": "Cavalry", 
         "unique_unit": [
@@ -114,8 +120,9 @@
         ]
       }, 
       {
-        "id": 7, 
+        "id": 7,
         "name": "Goths", 
+        "civilization_link": "",
         "expansion": "Age of Kings", 
         "army_type": "Infantry", 
         "unique_unit": [
@@ -135,8 +142,9 @@
         ]
       }, 
       {
-        "id": 8, 
+        "id": 8,
         "name": "Huns", 
+        "civilization_link": "",
         "expansion": "The Conquerors", 
         "army_type": "Cavalry", 
         "unique_unit": [
@@ -154,8 +162,9 @@
         ]
       }, 
       {
-        "id": 9, 
+        "id": 9,
         "name": "Japanese", 
+        "civilization_link": "",
         "expansion": "Age of Kings", 
         "army_type": "Infantry", 
         "unique_unit": [
@@ -173,8 +182,9 @@
         ]
       }, 
       {
-        "id": 10, 
+        "id": 10,
         "name": "Koreans", 
+        "civilization_link": "",
         "expansion": "The Conquerors", 
         "army_type": "Tower and naval", 
         "unique_unit": [
@@ -193,8 +203,9 @@
         ]
       }, 
       {
-        "id": 11, 
+        "id": 11,
         "name": "Mayans", 
+        "civilization_link": "",
         "expansion": "The Conquerors", 
         "army_type": "Archer", 
         "unique_unit": [
@@ -211,8 +222,9 @@
         ]
       }, 
       {
-        "id": 12, 
+        "id": 12,
         "name": "Mongols", 
+        "civilization_link": "",
         "expansion": "Age of Kings", 
         "army_type": "Cavalry Archer", 
         "unique_unit": [
@@ -229,8 +241,9 @@
         ]
       }, 
       {
-        "id": 13, 
+        "id": 13,
         "name": "Persians", 
+        "civilization_link": "",
         "expansion": "Age of Kings", 
         "army_type": "Cavalry", 
         "unique_unit": [
@@ -247,8 +260,9 @@
         ]
       }, 
       {
-        "id": 14, 
+        "id": 14,
         "name": "Saracens", 
+        "civilization_link": "",
         "expansion": "Age of Kings", 
         "army_type": "Camel and naval", 
         "unique_unit": [
@@ -266,8 +280,9 @@
         ]
       }, 
       {
-        "id": 15, 
+        "id": 15,
         "name": "Spanish", 
+        "civilization_link": "",
         "expansion": "The Conquerors", 
         "army_type": "Gunpowder and Monk", 
         "unique_unit": [
@@ -286,8 +301,9 @@
         ]
       }, 
       {
-        "id": 16, 
+        "id": 16,
         "name": "Teutons", 
+        "civilization_link": "",
         "expansion": "Age of Kings", 
         "army_type": "Infantry", 
         "unique_unit": [
@@ -306,8 +322,9 @@
         ]
       }, 
       {
-        "id": 17, 
+        "id": 17,
         "name": "Turks", 
+        "civilization_link": "",
         "expansion": "Age of Kings", 
         "army_type": "Gunpowder", 
         "unique_unit": [
@@ -326,8 +343,9 @@
         ]
       }, 
       {
-        "id": 18, 
+        "id": 18,
         "name": "Vikings", 
+        "civilization_link": "",
         "expansion": "Age of Kings", 
         "army_type": "Infantry and naval", 
         "unique_unit": [
@@ -345,8 +363,9 @@
         ]
       }, 
       {
-        "id": 19, 
+        "id": 19,
         "name": "Berbers", 
+        "civilization_link": "",
         "expansion": "African Kingdoms", 
         "army_type": "Calvary and Naval", 
         "unique_unit": [], 
@@ -359,8 +378,9 @@
         ]
       }, 
       {
-        "id": 20, 
+        "id": 20,
         "name": "Burmese", 
+        "civilization_link": "",
         "expansion": "Rise of Rajas", 
         "army_type": "Monk and Elephant", 
         "unique_unit": [], 
@@ -373,8 +393,9 @@
         ]
       }, 
       {
-        "id": 21, 
+        "id": 21,
         "name": "Ethiopians", 
+        "civilization_link": "",
         "expansion": "African Kingdoms", 
         "army_type": "Archer", 
         "unique_unit": [], 
@@ -387,8 +408,9 @@
         ]
       }, 
       {
-        "id": 22, 
+        "id": 22,
         "name": "Goths", 
+        "civilization_link": "",
         "expansion": "Age of Kings", 
         "army_type": "Infantry", 
         "unique_unit": [
@@ -408,8 +430,9 @@
         ]
       }, 
       {
-        "id": 23, 
+        "id": 23,
         "name": "Incas", 
+        "civilization_link": "",
         "expansion": "Forgotten Empires", 
         "army_type": "Infantry", 
         "unique_unit": [], 
@@ -424,8 +447,9 @@
         ]
       }, 
       {
-        "id": 24, 
+        "id": 24,
         "name": "Indians", 
+        "civilization_link": "",
         "expansion": "Forgotten Empires", 
         "army_type": "Gunpowder and Cavalry", 
         "unique_unit": [], 
@@ -438,8 +462,9 @@
         ]
       }, 
       {
-        "id": 25, 
+        "id": 25,
         "name": "Italians", 
+        "civilization_link": "",
         "expansion": "Forgotten Empires", 
         "army_type": "Archer and naval", 
         "unique_unit": [], 
@@ -453,8 +478,9 @@
         ]
       }, 
       {
-        "id": 26, 
+        "id": 26,
         "name": "Japanese", 
+        "civilization_link": "",
         "expansion": "Age of Kings", 
         "army_type": "Infantry", 
         "unique_unit": [
@@ -472,8 +498,9 @@
         ]
       }, 
       {
-        "id": 27, 
+        "id": 27,
         "name": "Khmer", 
+        "civilization_link": "",
         "expansion": "Rise of Rajas", 
         "army_type": "Siege and Elephant Civilzation", 
         "unique_unit": [], 
@@ -486,8 +513,9 @@
         ]
       }, 
       {
-        "id": 28, 
+        "id": 28,
         "name": "Magyars", 
+        "civilization_link": "",
         "expansion": "Forgotten Empires", 
         "army_type": "Calvary Infantry", 
         "unique_unit": [], 
@@ -500,8 +528,9 @@
         ]
       }, 
       {
-        "id": 29, 
+        "id": 29,
         "name": "Malians", 
+        "civilization_link": "",
         "expansion": "African Kingdoms", 
         "army_type": "Infantry", 
         "unique_unit": [], 
@@ -514,8 +543,9 @@
         ]
       }, 
       {
-        "id": 30, 
+        "id": 30,
         "name": "Portuguese", 
+        "civilization_link": "",
         "expansion": "African Kingdoms", 
         "army_type": "Naval and Gunpowder", 
         "unique_unit": [], 
@@ -528,8 +558,9 @@
         ]
       }, 
       {
-        "id": 31, 
+        "id": 31,
         "name": "Slavs", 
+        "civilization_link": "",
         "expansion": "Forgotten Empires", 
         "army_type": "Cavalry", 
         "unique_unit": [], 
@@ -542,8 +573,9 @@
         ]
       }, 
       {
-        "id": 32, 
+        "id": 32,
         "name": "Vietnamese", 
+        "civilization_link": "",
         "expansion": "Rise of Rajas", 
         "army_type": "Archer", 
         "unique_unit": [], 
@@ -555,8 +587,9 @@
         ]
       },
       {
-        "id": 33, 
+        "id": 33,
         "name": "Burgundians", 
+        "civilization_link": "",
         "expansion": "Lords of the West", 
         "army_type": "Cavalry", 
         "unique_unit": [], 
@@ -571,8 +604,9 @@
         ]
       },
       {
-        "id": 34, 
+        "id": 34,
         "name": "Sicilian",
+        "civilization_link": "",
         "expansion": "Lords of the West",
         "army_type": "Infantry",
         "unique_unit": [],

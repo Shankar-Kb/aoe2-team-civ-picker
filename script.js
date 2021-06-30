@@ -1,9 +1,12 @@
-let allCivs = ["Britons", "Byzantines", "Celts", "Chinese", "Franks", "Goths", "Japanese", "Mongols", "Persians", "Saracens", "Teutons", "Turks", "Vikings", "Aztecs", "Huns", "Koreans", "Mayans", "Spanish", "Incas", "Indians", "Italians", "Magyars", "Slavs", "Berbers", "Ethiopians", "Malians", "Portuguese", "Burmese", "Khmer", "Malay", "Vietnamese", "Bulgarians", "Cumans", "Lithuanians", "Tartars"];
+let allCivs = ["Britons", "Byzantines", "Celts", "Chinese", "Franks", "Goths", "Japanese", "Mongols", "Persians", "Saracens", "Teutons", "Turks", "Vikings", "Aztecs", "Huns", "Koreans", "Mayans", "Spanish", "Incas", "Indians", "Italians", "Magyars", "Slavs", "Berbers", "Ethiopians", "Malians", "Portuguese", "Burmese", "Khmer", "Malay", "Vietnamese", "Bulgarians", "Cumans", "Lithuanians", "Tatars"];
 let dlcCivs = ["Burgundians", "Sicilians"];
 let greatCivs = ["Britons", "Byzantines", "Celts", "Franks", "Goths", "Mongols", "Persians", "Teutons", "Huns", "Spanish", "Magyars", "Cumans", "Lithuanians"];
 let restCivs = ["Chinese", "Japanese", "Saracens", "Vikings", "Aztecs", "Koreans", "Mayans", "Incas", "Indians", "Italians", "Slavs", "Berbers", "Ethiopians", "Malians", "Portuguese", "Burmese", "Malay", "Vietnamese", "Bulgarians", "Tartars"];
 let playerColors = ["Blue", "Red", "Green", "Yellow", "Teal", "Purple", "Grey", "Orange"];
 let dlcOwners = ["Maniac", "Lezionare"];
+let brokenCivLinks = ["Chinese", "Japanese", "Persians", "Aztecs", "Spanish", "Incas", "Indians", "Portuguese"];
+let normalCivLink = "https://ageofempires.fandom.com/wiki/CivName";
+let newCivLink = "https://ageofempires.fandom.com/wiki/CivName_(Age_of_Empires_II)";
 
 function getRandomCiv(civPool){
     
@@ -69,12 +72,58 @@ function displayGeneratedTeams(teamOnePlayersArr, teamTwoPlayersArr, teamOneCivs
     }
 
     let displayBox = document.getElementById('displayBox');
-    let teamsBox = createHtmlElement('div', 'teams-box');
-    displayBox.appendChild(teamsBox);
+    let matchBox = createHtmlElement('div', 'match-box');
+    displayBox.appendChild(matchBox);
 
-    if(teamOneColorsArr.length > 0 && teamTwoColorsArr.length > 0){
-        console.log(teamOnePlayersArr, teamOneCivsArr, teamOneColorsArr, teamTwoPlayersArr, teamTwoCivsArr, teamTwoColorsArr);
-        teamsBox.innerHTML=`${teamOnePlayersArr}`
+    console.log(teamOnePlayersArr, teamOneCivsArr, teamOneColorsArr, teamTwoPlayersArr, teamTwoCivsArr, teamTwoColorsArr);
+    
+    let teamOneBox = createHtmlElement('div', 'team-one-box');
+    let versusBox = createHtmlElement('div', 'versus-icon-box');
+    let teamTwoBox = createHtmlElement('div', 'team-two-box');
+    matchBox.append(teamOneBox, versusBox, teamTwoBox);
+    
+    versusBox.innerHTML = `VS`;
+
+    for(let a=0; a<teamOnePlayersArr.length; a++){
+        
+        //Team One Players
+        let teamOnePlayerBox = createHtmlElement('div', 'player-box');
+        teamOneBox.appendChild(teamOnePlayerBox);
+
+        let teamOneCivIcon = createHtmlElement('img', 'civ-icon-box');
+        //teamOneCivIcon.src = `assets/icons/CivIcon-${teamOneCivsArr[a]}.webp`;
+        teamOneCivIcon.src = `assets/img/icons/${teamOneCivsArr[a]}.png`;
+        let teamOnePlayerName  = createHtmlElement('div', 'player-name-box', teamOnePlayersArr[a]);
+        teamOnePlayerName.innerHTML = `${teamOnePlayersArr[a]}`
+        
+        let teamOneCivName = createHtmlElement('a', 'civ-name-box');
+        if(brokenCivLinks.includes(teamOneCivsArr[a])) teamOneCivName.href = `https://ageofempires.fandom.com/wiki/${teamOneCivsArr[a]}_(Age_of_Empires_II)`;
+        else teamOneCivName.href = `https://ageofempires.fandom.com/wiki/${teamOneCivsArr[a]}`;
+        teamOneCivName.innerHTML = `${teamOneCivsArr[a]}`
+        teamOnePlayerBox.append(teamOneCivIcon, teamOnePlayerName, teamOneCivName);
+
+
+        //Team Two Players
+        let teamTwoPlayerBox = createHtmlElement('div', 'player-box');
+        teamTwoBox.appendChild(teamTwoPlayerBox);
+
+        let teamTwoCivIcon = createHtmlElement('img', 'civ-icon-box');
+        teamTwoCivIcon.src = `assets/icons/CivIcon-${teamTwoCivsArr[a]}.webp`;
+        //teamTwoCivIcon.src = `assets/img/icons/${teamTwoCivsArr[a]}.png`;
+        let teamTwoPlayerName  = createHtmlElement('div', 'player-name-box', teamTwoPlayersArr[a]);
+        teamTwoPlayerName.innerHTML = `${teamTwoPlayersArr[a]}`
+        
+        let teamTwoCivName = createHtmlElement('a', 'civ-name-box');
+        if(brokenCivLinks.includes(teamTwoCivsArr[a])) teamTwoCivName.href = `https://ageofempires.fandom.com/wiki/${teamTwoCivsArr[a]}_(Age_of_Empires_II)`;
+        else teamTwoCivName.href = `https://ageofempires.fandom.com/wiki/${teamTwoCivsArr[a]}`;
+        teamTwoCivName.innerHTML = `${teamTwoCivsArr[a]}`
+        teamTwoPlayerBox.append(teamTwoCivIcon, teamTwoPlayerName, teamTwoCivName);
+
+        if(teamOneColorsArr.length > 0 && teamTwoColorsArr.length > 0){
+
+            document.getElementById(teamOnePlayersArr[a]).style.color = teamOneColorsArr[a];
+            document.getElementById(teamTwoPlayersArr[a]).style.color = teamTwoColorsArr[a];
+        }
     }
 }
 
@@ -124,7 +173,7 @@ function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPl
           }
       }
   
-      function buildTeamTwo(greatCivCountArg, playerCountArg, usedCivsArr, playerCivsArr){
+      function buildBalancedTeamTwo(greatCivCountArg, playerCountArg, usedCivsArr, playerCivsArr){
   
           //let normalCivCount = playerCount/2 - greatCivCount;
           let playerCivs = playerCivsArr;
@@ -154,7 +203,7 @@ function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPl
           teamTwoCivs.sort(() => Math.random() - 0.5);
           return [playerCivs.concat(teamTwoCivs), usedCivs];
       }
-      [playerCivs, usedCivs] = buildTeamTwo(teamOneGreatCivs, playerCount, usedCivs, playerCivs);
+      [playerCivs, usedCivs] = buildBalancedTeamTwo(teamOneGreatCivs, playerCount, usedCivs, playerCivs);
     }
 
     else if(!applyCivBalance){
@@ -179,14 +228,7 @@ function getInputsFromUser(){
         
         let playerNames = teamOneNames.concat(teamTwoNames);
         
-        let playerCountInput = document.querySelectorAll('input[name="playerCount"]');
-        let selectedPlayerCount = "";
-        for (const elem of playerCountInput) {
-            if (elem.checked) {
-                selectedPlayerCount = elem.value;
-                break;
-            }
-        }
+        let playerCount = playerNames.length;
         let swapDepthInput = document.querySelectorAll('input[name="swapDepthLevel"]');
         let selectedSwapDepth = "";
         for (const elem of swapDepthInput) {
@@ -202,11 +244,15 @@ function getInputsFromUser(){
         let civBalanceInput = document.getElementById('civBalance');
         let selectedCivBalance = civBalanceInput.checked;
 
-        //console.log(selectedPlayerCount, selectedTeamColors, selectedCivBalance, selectedSwapDepth, playerNames);
-        generateTeamCivs(selectedPlayerCount, selectedTeamColors, selectedCivBalance, selectedSwapDepth, ...playerNames);
+        //console.log(playerCount, selectedTeamColors, selectedCivBalance, selectedSwapDepth, playerNames);
+        generateTeamCivs(playerCount, selectedTeamColors, selectedCivBalance, selectedSwapDepth, ...playerNames);
 }
 
 function clearGeneratedTeams(){
     document.getElementById('displayBox').innerHTML = '';
     console.log('Generated teams has been cleared!');
 }
+
+document.body.addEventListener('keypress', function(event){
+    if(window.event.keyCode === 13) getInputsFromUser();
+    });
