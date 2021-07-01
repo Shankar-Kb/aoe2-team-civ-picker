@@ -4,7 +4,7 @@ let greatCivs = ["Britons", "Byzantines", "Celts", "Franks", "Goths", "Mongols",
 let restCivs = ["Chinese", "Japanese", "Saracens", "Vikings", "Aztecs", "Koreans", "Mayans", "Incas", "Indians", "Italians", "Slavs", "Berbers", "Ethiopians", "Malians", "Portuguese", "Burmese", "Malay", "Vietnamese", "Bulgarians", "Tatars"];
 let playerColors = ["Blue", "Crimson", "Chartreuse", "Yellow", "Cyan", "DarkViolet", "Grey", "Orange"];
 let dlcOwners = ["Maniac", "Lezionare"];
-let brokenCivLinks = ["Chinese", "Japanese", "Persians", "Aztecs", "Spanish", "Incas", "Indians", "Portuguese"];
+let brokenLinkCivs = ["Chinese", "Japanese", "Persians", "Aztecs", "Spanish", "Incas", "Indians", "Portuguese"];
 let normalCivLink = "https://ageofempires.fandom.com/wiki/CivName";
 let newCivLink = "https://ageofempires.fandom.com/wiki/CivName_(Age_of_Empires_II)";
 let civTreeLink = "https://aoe2techtree.net/#CivName";
@@ -102,7 +102,7 @@ function displayGeneratedTeams(teamOnePlayersArr, teamTwoPlayersArr, teamOneCivs
         teamOnePlayerName.innerHTML = `${teamOnePlayersArr[a]}`
         
         let teamOneCivName = createHtmlElement('a', 'civ-name-box');
-        if(brokenCivLinks.includes(teamOneCivsArr[a])) teamOneCivName.href = `https://ageofempires.fandom.com/wiki/${teamOneCivsArr[a]}_(Age_of_Empires_II)`;
+        if(brokenLinkCivs.includes(teamOneCivsArr[a])) teamOneCivName.href = `https://ageofempires.fandom.com/wiki/${teamOneCivsArr[a]}_(Age_of_Empires_II)`;
         else teamOneCivName.href = `https://ageofempires.fandom.com/wiki/${teamOneCivsArr[a]}`;
         teamOneCivName.target = "_blank";
         teamOneCivName.innerHTML = `${teamOneCivsArr[a]}`
@@ -127,7 +127,7 @@ function displayGeneratedTeams(teamOnePlayersArr, teamTwoPlayersArr, teamOneCivs
         teamTwoPlayerName.innerHTML = `${teamTwoPlayersArr[a]}`;
         
         let teamTwoCivName = createHtmlElement('a', 'civ-name-box');
-        if(brokenCivLinks.includes(teamTwoCivsArr[a])) teamTwoCivName.href = `https://ageofempires.fandom.com/wiki/${teamTwoCivsArr[a]}_(Age_of_Empires_II)`;
+        if(brokenLinkCivs.includes(teamTwoCivsArr[a])) teamTwoCivName.href = `https://ageofempires.fandom.com/wiki/${teamTwoCivsArr[a]}_(Age_of_Empires_II)`;
         else teamTwoCivName.href = `https://ageofempires.fandom.com/wiki/${teamTwoCivsArr[a]}`;
         teamTwoCivName.target = "_blank";
         teamTwoCivName.innerHTML = `${teamTwoCivsArr[a]}`;
@@ -141,14 +141,14 @@ function displayGeneratedTeams(teamOnePlayersArr, teamTwoPlayersArr, teamOneCivs
             document.getElementById(teamTwoPlayersArr[a]+randomNumberTwo).style.color = teamTwoColorsArr[a];
         }
     }
-    let civNameSound = document.getElementsByClassName("civ-name-box");
-    for (let elem of civNameSound) {
+    let civNamesArrSound = document.getElementsByClassName("civ-name-box");
+    for (let elem of civNamesArrSound) {
         elem.addEventListener('click', function(event){
             playAudio("Open_Civ");
             });
     }
-    let civIconSound = document.getElementsByClassName("civ-icon-box");
-    for (let elem of civIconSound) {
+    let civIconArrSound = document.getElementsByClassName("civ-icon-box");
+    for (let elem of civIconArrSound) {
         elem.addEventListener('click', function(event){
             playAudio("Open_Civ");
             });
