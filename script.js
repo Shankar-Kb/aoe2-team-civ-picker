@@ -246,7 +246,7 @@ function getInputsFromUser(){
         let selectedSwapDepth = "";
         for (const elem of swapDepthInput) {
             if (elem.checked) {
-                selectedSwapDepth = elem.value;
+                selectedSwapDepth = +elem.value;
                 break;
             }
         }
@@ -256,9 +256,11 @@ function getInputsFromUser(){
 
         let civBalanceInput = document.getElementById('civBalance');
         let selectedCivBalance = civBalanceInput.checked;
-
-        //console.log(playerCount, selectedTeamColors, selectedCivBalance, selectedSwapDepth, playerNames);
-        generateTeamCivs(playerCount, selectedTeamColors, selectedCivBalance, selectedSwapDepth, ...playerNames);
+        
+        if(selectedSwapDepth === 0 || selectedSwapDepth <= playerNames.length/2){
+            console.log(playerCount, selectedTeamColors, selectedCivBalance, selectedSwapDepth, playerNames);
+            generateTeamCivs(playerCount, selectedTeamColors, selectedCivBalance, selectedSwapDepth, ...playerNames);
+        }
 }
 
 function clearGeneratedTeams(){
