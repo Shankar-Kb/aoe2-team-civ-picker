@@ -1,5 +1,43 @@
 body{
     background-color: darkgrey;
     margin: 0px 250px;
-    background-image: url("assets/img/bg_aoe2_hd_paper.jpg") repeat;
+    background: url("assets/img/bg_aoe2_hd_paper.jpg") repeat local;
+    font-family: 'Merriweather', serif;
+}
+
+.civ-icon-box{
+    height: 50px;
+    width: 50px;
+}
+.versus-icon-box{
+    width: 75px;
+    height: 75px;
+}
+
+.match-box{
+    width: 750px;
+    font-size: 20px;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-around;
+    border: 1px solid black;
+    border-radius: 5px;
+    box-shadow: darkgrey;
+}
+.player-box{
+    display: flex;
+    flex-flow: row;
+}
+/* .player-text-box{
+    display: flex;
+    flex-flow: column wrap;
+} */
+.versus-box{
+    align-self: center;
+}
+
+.match-box a{
+     text-decoration: none;
+     font-weight: bold;
+     color: black;
 }
