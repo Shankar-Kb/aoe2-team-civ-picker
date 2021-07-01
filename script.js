@@ -148,7 +148,6 @@ function displayGeneratedTeams(teamOnePlayersArr, teamTwoPlayersArr, teamOneCivs
                 playAudio("Open_Civ");
             });
         }
-        else break;
     }
     let civIconArrSound = document.getElementsByClassName("civ-icon-box");
     for (let element of civIconArrSound) {
@@ -158,7 +157,6 @@ function displayGeneratedTeams(teamOnePlayersArr, teamTwoPlayersArr, teamOneCivs
                 playAudio("Open_Civ");
             });
         }
-        else break;
     }
 }
 
