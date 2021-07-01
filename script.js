@@ -195,11 +195,12 @@ function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPl
       for(let i=0; i<playerCount/2; i++){
           
           if(teamOneGreatCivs >= (playerCount/2)-2) playerCivs[i] = getRandomCiv("Rest");
-          else playerCivs[i] = getRandomCiv("All");
-  
-          if(usedCivs.includes(playerCivs[i])){
-             i--;
+          else {
+            if(dlcOwners.includes(playerNames[i])) playerCivs[i] = getRandomCiv("All-DLC");
+            else playerCivs[i] = getRandomCiv("All");
           }
+  
+          if(usedCivs.includes(playerCivs[i])) i--;
           else {
              usedCivs.push(playerCivs[i]);
              if(greatCivs.includes(playerCivs[i])) teamOneGreatCivs++;     
@@ -209,6 +210,11 @@ function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPl
       function buildBalancedTeamTwo(greatCivCountArg, playerCountArg, usedCivsArr, playerCivsArr){
   
           //let normalCivCount = playerCount/2 - greatCivCount;
+          let teamOnePlayers = playerNames.slice(0, playerNames.length/2);
+          let teamTwoPlayers = playerNames.slice(playerNames.length/2, playerNames.length);
+          teamTwoPlayers = teamTwoPlayers.sort(() => Math.random() - 0.5);
+          playerNames = teamOnePlayers.concat(teamTwoPlayers);
+
           let playerCivs = playerCivsArr;
           let teamTwoCivs = [];
           let usedCivs = usedCivsArr;
@@ -222,7 +228,9 @@ function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPl
   
           else {
               for(let k=playerCountArg/2; k<playerCountArg; k++){
-                  playerCivs[k] = getRandomCiv("Great");
+                  
+                  if(dlcOwners.includes(playerNames[k])) playerCivs[k] = getRandomCiv("Great-DLC");
+                   else playerCivs[k] = getRandomCiv("Great");
                   if(usedCivs.includes(playerCivs[k])) k--;
                    else usedCivs.push(playerCivs[k]);
               }
