@@ -111,7 +111,6 @@ function displayGeneratedTeams(teamOnePlayersArr, teamTwoPlayersArr, teamOneCivs
         teamOnePlayerTextBox.append(teamOnePlayerName, teamOneCivName);
 
 
-
         //Team Two Players
         let teamTwoPlayerBox = createHtmlElement('div', 'player-box');
         teamTwoBox.appendChild(teamTwoPlayerBox);
@@ -142,16 +141,24 @@ function displayGeneratedTeams(teamOnePlayersArr, teamTwoPlayersArr, teamOneCivs
         }
     }
     let civNamesArrSound = document.getElementsByClassName("civ-name-box");
-    for (let elem of civNamesArrSound) {
-        elem.addEventListener('click', function(event){
-            playAudio("Open_Civ");
+    for (let element of civNamesArrSound) {
+        if (element.getAttribute('listener') !== 'true'){
+            element.setAttribute('listener', 'true');
+            element.addEventListener('click', function(event){
+                playAudio("Open_Civ");
             });
+        }
+        else break;
     }
     let civIconArrSound = document.getElementsByClassName("civ-icon-box");
-    for (let elem of civIconArrSound) {
-        elem.addEventListener('click', function(event){
-            playAudio("Open_Civ");
+    for (let element of civIconArrSound) {
+        if (element.getAttribute('listener') !== 'true'){
+            element.setAttribute('listener', 'true');
+            element.addEventListener('click', function(event){
+                playAudio("Open_Civ");
             });
+        }
+        else break;
     }
 }
 
