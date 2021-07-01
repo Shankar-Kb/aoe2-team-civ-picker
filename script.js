@@ -131,12 +131,23 @@ function displayGeneratedTeams(teamOnePlayersArr, teamTwoPlayersArr, teamOneCivs
         teamTwoPlayerBox.append(teamTwoCivIcon, teamTwoPlayerTextBox);
         teamTwoPlayerTextBox.append(teamTwoPlayerName, teamTwoCivName);
 
-
         if(teamOneColorsArr.length > 0 && teamTwoColorsArr.length > 0){
             
             document.getElementById(teamOnePlayersArr[a]+randomNumberOne).style.color = teamOneColorsArr[a];
             document.getElementById(teamTwoPlayersArr[a]+randomNumberTwo).style.color = teamTwoColorsArr[a];
         }
+    }
+    let civNameSound = document.getElementsByClassName("civ-name-box");
+    for (let elem of civNameSound) {
+        elem.addEventListener('auxclick', function(event){
+            playAudio("Open_Civ");
+            });
+    }
+    let civIconSound = document.getElementsByClassName("civ-icon-box");
+    for (let elem of civIconSound) {
+        elem.addEventListener('auxclick', function(event){
+            playAudio("Open_Civ");
+            });
     }
 }
 
@@ -168,6 +179,11 @@ function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPl
     let playerCivs = [];
     let playerNames = playerNamesArgs;
     let swappedPlayerNames = [];
+
+    allCivs = allCivs.sort(() => Math.random() - 0.5);
+    dlcCivs = dlcCivs.sort(() => Math.random() - 0.5);
+    greatCivs = greatCivs.sort(() => Math.random() - 0.5);
+    restCivs = restCivs.sort(() => Math.random() - 0.5);
     
     if(applyCivBalance){
 
@@ -257,17 +273,36 @@ function getInputsFromUser(){
         let civBalanceInput = document.getElementById('civBalance');
         let selectedCivBalance = civBalanceInput.checked;
         
-        if(selectedSwapDepth === 0 || selectedSwapDepth <= playerNames.length/2){
-            console.log(playerCount, selectedTeamColors, selectedCivBalance, selectedSwapDepth, playerNames);
-            generateTeamCivs(playerCount, selectedTeamColors, selectedCivBalance, selectedSwapDepth, ...playerNames);
-        }
+        if(selectedSwapDepth !== 0 || selectedSwapDepth > playerNames.length/2) selectedSwapDepth = playerNames.length/2;
+        if(playerNames.length > 8) playerNames.length = 8;
+
+        //console.log(playerCount, selectedTeamColors, selectedCivBalance, selectedSwapDepth, playerNames);
+        generateTeamCivs(playerCount, selectedTeamColors, selectedCivBalance, selectedSwapDepth, ...playerNames);
 }
 
 function clearGeneratedTeams(){
     document.getElementById('displayBox').innerHTML = '';
-    //console.log('Generated teams has been cleared!');
 }
 
+function playAudio(fileName){
+    let audioObject = new Audio(`assets/sound/${fileName}.wav`);
+    //audioObject.setAttribute("type", "audio/wav");
+    audioObject.setAttribute("autoplay", "false")
+    audioObject.preload = "none";
+    audioObject.play();
+}
+
+document.getElementById("clearButton").addEventListener('click', function(event){
+    playAudio("Clear_Teams");
+    });
+
+document.getElementById("generateButton").addEventListener('click', function(event){
+    playAudio("Generate_Teams");
+    });
+
 document.body.addEventListener('keypress', function(event){
-    if(window.event.keyCode === 13) getInputsFromUser();
+    if(window.event.keyCode === 13) {
+        playAudio("Generate_Teams");
+        getInputsFromUser();
+      }
     });

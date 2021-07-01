@@ -30,13 +30,19 @@ body{
     display:flex;
     flex-flow: row;
     justify-content: space-between;
-    height: 200px;
+    height: 180px;
 }
 .radio-box, .checkbox-box{
     margin: 5px 25px;
 }
 .text-box, .options-box, .button-box{
-    margin: 0px auto;
+    margin: 2.5px auto;
+}
+.button-box{
+    width: 200px;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-around;
 }
 
 .civ-icon-box{

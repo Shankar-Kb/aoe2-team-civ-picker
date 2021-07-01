@@ -36,7 +36,7 @@
 
     <div class="options-box">
       <div class="radio-box">
-        <p>Player Swap Depth Level:</p>
+        <div>Player Swap Depth Level:</div>
         <div class="form-check">
           <input class="form-check-input" type="radio" name="swapDepthLevel" value="0" id="swapDepthZeo" checked>
           <label class="form-check-label" for="swapDepthZeo"> 0 </label>
@@ -71,8 +71,8 @@
       </div>
     </div>
     <div class="button-box">
-      <button type="button" class="btn btn-light" onclick="clearGeneratedTeams()">Clear</button>
-      <button type="button" class="btn btn-light" onclick="getInputsFromUser()">Generate</button>
+      <button type="button" class="btn btn-light" id="clearButton" onclick="clearGeneratedTeams()">Clear</button>
+      <button type="button" class="btn btn-light" id="generateButton" onclick="getInputsFromUser()">Generate</button>
     </div>
 
   </div>
