@@ -288,7 +288,6 @@ function playAudio(fileName){
     let audioObject = new Audio(`assets/sound/${fileName}.wav`);
     audioObject.setAttribute("type", "audio/wav");
     audioObject.setAttribute("autoplay", "false");
-    audioObject.preload = "none";
     audioObject.play();
 }
 
