@@ -207,17 +207,19 @@ function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPl
           }
       }
   
-      function buildBalancedTeamTwo(greatCivCountArg, playerCountArg, usedCivsArr, playerCivsArr){
+      function buildBalancedTeamTwo(greatCivCountArg, playerCountArg, usedCivsArr, playerCivsArr, playerNamesArr){
   
           //let normalCivCount = playerCount/2 - greatCivCount;
-          let teamOnePlayers = playerNames.slice(0, playerNames.length/2);
-          let teamTwoPlayers = playerNames.slice(playerNames.length/2, playerNames.length);
-          teamTwoPlayers = teamTwoPlayers.sort(() => Math.random() - 0.5);
-          playerNames = teamOnePlayers.concat(teamTwoPlayers);
+          // let playerNames = playerNamesArr;
+          // let teamOnePlayers = playerNames.slice(0, playerNames.length/2);
+          // let teamTwoPlayers = playerNames.slice(playerNames.length/2, playerNames.length);
+          // teamTwoPlayers = teamTwoPlayers.sort(() => Math.random() - 0.5);
+          // playerNames = teamOnePlayers.concat(teamTwoPlayers);
 
           let playerCivs = playerCivsArr;
           let teamTwoCivs = [];
           let usedCivs = usedCivsArr;
+
           if(greatCivCountArg === 0) {
               for(let j=playerCountArg/2; j<playerCountArg; j++) {
                   playerCivs[j] = getRandomCiv("Rest");
@@ -244,7 +246,7 @@ function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPl
           teamTwoCivs.sort(() => Math.random() - 0.5);
           return [playerCivs.concat(teamTwoCivs), usedCivs];
       }
-      [playerCivs, usedCivs] = buildBalancedTeamTwo(teamOneGreatCivs, playerCount, usedCivs, playerCivs);
+      [playerCivs, usedCivs] = buildBalancedTeamTwo(teamOneGreatCivs, playerCount, usedCivs, playerCivs, playerNames);
     }
 
     else if(!applyCivBalance){
