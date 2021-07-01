@@ -93,7 +93,8 @@ function displayGeneratedTeams(teamOnePlayersArr, teamTwoPlayersArr, teamOneCivs
 
         let teamOneCivIcon = createHtmlElement('a', 'civ-icon-box');
         teamOneCivIcon.href = `https://aoe2techtree.net/#${teamOneCivsArr[a]}`;
-        teamOneCivIcon.innerHTML = `<img src="assets/img/icons/${teamOneCivsArr[a]}.png" alt="${teamOneCivsArr[a]}" class="civ-icon-box">`;
+        teamOneCivIcon.innerHTML = `<img src="assets/img/icons/${teamOneCivsArr[a]}.png" alt="${teamOneCivsArr[a]}" class="civ-icon">`;
+        teamOneCivIcon.target = "_blank";
 
         let teamOnePlayerTextBox = createHtmlElement('div', 'player-text-box');
         let randomNumberOne = Math.floor(Math.random()*(1000-1+1)+1);
@@ -103,6 +104,7 @@ function displayGeneratedTeams(teamOnePlayersArr, teamTwoPlayersArr, teamOneCivs
         let teamOneCivName = createHtmlElement('a', 'civ-name-box');
         if(brokenCivLinks.includes(teamOneCivsArr[a])) teamOneCivName.href = `https://ageofempires.fandom.com/wiki/${teamOneCivsArr[a]}_(Age_of_Empires_II)`;
         else teamOneCivName.href = `https://ageofempires.fandom.com/wiki/${teamOneCivsArr[a]}`;
+        teamOneCivName.target = "_blank";
         teamOneCivName.innerHTML = `${teamOneCivsArr[a]}`
         
         teamOnePlayerBox.append(teamOneCivIcon, teamOnePlayerTextBox);
@@ -116,7 +118,8 @@ function displayGeneratedTeams(teamOnePlayersArr, teamTwoPlayersArr, teamOneCivs
 
         let teamTwoCivIcon = createHtmlElement('a', 'civ-icon-box');
         teamTwoCivIcon.href = `https://aoe2techtree.net/#${teamTwoCivsArr[a]}`;
-        teamTwoCivIcon.innerHTML = `<img src="assets/img/icons/${teamTwoCivsArr[a]}.png" alt="${teamTwoCivsArr[a]}" class="civ-icon-box">`;
+        teamTwoCivIcon.innerHTML = `<img src="assets/img/icons/${teamTwoCivsArr[a]}.png" alt="${teamTwoCivsArr[a]}" class="civ-icon">`;
+        teamTwoCivIcon.target = "_blank";
 
         let teamTwoPlayerTextBox = createHtmlElement('div', 'player-text-box');
         let randomNumberTwo = Math.floor(Math.random()*(1000-1+1)+1+1);
@@ -126,6 +129,7 @@ function displayGeneratedTeams(teamOnePlayersArr, teamTwoPlayersArr, teamOneCivs
         let teamTwoCivName = createHtmlElement('a', 'civ-name-box');
         if(brokenCivLinks.includes(teamTwoCivsArr[a])) teamTwoCivName.href = `https://ageofempires.fandom.com/wiki/${teamTwoCivsArr[a]}_(Age_of_Empires_II)`;
         else teamTwoCivName.href = `https://ageofempires.fandom.com/wiki/${teamTwoCivsArr[a]}`;
+        teamTwoCivName.target = "_blank";
         teamTwoCivName.innerHTML = `${teamTwoCivsArr[a]}`;
 
         teamTwoPlayerBox.append(teamTwoCivIcon, teamTwoPlayerTextBox);
@@ -139,13 +143,13 @@ function displayGeneratedTeams(teamOnePlayersArr, teamTwoPlayersArr, teamOneCivs
     }
     let civNameSound = document.getElementsByClassName("civ-name-box");
     for (let elem of civNameSound) {
-        elem.addEventListener('auxclick', function(event){
+        elem.addEventListener('click', function(event){
             playAudio("Open_Civ");
             });
     }
     let civIconSound = document.getElementsByClassName("civ-icon-box");
     for (let elem of civIconSound) {
-        elem.addEventListener('auxclick', function(event){
+        elem.addEventListener('click', function(event){
             playAudio("Open_Civ");
             });
     }
