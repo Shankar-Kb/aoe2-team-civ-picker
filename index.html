@@ -20,7 +20,6 @@
 </head>
 
 <body>
-  <div class="left-box" id="leftBox"></div>
 
   <div class="middle-box" id="middleBox">
     <div class="input-box">
@@ -28,11 +27,13 @@
       <div class="input-text-container-box">
         <div class="team-one-text-box">
           <label for="teamOneNames">Team One:</label>
-          <input type="text" class="input-text-box" id="teamOneNames" name="teamOne">
+          <input type="text" class="input-text-box" id="teamOneNames" name="teamOne"
+            placeholder="Player-1 Player-2 Player-3 Player-4">
         </div>
         <div class="team-two-text-box">
           <label for="teamTwoNames">Team Two:</label>
-          <input type="text" class="input-text-box" id="teamTwoNames" name="teamTwo">
+          <input type="text" class="input-text-box" id="teamTwoNames" name="teamTwo"
+            placeholder="Player-5 Player-6 Player-7 Player-8">
         </div>
       </div>
 
@@ -64,7 +65,8 @@
         <div class="checkbox-box">
           <div class="form-check">
             <label class="form-check-label" for="teamColors"> Apply Player Colors </label>
-            <input class="form-check-input" type="checkbox" name="applyPlayerColors" value="Yes" id="playerColors" checked>
+            <input class="form-check-input" type="checkbox" name="applyPlayerColors" value="Yes" id="playerColors"
+              checked>
           </div>
           <div class="form-check">
             <label class="form-check-label" for="civBalance"> Apply Civ Balancer </label>
@@ -73,14 +75,18 @@
         </div>
       </div>
       <div class="button-box">
-        <button type="button" class="btn functional-button" id="clearButton" onclick="clearGeneratedTeams()">Clear</button>
-        <button type="button" class="btn functional-button" id="generateButton" onclick="getInputsFromUser()">Generate</button>
+        <button type="button" class="btn functional-button" id="clearButton"
+          onclick="clearGeneratedTeams()">Clear</button>
+        <button type="button" class="btn functional-button" id="generateButton"
+          onclick="getInputsFromUser()">Generate</button>
       </div>
 
     </div>
     <div class="display-box" id="displayBox"></div>
   </div>
+  <div class="left-box" id="leftBox"></div>
   <div class="right-box" id="rightBox"></div>
+
   <script src="script.js"></script>
 </body>
 

@@ -309,6 +309,51 @@ function playAudio(fileName){
     audioObject.play();
 }
 
+function displayAllCivs(allCivsArr, dlcCivsArr, brokenLinkCivsArr){
+   
+    function createHtmlElement(element,  className='', id=''){
+        let elem = document.createElement(element);
+        elem.setAttribute('class', className);
+        elem.setAttribute('id', id);
+        return elem;
+    }
+    
+    let allCivs = [...allCivsArr, ...dlcCivsArr];
+    allCivs = allCivs.sort();
+    let brokenLinkCivs = brokenLinkCivsArr;
+
+    let halfPoint = Math.ceil(allCivs.length / 2);
+    let firstHalfCivs = allCivs.splice(0, halfPoint);
+    let secondHalfCivs = allCivs.splice(-halfPoint);
+
+    let leftBox = document.getElementById("leftBox");
+    let rightBox = document.getElementById("rightBox");
+
+    function displayCivilization(civilizationArr, containerName){
+    
+    for(let z=0; z<civilizationArr.length; z++){
+
+        let civBox = createHtmlElement('div', 'civilization-box');
+        containerName.appendChild(civBox);
+
+        let civIcon = createHtmlElement('a', 'civilization-icon-box');
+        civIcon.href = `https://aoe2techtree.net/#${civilizationArr[z]}`;
+        civIcon.innerHTML = `<img src="assets/img/icons/${civilizationArr[z]}.png" alt="${civilizationArr[z]}" class="civilization-icon">`;
+        civIcon.target = "_blank";
+        
+        let civName = createHtmlElement('a', 'civilization-name-box');
+        if(brokenLinkCivs.includes(civilizationArr[z])) civName.href = `https://ageofempires.fandom.com/wiki/${civilizationArr[z]}_(Age_of_Empires_II)`;
+        else civName.href = `https://ageofempires.fandom.com/wiki/${civilizationArr[z]}`;
+        civName.target = "_blank";
+        civName.innerHTML = `${civilizationArr[z]}`
+
+        civBox.append(civIcon, civName);
+        }
+    }
+    displayCivilization(firstHalfCivs, leftBox);
+    displayCivilization(secondHalfCivs, rightBox);
+}
+
 document.getElementById("clearButton").addEventListener('click', function(event){
     playAudio("Clear_Teams");
     });
@@ -323,3 +368,5 @@ document.body.addEventListener('keypress', function(event){
         getInputsFromUser();
       }
     });
+
+displayAllCivs(allCivs, dlcCivs, brokenLinkCivs);

@@ -86,6 +86,9 @@ body{
      font-weight: bold;
      color: black;
 }
+.team-one-box, .team-two-box{
+    max-width: 250px;
+}
 .player-box{
     display: flex;
     flex-flow: row;
@@ -106,6 +109,40 @@ body{
     height: 75px;
 }
 
+.left-box, .right-box{
+    border: 1px solid #191919;
+    border-radius: 5px;
+    box-shadow: 0px 0px 3px 0px #191919;
+    max-width: 235px;
+    font-size: 25px;
+    padding: 5px;
+}
+.left-box{
+   position: fixed;
+   left: 3.5%;
+   top: 2.5%;
+}
+.right-box{
+    position: fixed;
+    right: 3.5%;
+    top: 2.5%;
+}
+/* .civilization-box{
+
+}
+.civilization-icon-box{
+
+} */
+.civilization-icon{
+    height: 45x;
+    width: 45px;
+}
+.civilization-name-box, .civilization-name-box:hover, .civilization-name-box:focus, .civilization-name-box:active{
+    text-decoration: none;
+    font-weight: bold;
+    color: #191919;
+}
+
 @media only screen and (max-width: 1900px) {
     .input{
         width: 900px;
@@ -113,4 +150,25 @@ body{
     .input-text-box{
         width: 450px;
     }
+}
+
+@media only screen and (max-width: 1600px) {
+    /* .left-box, .right-box{
+        border: 1px solid #191919;
+        border-radius: 5px;
+        box-shadow: 0px 0px 3px 0px #191919;
+        max-width: 235px;
+        font-size: 25px;
+        padding: 5px;
+    }
+    .left-box{
+       position: fixed;
+       left: 3.5%;
+       top: 2.5%;
+    }
+    .right-box{
+        position: fixed;
+        right: 3.5%;
+        top: 2.5%;
+    } */
 }
