@@ -10,27 +10,25 @@ let newCivLink = "https://ageofempires.fandom.com/wiki/CivName_(Age_of_Empires_I
 let civTreeLink = "https://aoe2techtree.net/#CivName";
 
 function getRandomCiv(civPool, allCivsArr, dlcCivsArr, greatCivsArr, restCivsArr){
-
-    let [allCivs, dlcCivs, greatCivs, restCivs] = [allCivsArr, dlcCivsArr, greatCivsArr, restCivsArr];
     
     switch(civPool){
 
-        case "All": return allCivs[Math.floor(Math.random()*allCivs.length)];
+        case "All": return allCivsArr[Math.floor(Math.random()*allCivsArr.length)];
 
-        case "Great": return greatCivs[Math.floor(Math.random()*greatCivs.length)];
+        case "Great": return greatCivsArr[Math.floor(Math.random()*greatCivsArr.length)];
 
-        case "Rest": return restCivs[Math.floor(Math.random()*restCivs.length)];
+        case "Rest": return restCivsArr[Math.floor(Math.random()*restCivsArr.length)];
 
         case "All-DLC": 
-            let allCivsWithDlc = allCivs.concat(dlcCivs);
+            let allCivsWithDlc = allCivsArr.concat(dlcCivsArr);
             return allCivsWithDlc[Math.floor(Math.random()*allCivsWithDlc.length)];
 
         case "Great-DLC":
-            let greatCivsWithDlc = greatCivs.concat(dlcCivs);
+            let greatCivsWithDlc = greatCivsArr.concat(dlcCivsArr);
             return greatCivsWithDlc[Math.floor(Math.random()*greatCivsWithDlc.length)];
 
         case "Rest-DLC":
-            let restCivsWithDlc = restCivs.concat(dlcCivs);
+            let restCivsWithDlc = restCivsArr.concat(dlcCivsArr);
             return restCivsWithDlc[Math.floor(Math.random()*restCivsWithDlc.length)];
 
     }
