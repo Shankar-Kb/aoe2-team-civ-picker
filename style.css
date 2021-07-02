@@ -27,8 +27,7 @@ body{
 .input-text-box{
     background-color:#474340;
     color: #FFFFFD;
-    min-width: 500px;
-    margin: 0px 25px;
+    width: 500px;
     font-weight: bold;
     border-color: #6f5c4f;
 }
@@ -36,6 +35,12 @@ body{
     outline: none !important;
     /* border:1px solid #191919;
     box-shadow: 0 0 1px #191919; */
+}
+.team-one-text-box{
+    margin-right: 20px;
+}
+#team-two-text-box{
+    margin-left: 20px;
 }
 .options-box{
     display:flex;
@@ -46,10 +51,11 @@ body{
     margin: 10px 0px;
 }
 .button-box{
-    width: 500px;
+    width: 600px;
     display: flex;
     flex-flow: row;
     justify-content: space-around;
+    margin-bottom: 2.5px;
 }
 
 .functional-button{
@@ -61,7 +67,9 @@ body{
     font-weight: bold;
     margin: 0px 10px;
 }
-
+.display-box{
+    min-width: 1000px;
+}
 .match-box{
     width: 750px;
     font-size: 20px;
@@ -96,4 +104,13 @@ body{
 .versus-icon-box{
     width: 75px;
     height: 75px;
+}
+
+@media only screen and (max-width: 1900px) {
+    .input{
+        width: 900px;
+    }
+    .input-text-box{
+        width: 450px;
+    }
 }
