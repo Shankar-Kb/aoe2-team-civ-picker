@@ -9,7 +9,9 @@ let normalCivLink = "https://ageofempires.fandom.com/wiki/CivName";
 let newCivLink = "https://ageofempires.fandom.com/wiki/CivName_(Age_of_Empires_II)";
 let civTreeLink = "https://aoe2techtree.net/#CivName";
 
-function getRandomCiv(civPool){
+function getRandomCiv(civPool, allCivsArr, dlcCivsArr, greatCivsArr, restCivsArr){
+
+    let [allCivs, dlcCivs, greatCivs, restCivs] = [allCivsArr, dlcCivsArr, greatCivsArr, restCivsArr];
     
     switch(civPool){
 
@@ -63,7 +65,7 @@ function swapPlayerColors(playerColorsArr){
     return playerColorsArr.sort(() => Math.random() - 0.5);
 }
 
-function displayGeneratedTeams(teamOnePlayersArr, teamTwoPlayersArr, teamOneCivsArr, teamTwoCivsArr, teamOneColorsArr = false, teamTwoColorsArr = false){
+function displayGeneratedTeams(teamOnePlayersArr, teamTwoPlayersArr, teamOneCivsArr, teamTwoCivsArr, brokenLinkCivsArr, teamOneColorsArr = false, teamTwoColorsArr = false){
 
     function createHtmlElement(element,  className='', id=''){
         let elem = document.createElement(element);
@@ -71,6 +73,8 @@ function displayGeneratedTeams(teamOnePlayersArr, teamTwoPlayersArr, teamOneCivs
         elem.setAttribute('id', id);
         return elem;
     }
+
+    let brokenLinkCivs = brokenLinkCivsArr;
 
     let displayBox = document.getElementById('displayBox');
     let matchBox = createHtmlElement('div', 'match-box');
@@ -173,21 +177,23 @@ function assignCivsToPlayers(playerNamesArr, playerCivsArr, playerColorsArr, app
       let teamOneColors = playerColorsArr.slice(0, playerCivsArr.length/2).sort(() => Math.random() - 0.5);
       let teamTwoColors = playerColorsArr.slice(playerCivsArr.length/2, playerCivsArr.length).sort(() => Math.random() - 0.5);
 
-      displayGeneratedTeams(teamOnePlayers, teamTwoPlayers, teamOneCivs, teamTwoCivs, teamOneColors, teamTwoColors);
+      displayGeneratedTeams(teamOnePlayers, teamTwoPlayers, teamOneCivs, teamTwoCivs, brokenLinkCivs, teamOneColors, teamTwoColors);
     }
     else if(!applyPlayerColorArg){
 
-        displayGeneratedTeams(teamOnePlayers, teamTwoPlayers, teamOneCivs, teamTwoCivs);
+        displayGeneratedTeams(teamOnePlayers, teamTwoPlayers, brokenLinkCivs, teamOneCivs, teamTwoCivs);
     }
 }
 
-function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPlayerDepth, ...playerNamesArgs){
+function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPlayerDepth, allCivsArr, dlcCivsArr, greatCivsArr, restCivsArr, dlcOwnersArr, ...playerNamesArgs){
      
     let usedCivs = [];
     let teamOneGreatCivs = 0;
     let playerCivs = [];
     let playerNames = playerNamesArgs;
     let swappedPlayerNames = [];
+
+    let [allCivs, dlcCivs, greatCivs, restCivs, dlcOwners] = [allCivsArr, dlcCivsArr, greatCivsArr, restCivsArr, dlcOwnersArr];
 
     allCivs = allCivs.sort(() => Math.random() - 0.5);
     dlcCivs = dlcCivs.sort(() => Math.random() - 0.5);
@@ -199,10 +205,10 @@ function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPl
       //Team 1 Logic
       for(let i=0; i<playerCount/2; i++){
           
-          if(teamOneGreatCivs >= (playerCount/2)-2) playerCivs[i] = getRandomCiv("Rest");
+          if(teamOneGreatCivs >= (playerCount/2)-2) playerCivs[i] = getRandomCiv("Rest", allCivs, dlcCivs, greatCivs, restCivs);
           else {
-            if(dlcOwners.includes(playerNames[i])) playerCivs[i] = getRandomCiv("All-DLC");
-            else playerCivs[i] = getRandomCiv("All");
+            if(dlcOwners.includes(playerNames[i])) playerCivs[i] = getRandomCiv("All-DLC", allCivs, dlcCivs, greatCivs, restCivs);
+            else playerCivs[i] = getRandomCiv("All", allCivs, dlcCivs, greatCivs, restCivs);
           }
   
           if(usedCivs.includes(playerCivs[i])) i--;
@@ -212,22 +218,16 @@ function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPl
           }
       }
   
-      function buildBalancedTeamTwo(greatCivCountArg, playerCountArg, usedCivsArr, playerCivsArr, playerNamesArr){
-  
-          //let normalCivCount = playerCount/2 - greatCivCount;
-          // let playerNames = playerNamesArr;
-          // let teamOnePlayers = playerNames.slice(0, playerNames.length/2);
-          // let teamTwoPlayers = playerNames.slice(playerNames.length/2, playerNames.length);
-          // teamTwoPlayers = teamTwoPlayers.sort(() => Math.random() - 0.5);
-          // playerNames = teamOnePlayers.concat(teamTwoPlayers);
-
-          let playerCivs = playerCivsArr;
+      function buildBalancedTeamTwo(greatCivCountArg, playerCountArg, usedCivsArr, playerCivsArr, allCivsArr, dlcCivsArr, greatCivsArr, restCivsArr){
+          
+          let [playerCivs, usedCivs] = [playerCivsArr, usedCivsArr];
           let teamTwoCivs = [];
-          let usedCivs = usedCivsArr;
+
+          let [allCivs, dlcCivs, greatCivs, restCivs] = [allCivsArr, dlcCivsArr, greatCivsArr, restCivsArr];
 
           if(greatCivCountArg === 0) {
               for(let j=playerCountArg/2; j<playerCountArg; j++) {
-                  playerCivs[j] = getRandomCiv("Rest");
+                  playerCivs[j] = getRandomCiv("Rest", allCivs, dlcCivs, greatCivs, restCivs);
                   if(usedCivs.includes(playerCivs[j])) j--;
                    else usedCivs.push(playerCivs[j]);
               }
@@ -236,14 +236,14 @@ function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPl
           else {
               for(let k=playerCountArg/2; k<playerCountArg; k++){
                   
-                  if(dlcOwners.includes(playerNames[k])) playerCivs[k] = getRandomCiv("Great-DLC");
-                   else playerCivs[k] = getRandomCiv("Great");
+                  if(dlcOwners.includes(playerNames[k])) playerCivs[k] = getRandomCiv("Great-DLC", allCivs, dlcCivs, greatCivs, restCivs);
+                   else playerCivs[k] = getRandomCiv("Great", allCivs, dlcCivs, greatCivs, restCivs);
                   if(usedCivs.includes(playerCivs[k])) k--;
                    else usedCivs.push(playerCivs[k]);
               }
   
               for(let l=(playerCountArg/2)+greatCivCountArg; l<playerCountArg; l++){
-                  playerCivs[l] = getRandomCiv("Rest");
+                  playerCivs[l] = getRandomCiv("Rest", allCivs, dlcCivs, greatCivs, restCivs);
                   if(usedCivs.includes(playerCivs[l])) l--;
                    else usedCivs.push(playerCivs[l]);
               }
@@ -251,14 +251,14 @@ function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPl
           teamTwoCivs.sort(() => Math.random() - 0.5);
           return [playerCivs.concat(teamTwoCivs), usedCivs];
       }
-      [playerCivs, usedCivs] = buildBalancedTeamTwo(teamOneGreatCivs, playerCount, usedCivs, playerCivs, playerNames);
+      [playerCivs, usedCivs] = buildBalancedTeamTwo(teamOneGreatCivs, playerCount, usedCivs, playerCivs, allCivs, dlcCivs, greatCivs, restCivs);
     }
 
     else if(!applyCivBalance){
         for(let m=0; m<playerCount; m++){
 
-            if(dlcOwners.includes(playerNames[m])) playerCivs[m] = getRandomCiv("All-DLC");
-            else playerCivs[m] = getRandomCiv("All");
+            if(dlcOwners.includes(playerNames[m])) playerCivs[m] = getRandomCiv("All-DLC", allCivs, dlcCivs, greatCivs, restCivs);
+            else playerCivs[m] = getRandomCiv("All", allCivs, dlcCivs, greatCivs, restCivs);
 
             if(usedCivs.includes(playerCivs[m])) m--;
              else usedCivs.push(playerCivs[m]);
@@ -286,7 +286,7 @@ function getInputsFromUser(){
             }
         }
 
-        let teamColorsInput = document.getElementById('teamColors');
+        let teamColorsInput = document.getElementById('playerColors');
         let selectedTeamColors = teamColorsInput.checked;
 
         let civBalanceInput = document.getElementById('civBalance');
@@ -296,7 +296,7 @@ function getInputsFromUser(){
         if(playerNames.length > 8) playerNames.length = 8;
 
         //console.log(playerCount, selectedTeamColors, selectedCivBalance, selectedSwapDepth, playerNames);
-        generateTeamCivs(playerCount, selectedTeamColors, selectedCivBalance, selectedSwapDepth, ...playerNames);
+        generateTeamCivs(playerCount, selectedTeamColors, selectedCivBalance, selectedSwapDepth, allCivs, dlcCivs, greatCivs, restCivs, dlcOwners, ...playerNames);
 }
 
 function clearGeneratedTeams(){
@@ -307,6 +307,7 @@ function playAudio(fileName){
     let audioObject = new Audio(`assets/sound/${fileName}.wav`);
     audioObject.setAttribute("type", "audio/wav");
     audioObject.setAttribute("autoplay", "false");
+    audioObject.setAttribute("preload", "auto");
     audioObject.play();
 }
 

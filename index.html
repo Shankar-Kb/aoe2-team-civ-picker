@@ -20,42 +20,42 @@
 </head>
 
 <body>
-  <div class="left-box"></div>
+  <div class="left-box" id="leftBox"></div>
 
-  <div class="middle-box">
+  <div class="middle-box" id="middleBox">
     <div class="input-box">
 
-      <div class="text-box">
+      <div class="input-text-container-box">
         <div class="input-group team-one-text-box">
           <label for="teamOneNames">Team One:</label>
-          <input type="text" class="form-control" id="teamOneNames" name="teamOne">
+          <input type="text" class="input-text-box" id="teamOneNames" name="teamOne">
         </div>
         <div class="input-group team-two-text-box">
           <label for="teamTwoNames">Team Two:</label>
-          <input type="text" class="form-control" id="teamTwoNames" name="teamTwo">
+          <input type="text" class="input-text-box" id="teamTwoNames" name="teamTwo">
         </div>
       </div>
 
       <div class="options-box">
         <div class="radio-box">
           <div>Player Swap Depth Level:</div>
-          <div class="form-check">
+          <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="swapDepthLevel" value="0" id="swapDepthZero" checked>
             <label class="form-check-label" for="swapDepthZero"> 0 </label>
           </div>
-          <div class="form-check">
+          <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="swapDepthLevel" value="1" id="swapDepthOne">
             <label class="form-check-label" for="swapDepthOne"> 1 </label>
           </div>
-          <div class="form-check">
+          <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="swapDepthLevel" value="2" id="swapDepthTwo">
             <label class="form-check-label" for="swapDepthTwo"> 2 </label>
           </div>
-          <div class="form-check">
+          <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="swapDepthLevel" value="3" id="swapDepthThree">
             <label class="form-check-label" for="swapDepthThree"> 3 </label>
           </div>
-          <div class="form-check">
+          <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="swapDepthLevel" value="4" id="swapDethFour">
             <label class="form-check-label" for="swapDethFour"> 4 </label>
           </div>
@@ -63,8 +63,8 @@
 
         <div class="checkbox-box">
           <div class="form-check">
-            <label class="form-check-label" for="teamColors"> Apply Team Colors </label>
-            <input class="form-check-input" type="checkbox" name="applyTeamColors" value="Yes" id="teamColors" checked>
+            <label class="form-check-label" for="teamColors"> Apply Player Colors </label>
+            <input class="form-check-input" type="checkbox" name="applyPlayerColors" value="Yes" id="playerColors" checked>
           </div>
           <div class="form-check">
             <label class="form-check-label" for="civBalance"> Apply Civ Balancer </label>
@@ -73,14 +73,14 @@
         </div>
       </div>
       <div class="button-box">
-        <button type="button" class="btn btn-light" id="clearButton" onclick="clearGeneratedTeams()">Clear</button>
-        <button type="button" class="btn btn-light" id="generateButton" onclick="getInputsFromUser()">Generate</button>
+        <button type="button" class="btn functional-button" id="clearButton" onclick="clearGeneratedTeams()">Clear</button>
+        <button type="button" class="btn functional-button" id="generateButton" onclick="getInputsFromUser()">Generate</button>
       </div>
 
     </div>
     <div class="display-box" id="displayBox"></div>
   </div>
-  <div class="right-box"></div>
+  <div class="right-box" id="rightBox"></div>
   <script src="script.js"></script>
 </body>
 

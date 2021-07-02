@@ -8,50 +8,58 @@ body{
     display: flex;
     flex-flow: column wrap;
     justify-content: space-around;
+    align-items: center;
     font-size: 18px;
     font-weight: bold;
     width: 80%;
+    min-width: 1000px;
     margin: 25px auto;
     padding: 10px;
     border: 1px solid #191919;
     border-radius: 5px;
     box-shadow: 0px 0px 3px 0px #191919;
 }
-.text-box{
+.input-text-container-box{
     width: 1000px;
     display: flex;
     flex-flow: row;
 }
-.team-one-text-box, .team-two-text-box{
-    width: 500px;
-    margin: 0px 10px;
+.input-text-box{
+    background-color:#474340;
+    color: #FFFFFD;
+    min-width: 500px;
+    margin: 0px 25px;
+    font-weight: bold;
+    border-color: #6f5c4f;
+}
+.input-text-box:focus {
+    outline: none !important;
+    /* border:1px solid #191919;
+    box-shadow: 0 0 1px #191919; */
 }
 .options-box{
     display:flex;
     flex-flow: row;
     justify-content: space-between;
-    height: 180px;
-}
-.radio-box, .checkbox-box{
-    margin: 5px 25px;
-}
-.text-box, .options-box, .button-box{
-    margin: 2.5px auto;
+    min-height: 50px;
+    min-width: 700px;
+    margin: 10px 0px;
 }
 .button-box{
-    width: 200px;
+    width: 500px;
     display: flex;
     flex-flow: row;
     justify-content: space-around;
 }
 
-.civ-icon{
-    height: 50px;
-    width: 50px;
-}
-.versus-icon-box{
-    width: 75px;
-    height: 75px;
+.functional-button{
+    background-color: #8C0911;
+    width: 250px;
+    height: 37.5px;
+    color: #f7ceb6;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0px 10px;
 }
 
 .match-box{
@@ -65,20 +73,27 @@ body{
     border-radius: 5px;
     box-shadow: 0px 0px 3px 3px #191919;
 }
+.match-box a{
+     text-decoration: none;
+     font-weight: bold;
+     color: black;
+}
 .player-box{
     display: flex;
     flex-flow: row;
     margin: 10px 0px;
 }
-
-.versus-box{
-    align-self: center;
+.civ-icon{
+    height: 50px;
+    width: 50px;
 }
 .player-name-box{
     font-weight: bold;
 }
-.match-box a{
-     text-decoration: none;
-     font-weight: bold;
-     color: black;
+.versus-box{
+    align-self: center;
+}
+.versus-icon-box{
+    width: 75px;
+    height: 75px;
 }
