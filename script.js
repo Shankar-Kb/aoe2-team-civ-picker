@@ -33,16 +33,18 @@ function getRandomCiv(civPool, allCivsArr, dlcCivsArr, greatCivsArr, restCivsArr
 
         case "All-DLC": 
             let allCivsWithDlc = allCivsArr.concat(dlcCivsArr);
+            allCivsWithDlc = shuffleArray(allCivsWithDlc);
+            //console.log(allCivsWithDlc);
             return allCivsWithDlc[Math.floor(Math.random()*allCivsWithDlc.length)];
 
         case "Great-DLC":
             let greatCivsWithDlc = greatCivsArr.concat(dlcCivsArr);
             greatCivsWithDlc = shuffleArray(greatCivsWithDlc);
+            //console.log(greatCivsWithDlc);
             return greatCivsWithDlc[Math.floor(Math.random()*greatCivsWithDlc.length)];
 
         case "Rest-DLC":
             let restCivsWithDlc = restCivsArr.concat(dlcCivsArr);
-            restCivsWithDlc = shuffleArray(restCivsWithDlc);
             return restCivsWithDlc[Math.floor(Math.random()*restCivsWithDlc.length)];
 
     }
@@ -50,10 +52,10 @@ function getRandomCiv(civPool, allCivsArr, dlcCivsArr, greatCivsArr, restCivsArr
 
 function checkDlcOwner(playerNameArg, dlcOwnersArr){
 
-    dlcOwnersArr.forEach( elem => {
+    for(let i=0; i<dlcOwnersArr.length; i++){
 
-        if(elem.toUpperCase() === playerNameArg) return true;
-    })
+        if(playerNameArg.toUpperCase() === dlcOwnersArr[i].toUpperCase()) return true;
+    }
     return false;
 }
 
@@ -209,7 +211,6 @@ function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPl
     let teamOneGreatCivs = 0;
     let playerCivs = [];
     let playerNames = playerNamesArgs;
-    let swappedPlayerNames = [];
 
     let [allCivs, dlcCivs, greatCivs, restCivs, dlcOwners] = [allCivsArr, dlcCivsArr, greatCivsArr, restCivsArr, dlcOwnersArr];
 
@@ -218,7 +219,7 @@ function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPl
     greatCivs = shuffleArray(greatCivs);
     restCivs = shuffleArray(restCivs);
 
-    [swappedPlayerNames, playerCivs] = swapPlayers(playerNames, playerCivs, swapPlayerDepth);
+    [playerNames, playerCivs] = swapPlayers(playerNames, playerCivs, swapPlayerDepth);
     
     if(applyCivBalance){
 
@@ -254,7 +255,7 @@ function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPl
           }
           else {
               for(let k=playerCountArg/2; k<playerCountArg; k++){
-                  
+
                   if(checkDlcOwner(playerNames[k], dlcOwners)) playerCivs[k] = getRandomCiv("Great-DLC", allCivs, dlcCivs, greatCivs, restCivs);
                    else playerCivs[k] = getRandomCiv("Great", allCivs, dlcCivs, greatCivs, restCivs);
                   if(usedCivs.includes(playerCivs[k])) k--;
@@ -284,16 +285,32 @@ function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPl
              else usedCivs.push(playerCivs[m]);
         }
     }
-    assignCivsToPlayers(swappedPlayerNames, playerCivs, playerColors, applyPlayerColor);
+    assignCivsToPlayers(playerNames, playerCivs, playerColors, applyPlayerColor);
 }
 
 
 function getInputsFromUser(){
-
-        let teamOneNames = document.getElementById('teamOneNames').value.split(" ");
-        let teamTwoNames = document.getElementById('teamTwoNames').value.split(" ");
         
+        let teamOneNames = document.getElementById('teamOneNames').value.trim();
+        let teamTwoNames = document.getElementById('teamTwoNames').value.trim();
+        
+        if(teamOneNames.includes(',') && teamTwoNames.includes(',')){
+            teamOneNames = teamOneNames.split(',');
+            teamTwoNames = teamTwoNames.split(',');
+        }
+        else if(teamOneNames.includes(' ') && teamTwoNames.includes(' ')){
+            teamOneNames = teamOneNames.split(' ');
+            teamTwoNames = teamTwoNames.split(' ');
+        }
+        else return;
         let playerNames = teamOneNames.concat(teamTwoNames);
+        
+        playerNames = playerNames.map(elem => elem.trim());
+        playerNames = playerNames.map(elem => {    
+            let stringArr = elem.split("");
+            stringArr[0] = stringArr[0].toUpperCase();
+            return stringArr.join("");
+        });
         
         let playerCount = playerNames.length;
         let swapDepthInput = document.querySelectorAll('input[name="swapDepthLevel"]');
