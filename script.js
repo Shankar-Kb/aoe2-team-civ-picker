@@ -21,7 +21,7 @@ function shuffleArray(array) {
     //Old Version - array.sort(() => Math.random() - 0.5);
   }
 
-function getRandomCiv(civPool, allCivsArr, dlcCivsArr, greatCivsArr, restCivsArr){
+function getRandomCiv(civPool, allCivsArr, greatCivsArr, restCivsArr, allCivsWithDlcArr, greatCivsWithDlcArr, restCivsWithDlcArr){
     
     switch(civPool){
 
@@ -31,21 +31,11 @@ function getRandomCiv(civPool, allCivsArr, dlcCivsArr, greatCivsArr, restCivsArr
 
         case "Rest": return restCivsArr[Math.floor(Math.random()*restCivsArr.length)];
 
-        case "All-DLC": 
-            let allCivsWithDlc = allCivsArr.concat(dlcCivsArr);
-            allCivsWithDlc = shuffleArray(allCivsWithDlc);
-            //console.log(allCivsWithDlc);
-            return allCivsWithDlc[Math.floor(Math.random()*allCivsWithDlc.length)];
+        case "All-DLC": return allCivsWithDlcArr[Math.floor(Math.random()*allCivsWithDlcArr.length)];
 
-        case "Great-DLC":
-            let greatCivsWithDlc = greatCivsArr.concat(dlcCivsArr);
-            greatCivsWithDlc = shuffleArray(greatCivsWithDlc);
-            //console.log(greatCivsWithDlc);
-            return greatCivsWithDlc[Math.floor(Math.random()*greatCivsWithDlc.length)];
+        case "Great-DLC": return greatCivsWithDlcArr[Math.floor(Math.random()*greatCivsWithDlcArr.length)];
 
-        case "Rest-DLC":
-            let restCivsWithDlc = restCivsArr.concat(dlcCivsArr);
-            return restCivsWithDlc[Math.floor(Math.random()*restCivsWithDlc.length)];
+        case "Rest-DLC": return restCivsWithDlcArr[Math.floor(Math.random()*restCivsWithDlcArr.length)];
 
     }
 }
@@ -212,12 +202,22 @@ function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPl
     let playerCivs = [];
     let playerNames = playerNamesArgs;
 
-    let [allCivs, dlcCivs, greatCivs, restCivs, dlcOwners] = [allCivsArr, dlcCivsArr, greatCivsArr, restCivsArr, dlcOwnersArr];
+    let allCivs = [...allCivsArr];
+    let dlcCivs = [...dlcCivsArr];
+    let greatCivs = [...greatCivsArr];
+    let restCivs = [...restCivsArr];
+    let dlcOwners = [...dlcOwnersArr];
+
+    let allCivsWithDlc = [...allCivs, ...dlcCivs];
+    let greatCivsWithDlc = [...greatCivs, ...dlcCivs];
+    let restCivsWithDlc = [...restCivs, ...dlcCivs];
 
     allCivs = shuffleArray(allCivs);
-    dlcCivs = shuffleArray(dlcCivs);
     greatCivs = shuffleArray(greatCivs);
     restCivs = shuffleArray(restCivs);
+    allCivsWithDlc = shuffleArray(allCivsWithDlc);
+    greatCivsWithDlc = shuffleArray(greatCivsWithDlc);
+    restCivsWithDlc = shuffleArray(restCivsWithDlc);
 
     [playerNames, playerCivs] = swapPlayers(playerNames, playerCivs, swapPlayerDepth);
     
@@ -226,10 +226,10 @@ function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPl
       //Team 1 Logic
       for(let i=0; i<playerCount/2; i++){
           
-          if(teamOneGreatCivs >= (playerCount/2)-2) playerCivs[i] = getRandomCiv("Rest", allCivs, dlcCivs, greatCivs, restCivs);
+          if(teamOneGreatCivs >= (playerCount/2)-2) playerCivs[i] = getRandomCiv("Rest", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc);
           else {
-            if(checkDlcOwner(playerNames[i], dlcOwners) === true) playerCivs[i] = getRandomCiv("All-DLC", allCivs, dlcCivs, greatCivs, restCivs);
-            else playerCivs[i] = getRandomCiv("All", allCivs, dlcCivs, greatCivs, restCivs);
+            if(checkDlcOwner(playerNames[i], dlcOwners) === true) playerCivs[i] = getRandomCiv("All-DLC", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc);
+            else playerCivs[i] = getRandomCiv("All", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc);
           }
   
           if(usedCivs.includes(playerCivs[i])) i--;
@@ -248,7 +248,7 @@ function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPl
 
           if(greatCivCountArg === 0) {
               for(let j=playerCountArg/2; j<playerCountArg; j++) {
-                  playerCivs[j] = getRandomCiv("Rest", allCivs, dlcCivs, greatCivs, restCivs);
+                  playerCivs[j] = getRandomCiv("Rest", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc);
                   if(usedCivs.includes(playerCivs[j])) j--;
                    else usedCivs.push(playerCivs[j]);
               }
@@ -256,14 +256,14 @@ function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPl
           else {
               for(let k=playerCountArg/2; k<playerCountArg; k++){
 
-                  if(checkDlcOwner(playerNames[k], dlcOwners)) playerCivs[k] = getRandomCiv("Great-DLC", allCivs, dlcCivs, greatCivs, restCivs);
-                   else playerCivs[k] = getRandomCiv("Great", allCivs, dlcCivs, greatCivs, restCivs);
+                  if(checkDlcOwner(playerNames[k], dlcOwners)) playerCivs[k] = getRandomCiv("Great-DLC", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc);
+                   else playerCivs[k] = getRandomCiv("Great", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc);
                   if(usedCivs.includes(playerCivs[k])) k--;
                    else usedCivs.push(playerCivs[k]);
               }
   
               for(let l=(playerCountArg/2)+greatCivCountArg; l<playerCountArg; l++){
-                  playerCivs[l] = getRandomCiv("Rest", allCivs, dlcCivs, greatCivs, restCivs);
+                  playerCivs[l] = getRandomCiv("Rest", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc);
                   if(usedCivs.includes(playerCivs[l])) l--;
                    else usedCivs.push(playerCivs[l]);
               }
@@ -278,8 +278,8 @@ function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPl
     else if(!applyCivBalance){
         for(let m=0; m<playerCount; m++){
 
-            if(checkDlcOwner(playerNames[m], dlcOwners)) playerCivs[m] = getRandomCiv("All-DLC", allCivs, dlcCivs, greatCivs, restCivs);
-            else playerCivs[m] = getRandomCiv("All", allCivs, dlcCivs, greatCivs, restCivs);
+            if(checkDlcOwner(playerNames[m], dlcOwners)) playerCivs[m] = getRandomCiv("All-DLC", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc);
+            else playerCivs[m] = getRandomCiv("All", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc);
 
             if(usedCivs.includes(playerCivs[m])) m--;
              else usedCivs.push(playerCivs[m]);
