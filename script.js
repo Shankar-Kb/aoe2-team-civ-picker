@@ -9,6 +9,18 @@ let normalCivLink = "https://ageofempires.fandom.com/wiki/CivName";
 let newCivLink = "https://ageofempires.fandom.com/wiki/CivName_(Age_of_Empires_II)";
 let civTreeLink = "https://aoe2techtree.net/#CivName";
 
+function shuffleArray(array) {
+
+    //Fisher–Yates Shuffle
+    for (let i = array.length - 1; i > 0; i--) {
+      let j = Math.floor(Math.random() * (i + 1)); // random index from 0 to i
+
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+    //Old Version - array.sort(() => Math.random() - 0.5);
+  }
+
 function getRandomCiv(civPool, allCivsArr, dlcCivsArr, greatCivsArr, restCivsArr){
     
     switch(civPool){
@@ -25,13 +37,24 @@ function getRandomCiv(civPool, allCivsArr, dlcCivsArr, greatCivsArr, restCivsArr
 
         case "Great-DLC":
             let greatCivsWithDlc = greatCivsArr.concat(dlcCivsArr);
+            greatCivsWithDlc = shuffleArray(greatCivsWithDlc);
             return greatCivsWithDlc[Math.floor(Math.random()*greatCivsWithDlc.length)];
 
         case "Rest-DLC":
             let restCivsWithDlc = restCivsArr.concat(dlcCivsArr);
+            restCivsWithDlc = shuffleArray(restCivsWithDlc);
             return restCivsWithDlc[Math.floor(Math.random()*restCivsWithDlc.length)];
 
     }
+}
+
+function checkDlcOwner(playerNameArg, dlcOwnersArr){
+
+    dlcOwnersArr.forEach( elem => {
+
+        if(elem.toUpperCase() === playerNameArg) return true;
+    })
+    return false;
 }
 
 function swapPlayers(playerNamesArr, playerCivsArr, swapDepthArg){
@@ -56,11 +79,6 @@ function swapPlayers(playerNamesArr, playerCivsArr, swapDepthArg){
         
     }
     return [teamOnePlayers.concat(teamTwoPlayers), teamOneCivs.concat(teamTwoCivs)];
-}
-
-function swapPlayerColors(playerColorsArr){
-
-    return playerColorsArr.sort(() => Math.random() - 0.5);
 }
 
 function displayGeneratedTeams(teamOnePlayersArr, teamTwoPlayersArr, teamOneCivsArr, teamTwoCivsArr, brokenLinkCivsArr, teamOneColorsArr = false, teamTwoColorsArr = false){
@@ -99,7 +117,7 @@ function displayGeneratedTeams(teamOnePlayersArr, teamTwoPlayersArr, teamOneCivs
         teamOneCivIcon.target = "_blank";
 
         let teamOnePlayerTextBox = createHtmlElement('div', 'player-text-box');
-        let randomNumberOne = Math.floor(Math.random()*(1000-1+1)+1);
+        let randomNumberOne = Math.floor(Math.random()*(10000-1+1)+1);
         let teamOnePlayerName  = createHtmlElement('div', 'player-name-box', teamOnePlayersArr[a]+randomNumberOne);
         teamOnePlayerName.innerHTML = `${teamOnePlayersArr[a]}`
         
@@ -123,7 +141,7 @@ function displayGeneratedTeams(teamOnePlayersArr, teamTwoPlayersArr, teamOneCivs
         teamTwoCivIcon.target = "_blank";
 
         let teamTwoPlayerTextBox = createHtmlElement('div', 'player-text-box');
-        let randomNumberTwo = Math.floor(Math.random()*(1000-1+1)+1+1);
+        let randomNumberTwo = Math.floor(Math.random()*(10000-1+1)+1+1);
         let teamTwoPlayerName  = createHtmlElement('div', 'player-name-box', teamTwoPlayersArr[a]+randomNumberTwo);
         teamTwoPlayerName.innerHTML = `${teamTwoPlayersArr[a]}`;
         
@@ -171,9 +189,11 @@ function assignCivsToPlayers(playerNamesArr, playerCivsArr, playerColorsArr, app
 
     if(applyPlayerColorArg){
 
-      playerColorsArr = swapPlayerColors(playerColorsArr);
-      let teamOneColors = playerColorsArr.slice(0, playerCivsArr.length/2).sort(() => Math.random() - 0.5);
-      let teamTwoColors = playerColorsArr.slice(playerCivsArr.length/2, playerCivsArr.length).sort(() => Math.random() - 0.5);
+      playerColorsArr = shuffleArray(playerColorsArr);
+      let teamOneColors = playerColorsArr.slice(0, playerCivsArr.length/2);
+      //teamOneColors = shuffleArray(teamOneColors);
+      let teamTwoColors = playerColorsArr.slice(playerCivsArr.length/2, playerCivsArr.length);
+      //teamTwoColors = shuffleArray(teamTwoColors);
 
       displayGeneratedTeams(teamOnePlayers, teamTwoPlayers, teamOneCivs, teamTwoCivs, brokenLinkCivs, teamOneColors, teamTwoColors);
     }
@@ -193,10 +213,12 @@ function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPl
 
     let [allCivs, dlcCivs, greatCivs, restCivs, dlcOwners] = [allCivsArr, dlcCivsArr, greatCivsArr, restCivsArr, dlcOwnersArr];
 
-    allCivs = allCivs.sort(() => Math.random() - 0.5);
-    dlcCivs = dlcCivs.sort(() => Math.random() - 0.5);
-    greatCivs = greatCivs.sort(() => Math.random() - 0.5);
-    restCivs = restCivs.sort(() => Math.random() - 0.5);
+    allCivs = shuffleArray(allCivs);
+    dlcCivs = shuffleArray(dlcCivs);
+    greatCivs = shuffleArray(greatCivs);
+    restCivs = shuffleArray(restCivs);
+
+    [swappedPlayerNames, playerCivs] = swapPlayers(playerNames, playerCivs, swapPlayerDepth);
     
     if(applyCivBalance){
 
@@ -205,7 +227,7 @@ function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPl
           
           if(teamOneGreatCivs >= (playerCount/2)-2) playerCivs[i] = getRandomCiv("Rest", allCivs, dlcCivs, greatCivs, restCivs);
           else {
-            if(dlcOwners.includes(playerNames[i])) playerCivs[i] = getRandomCiv("All-DLC", allCivs, dlcCivs, greatCivs, restCivs);
+            if(checkDlcOwner(playerNames[i], dlcOwners) === true) playerCivs[i] = getRandomCiv("All-DLC", allCivs, dlcCivs, greatCivs, restCivs);
             else playerCivs[i] = getRandomCiv("All", allCivs, dlcCivs, greatCivs, restCivs);
           }
   
@@ -230,11 +252,10 @@ function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPl
                    else usedCivs.push(playerCivs[j]);
               }
           }
-  
           else {
               for(let k=playerCountArg/2; k<playerCountArg; k++){
                   
-                  if(dlcOwners.includes(playerNames[k])) playerCivs[k] = getRandomCiv("Great-DLC", allCivs, dlcCivs, greatCivs, restCivs);
+                  if(checkDlcOwner(playerNames[k], dlcOwners)) playerCivs[k] = getRandomCiv("Great-DLC", allCivs, dlcCivs, greatCivs, restCivs);
                    else playerCivs[k] = getRandomCiv("Great", allCivs, dlcCivs, greatCivs, restCivs);
                   if(usedCivs.includes(playerCivs[k])) k--;
                    else usedCivs.push(playerCivs[k]);
@@ -245,8 +266,9 @@ function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPl
                   if(usedCivs.includes(playerCivs[l])) l--;
                    else usedCivs.push(playerCivs[l]);
               }
+              teamTwoCivs = playerCivs.splice(playerCivs.length/2);
+              teamTwoCivs = shuffleArray(teamTwoCivs);
           }
-          teamTwoCivs.sort(() => Math.random() - 0.5);
           return [playerCivs.concat(teamTwoCivs), usedCivs];
       }
       [playerCivs, usedCivs] = buildBalancedTeamTwo(teamOneGreatCivs, playerCount, usedCivs, playerCivs, allCivs, dlcCivs, greatCivs, restCivs);
@@ -255,14 +277,13 @@ function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPl
     else if(!applyCivBalance){
         for(let m=0; m<playerCount; m++){
 
-            if(dlcOwners.includes(playerNames[m])) playerCivs[m] = getRandomCiv("All-DLC", allCivs, dlcCivs, greatCivs, restCivs);
+            if(checkDlcOwner(playerNames[m], dlcOwners)) playerCivs[m] = getRandomCiv("All-DLC", allCivs, dlcCivs, greatCivs, restCivs);
             else playerCivs[m] = getRandomCiv("All", allCivs, dlcCivs, greatCivs, restCivs);
 
             if(usedCivs.includes(playerCivs[m])) m--;
              else usedCivs.push(playerCivs[m]);
         }
     }
-    [swappedPlayerNames, playerCivs] = swapPlayers(playerNames, playerCivs, swapPlayerDepth);
     assignCivsToPlayers(swappedPlayerNames, playerCivs, playerColors, applyPlayerColor);
 }
 
