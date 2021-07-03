@@ -239,12 +239,12 @@ function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPl
           }
       }
   
-      function buildBalancedTeamTwo(greatCivCountArg, playerCountArg, usedCivsArr, playerCivsArr, allCivsArr, dlcCivsArr, greatCivsArr, restCivsArr){
+      function buildBalancedTeamTwo(greatCivCountArg, playerCountArg, usedCivsArr, playerCivsArr, allCivsArr, greatCivsArr, restCivsArr, allCivsWithDlcArr, greatCivsWithDlcArr, restCivsWithDlcArr){
           
           let [playerCivs, usedCivs] = [playerCivsArr, usedCivsArr];
           let teamTwoCivs = [];
 
-          let [allCivs, dlcCivs, greatCivs, restCivs] = [allCivsArr, dlcCivsArr, greatCivsArr, restCivsArr];
+          let [allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc] = [allCivsArr, greatCivsArr, restCivsArr, allCivsWithDlcArr, greatCivsWithDlcArr, restCivsWithDlcArr];
 
           if(greatCivCountArg === 0) {
               for(let j=playerCountArg/2; j<playerCountArg; j++) {
@@ -272,7 +272,7 @@ function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPl
           }
           return [playerCivs.concat(teamTwoCivs), usedCivs];
       }
-      [playerCivs, usedCivs] = buildBalancedTeamTwo(teamOneGreatCivs, playerCount, usedCivs, playerCivs, allCivs, dlcCivs, greatCivs, restCivs);
+      [playerCivs, usedCivs] = buildBalancedTeamTwo(teamOneGreatCivs, playerCount, usedCivs, playerCivs, allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc);
     }
 
     else if(!applyCivBalance){
