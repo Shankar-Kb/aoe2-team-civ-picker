@@ -49,15 +49,12 @@ function checkDlcOwner(playerNameArg, dlcOwnersArr){
     return false;
 }
 
-function swapPlayers(playerNamesArr, playerCivsArr, swapDepthArg){
+function swapPlayers(playerNamesArr, swapDepthArg){
      
     let teamOnePlayers = playerNamesArr.slice(0, playerNamesArr.length/2);
     let teamTwoPlayers = playerNamesArr.slice(playerNamesArr.length/2, playerNamesArr.length);
 
-    let teamOneCivs = playerCivsArr.slice(0, playerCivsArr.length/2);
-    let teamTwoCivs = playerCivsArr.slice(playerCivsArr.length/2, playerCivsArr.length)
-
-    if(swapDepthArg === 0) return [playerNamesArr, playerCivsArr];
+    if(swapDepthArg === 0) return playerNamesArr;
 
     else if(swapDepthArg > 0){
         for(let n=0; n<swapDepthArg; n++){
@@ -65,12 +62,11 @@ function swapPlayers(playerNamesArr, playerCivsArr, swapDepthArg){
             if(Math.floor((Math.random() * 100) + 1) % 2 !== 0){
                 
                 [teamTwoPlayers[n], teamOnePlayers[n]] = [teamOnePlayers[n], teamTwoPlayers[n]];
-                [teamTwoCivs[n], teamOneCivs[n]] = [teamOneCivs[n], teamTwoCivs[n]];
             }
         }
         
     }
-    return [teamOnePlayers.concat(teamTwoPlayers), teamOneCivs.concat(teamTwoCivs)];
+    return teamOnePlayers.concat(teamTwoPlayers);
 }
 
 function displayGeneratedTeams(teamOnePlayersArr, teamTwoPlayersArr, teamOneCivsArr, teamTwoCivsArr, brokenLinkCivsArr, teamOneColorsArr = false, teamTwoColorsArr = false){
@@ -219,7 +215,7 @@ function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPl
     greatCivsWithDlc = shuffleArray(greatCivsWithDlc);
     restCivsWithDlc = shuffleArray(restCivsWithDlc);
 
-    [playerNames, playerCivs] = swapPlayers(playerNames, playerCivs, swapPlayerDepth);
+    playerNames = swapPlayers(playerNames, swapPlayerDepth);
     
     if(applyCivBalance){
 
