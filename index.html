@@ -20,72 +20,76 @@
 </head>
 
 <body>
+  <div class="container-box">
+    <div class="left-box" id="leftBox"></div>
 
-  <div class="middle-box" id="middleBox">
-    <div class="input-box">
+    <div class="middle-box" id="middleBox">
+      <div class="input-box">
 
-      <div class="input-text-container-box">
-        <div class="team-one-text-box">
-          <label for="teamOneNames">Team One:</label>
-          <input type="text" class="input-text-box" id="teamOneNames" name="teamOne"
-            placeholder="Player-1 Player-2 Player-3 Player-4">
+        <div class="input-text-container-box">
+          <div class="team-one-text-box">
+            <label for="teamOneNames">Team One:</label>
+            <input type="text" class="input-text-box" id="teamOneNames" name="teamOne"
+              placeholder="Player-1 Player-2 Player-3 Player-4">
+          </div>
+          <div class="team-two-text-box">
+            <label for="teamTwoNames">Team Two:</label>
+            <input type="text" class="input-text-box" id="teamTwoNames" name="teamTwo"
+              placeholder="Player-5 Player-6 Player-7 Player-8">
+          </div>
         </div>
-        <div class="team-two-text-box">
-          <label for="teamTwoNames">Team Two:</label>
-          <input type="text" class="input-text-box" id="teamTwoNames" name="teamTwo"
-            placeholder="Player-5 Player-6 Player-7 Player-8">
+
+        <div class="options-box">
+          <div class="radio-box">
+            <div>Player Swap Depth Level:</div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="swapDepthLevel" value="0" id="swapDepthZero" checked>
+              <label class="form-check-label" for="swapDepthZero"> 0 </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="swapDepthLevel" value="1" id="swapDepthOne">
+              <label class="form-check-label" for="swapDepthOne"> 1 </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="swapDepthLevel" value="2" id="swapDepthTwo">
+              <label class="form-check-label" for="swapDepthTwo"> 2 </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="swapDepthLevel" value="3" id="swapDepthThree">
+              <label class="form-check-label" for="swapDepthThree"> 3 </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="swapDepthLevel" value="4" id="swapDethFour">
+              <label class="form-check-label" for="swapDethFour"> 4 </label>
+            </div>
+          </div>
+
+          <div class="checkbox-box">
+            <div class="form-check">
+              <label class="form-check-label" for="teamColors"> Apply Player Colors </label>
+              <input class="form-check-input" type="checkbox" name="applyPlayerColors" value="Yes" id="playerColors"
+                checked>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label" for="civBalance"> Apply Civ Balancer </label>
+              <input class="form-check-input" type="checkbox" name="applyCivBalancer" value="Yes" id="civBalance">
+            </div>
+          </div>
         </div>
+        <div class="button-box">
+          <button type="button" class="btn functional-button" id="clearButton"
+            onclick="clearGeneratedTeams()">Clear</button>
+          <button type="button" class="btn functional-button" id="generateButton"
+            onclick="getInputsFromUser()">Generate</button>
+        </div>
+
       </div>
-
-      <div class="options-box">
-        <div class="radio-box">
-          <div>Player Swap Depth Level:</div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="swapDepthLevel" value="0" id="swapDepthZero" checked>
-            <label class="form-check-label" for="swapDepthZero"> 0 </label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="swapDepthLevel" value="1" id="swapDepthOne">
-            <label class="form-check-label" for="swapDepthOne"> 1 </label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="swapDepthLevel" value="2" id="swapDepthTwo">
-            <label class="form-check-label" for="swapDepthTwo"> 2 </label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="swapDepthLevel" value="3" id="swapDepthThree">
-            <label class="form-check-label" for="swapDepthThree"> 3 </label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="swapDepthLevel" value="4" id="swapDethFour">
-            <label class="form-check-label" for="swapDethFour"> 4 </label>
-          </div>
-        </div>
-
-        <div class="checkbox-box">
-          <div class="form-check">
-            <label class="form-check-label" for="teamColors"> Apply Player Colors </label>
-            <input class="form-check-input" type="checkbox" name="applyPlayerColors" value="Yes" id="playerColors"
-              checked>
-          </div>
-          <div class="form-check">
-            <label class="form-check-label" for="civBalance"> Apply Civ Balancer </label>
-            <input class="form-check-input" type="checkbox" name="applyCivBalancer" value="Yes" id="civBalance">
-          </div>
-        </div>
-      </div>
-      <div class="button-box">
-        <button type="button" class="btn functional-button" id="clearButton"
-          onclick="clearGeneratedTeams()">Clear</button>
-        <button type="button" class="btn functional-button" id="generateButton"
-          onclick="getInputsFromUser()">Generate</button>
-      </div>
-
+      <div class="display-box" id="displayBox"></div>
     </div>
-    <div class="display-box" id="displayBox"></div>
+
+    <div class="right-box" id="rightBox"></div>
+
   </div>
-  <div class="left-box" id="leftBox"></div>
-  <div class="right-box" id="rightBox"></div>
 
   <script src="script.js"></script>
 </body>

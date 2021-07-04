@@ -1,7 +1,12 @@
 body{
-    margin: 0px 250px;
     background: url("assets/img/bg_aoe2_hd_paper.jpg") repeat local;
     font-family: 'Merriweather', serif;
+    min-width: 1600px;
+}
+.container-box{
+    display:flex;
+    flex-flow: row;
+    justify-content: space-around;
 }
 
 .input-box{
@@ -20,14 +25,14 @@ body{
     box-shadow: 0px 0px 3px 0px #191919;
 }
 .input-text-container-box{
-    width: 1000px;
+    width: 950px;
     display: flex;
     flex-flow: row;
 }
 .input-text-box{
     background-color:#474340;
     color: #FFFFFD;
-    width: 500px;
+    width: 465px;
     font-weight: bold;
     border-color: #6f5c4f;
 }
@@ -125,18 +130,17 @@ body{
     border-radius: 5px;
     box-shadow: 0px 0px 3px 0px #191919;
     max-width: 235px;
+    max-height: 875px;
     font-size: 25px;
     padding: 10px;
+    margin-top: 25px;
+    position: sticky;
 }
 .left-box{
-   position: fixed;
-   left: 3.5%;
-   top: 2.5%;
+    left: 3.5%;
 }
 .right-box{
-    position: fixed;
     right: 3.5%;
-    top: 2.5%;
 }
 /* .civilization-box{
 
@@ -162,24 +166,11 @@ body{
         width: 450px;
     }
 }
-
 @media only screen and (max-width: 1600px) {
     /* .left-box, .right-box{
-        border: 1px solid #191919;
-        border-radius: 5px;
-        box-shadow: 0px 0px 3px 0px #191919;
-        max-width: 235px;
-        font-size: 25px;
-        padding: 5px;
-    }
-    .left-box{
-       position: fixed;
-       left: 3.5%;
-       top: 2.5%;
-    }
-    .right-box{
-        position: fixed;
-        right: 3.5%;
-        top: 2.5%;
+
     } */
+    .civilization-name-box{
+        display: none;
+    }
 }

@@ -214,7 +214,7 @@ function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPl
     allCivsWithDlc = shuffleArray(allCivsWithDlc);
     greatCivsWithDlc = shuffleArray(greatCivsWithDlc);
     restCivsWithDlc = shuffleArray(restCivsWithDlc);
-
+    
     playerNames = swapPlayers(playerNames, swapPlayerDepth);
     
     if(applyCivBalance){
@@ -324,7 +324,7 @@ function getInputsFromUser(){
         let civBalanceInput = document.getElementById('civBalance');
         let selectedCivBalance = civBalanceInput.checked;
         
-        if(selectedSwapDepth !== 0 || selectedSwapDepth > playerNames.length/2) selectedSwapDepth = playerNames.length/2;
+        if(selectedSwapDepth !== 0 && selectedSwapDepth > playerNames.length/2) selectedSwapDepth = playerNames.length/2;
         if(playerNames.length > 8) playerNames.length = 8;
 
         //console.log(playerCount, selectedTeamColors, selectedCivBalance, selectedSwapDepth, playerNames);
