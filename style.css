@@ -1,7 +1,7 @@
 body{
     background: url("assets/img/bg_aoe2_hd_paper.jpg") repeat local;
     font-family: 'Merriweather', serif;
-    min-width: 1600px;
+    min-width: 1200px;
 }
 .container-box{
     display:flex;
@@ -130,20 +130,22 @@ body{
     border-radius: 5px;
     box-shadow: 0px 0px 3px 0px #191919;
     max-width: 235px;
-    max-height: 875px;
     font-size: 25px;
     padding: 10px;
     margin-top: 25px;
     position: sticky;
     top: 25px;
 }
-/* .left-box{
-
+.left-box{
+    max-height: 875px;
 }
 .right-box{
+    max-height: 835px;
+}
+/* .civilization-box{
 
 }
-.civilization-box{
+.civilization-name-box{
 
 }
 .civilization-icon-box{
@@ -167,10 +169,16 @@ body{
         width: 450px;
     }
 }
-@media only screen and (max-width: 1600px) {
-    /* .left-box, .right-box{
-
-    } */
+@media only screen and (max-width: 1500px) {
+    .container-box{
+        justify-content: space-around;
+    }
+    .left-box{
+        margin-right: 25px;
+    }
+    .right-box{
+        margin-left: 25px;
+    }
     .civilization-name-box{
         display: none;
     }
