@@ -3,11 +3,15 @@ let allCivs = ["Britons", "Byzantines", "Celts", "Chinese", "Franks", "Goths", "
 //let dlcCivs = ["Burgundians", "Sicilians"];
 let dlcCivs = [];
 //let greatCivs = ["Britons", "Byzantines", "Celts", "Franks", "Goths", "Mongols", "Persians", "Teutons", "Huns", "Spanish", "Magyars", "Cumans", "Lithuanians"];
-let greatCivs = ["Britons", "Byzantines", "Celts", "Franks", "Goths", "Mongols", "Persians", "Teutons", "Huns", "Spanish", "Magyars", "Cumans", "Lithuanians", "Burgundians", "Sicilians"];
+let greatCivs = ["Britons", "Byzantines", "Celts", "Franks", "Goths", "Mongols", "Persians", "Teutons", "Huns", "Spanish", "Magyars", "Cumans", "Lithuanians", "Burgundians"];
+//let restCivs = ["Chinese", "Japanese", "Saracens", "Turks", "Vikings", "Aztecs", "Koreans", "Mayans", "Incas", "Indians", "Italians", "Slavs", "Berbers", "Ethiopians", "Malians", "Portuguese", "Burmese", "Khmer", "Malay", "Vietnamese", "Bulgarians", "Tatars"];
+let restCivs = ["Chinese", "Japanese", "Saracens", "Turks", "Vikings", "Aztecs", "Koreans", "Mayans", "Incas", "Indians", "Italians", "Slavs", "Berbers", "Ethiopians", "Malians", "Portuguese", "Burmese", "Khmer", "Malay", "Vietnamese", "Bulgarians", "Tatars", "Sicilians"];
 
-let restCivs = ["Chinese", "Japanese", "Saracens", "Turks", "Vikings", "Aztecs", "Koreans", "Mayans", "Incas", "Indians", "Italians", "Slavs", "Berbers", "Ethiopians", "Malians", "Portuguese", "Burmese", "Khmer", "Malay", "Vietnamese", "Bulgarians", "Tatars"];
-let greatCivsWithDlc = [...greatCivs, ...dlcCivs];
-let restCivsWithDlc = [...restCivs, ...dlcCivs];
+//let greatCivsWithDlc = [...greatCivs, "Burgundians"];
+let greatCivsWithDlc = [...greatCivs];
+//let restCivsWithDlc = [...restCivs, "Sicilians"];
+let restCivsWithDlc = [...restCivs];
+
 let playerColors = ["Blue", "Crimson", "Chartreuse", "Yellow", "Cyan", "DarkViolet", "Grey", "Orange"];
 let dlcOwners = ["Maniac", "Lezionare"];
 let brokenLinkCivs = ["Chinese", "Japanese", "Persians", "Aztecs", "Spanish", "Incas", "Indians", "Portuguese"];
@@ -49,7 +53,7 @@ function getRandomCiv(civPool, allCivsArr, greatCivsArr, restCivsArr, allCivsWit
 function checkDlcOwner(playerNameArg, dlcOwnersArr){
 
     for(let i=0; i<dlcOwnersArr.length; i++){
-
+        
         if(playerNameArg.toUpperCase() === dlcOwnersArr[i].toUpperCase()) return true;
     }
     return false;
@@ -244,21 +248,26 @@ function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPl
       function buildBalancedTeamTwo(greatCivCountArg, playerCountArg, usedCivsArr, playerCivsArr, allCivsArr, greatCivsArr, restCivsArr, allCivsWithDlcArr, greatCivsWithDlcArr, restCivsWithDlcArr){
           
           let [playerCivs, usedCivs] = [playerCivsArr, usedCivsArr];
-          let teamTwoCivs = [];
 
           let [allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc] = [allCivsArr, greatCivsArr, restCivsArr, allCivsWithDlcArr, greatCivsWithDlcArr, restCivsWithDlcArr];
 
           if(greatCivCountArg === 0) {
 
               for(let j=playerCountArg/2; j<playerCountArg; j++) {
-
-                  if(checkDlcOwner(playerNames[j], dlcOwners)) getRandomCiv("Rest-DLC", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc);
+                  
+                  if(checkDlcOwner(playerNames[j], dlcOwners)) playerCivs[j] = getRandomCiv("Rest-DLC", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc);
                    else playerCivs[j] = getRandomCiv("Rest", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc);
                   if(usedCivs.includes(playerCivs[j])) j--;
                    else usedCivs.push(playerCivs[j]);
               }
           }
           else if(greatCivCountArg > 0){
+              
+              //Shuffling Team Two Players
+              let teamTwoPlayers = [];
+              teamTwoPlayers = playerNames.splice(playerNames.length/2);
+              teamTwoPlayers = shuffleArray(teamTwoPlayers);
+              playerNames = playerNames.concat(teamTwoPlayers);
 
               for(let k=playerCountArg/2; k<playerCountArg; k++){
 
@@ -270,15 +279,13 @@ function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPl
   
               for(let l=(playerCountArg/2)+greatCivCountArg; l<playerCountArg; l++){
 
-                  if(checkDlcOwner(playerNames[l], dlcOwners)) getRandomCiv("Rest-DLC", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc);
+                  if(checkDlcOwner(playerNames[l], dlcOwners)) playerCivs[l] = getRandomCiv("Rest-DLC", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc);
                    else playerCivs[l] = getRandomCiv("Rest", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc);
                   if(usedCivs.includes(playerCivs[l])) l--;
                    else usedCivs.push(playerCivs[l]);
               }
-              teamTwoCivs = playerCivs.splice(playerCivs.length/2);
-              teamTwoCivs = shuffleArray(teamTwoCivs);
           }
-          return [playerCivs.concat(teamTwoCivs), usedCivs];
+          return [playerCivs, usedCivs];
       }
       [playerCivs, usedCivs] = buildBalancedTeamTwo(teamOneGreatCivs, playerCount, usedCivs, playerCivs, allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc);
     }
@@ -340,10 +347,11 @@ function getInputsFromUser(){
         if(playerNames.length > 8) playerNames.length = 8;
 
         //console.log(playerCount, selectedTeamColors, selectedCivBalance, selectedSwapDepth, playerNames);
-        generateTeamCivs(playerCount, selectedTeamColors, selectedCivBalance, selectedSwapDepth, allCivs, dlcCivs, greatCivs, restCivs, dlcOwners, greatCivsWithDlc, restCivsWithDlc, ...playerNames);
+        generateTeamCivs(playerCount, selectedTeamColors, selectedCivBalance, selectedSwapDepth, allCivs, dlcCivs, greatCivs, restCivs, greatCivsWithDlc, restCivsWithDlc, dlcOwners, ...playerNames);
 }
 
 function clearGeneratedTeams(){
+    console.clear();
     document.getElementById('displayBox').innerHTML = '';
 }
 
