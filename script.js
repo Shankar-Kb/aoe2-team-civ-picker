@@ -6,14 +6,14 @@ let dlcCivs = [];
 let greatCivs = ["Britons", "Byzantines", "Celts", "Franks", "Goths", "Mongols", "Persians", "Teutons", "Huns", "Spanish", "Magyars", "Cumans", "Lithuanians", "Burgundians"];
 //let restCivs = ["Chinese", "Japanese", "Saracens", "Turks", "Vikings", "Aztecs", "Koreans", "Mayans", "Incas", "Indians", "Italians", "Slavs", "Berbers", "Ethiopians", "Malians", "Portuguese", "Burmese", "Khmer", "Malay", "Vietnamese", "Bulgarians", "Tatars"];
 let restCivs = ["Chinese", "Japanese", "Saracens", "Turks", "Vikings", "Aztecs", "Koreans", "Mayans", "Incas", "Indians", "Italians", "Slavs", "Berbers", "Ethiopians", "Malians", "Portuguese", "Burmese", "Khmer", "Malay", "Vietnamese", "Bulgarians", "Tatars", "Sicilians"];
-
 //let greatCivsWithDlc = [...greatCivs, "Burgundians"];
 let greatCivsWithDlc = [...greatCivs];
 //let restCivsWithDlc = [...restCivs, "Sicilians"];
 let restCivsWithDlc = [...restCivs];
+//let dlcOwners = ["Maniac", "Lezionare"];
+let dlcOwners = [];
 
 let playerColors = ["Blue", "Crimson", "Chartreuse", "Yellow", "Cyan", "DarkViolet", "Grey", "Orange"];
-let dlcOwners = ["Maniac", "Lezionare"];
 let brokenLinkCivs = ["Chinese", "Japanese", "Persians", "Aztecs", "Spanish", "Incas", "Indians", "Portuguese"];
 let normalCivLink = "https://ageofempires.fandom.com/wiki/CivName";
 let newCivLink = "https://ageofempires.fandom.com/wiki/CivName_(Age_of_Empires_II)";
