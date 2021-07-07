@@ -129,7 +129,8 @@ body{
     border: 1px solid #191919;
     border-radius: 5px;
     box-shadow: 0px 0px 3px 0px #191919;
-    max-width: 235px;
+    /* max-width: 235px; */
+    max-width: 300px;
     font-size: 25px;
     padding: 10px;
     margin-top: 25px;
@@ -142,17 +143,18 @@ body{
 .right-box{
     max-height: 835px;
 }
-/* .civilization-box{
-
+.civilization-box{
+    display: flex;
+    flex-flow: row;
 }
 .civilization-name-box{
-
+    margin: 0px 5px;
 }
-.civilization-icon-box{
+/*.civilization-icon-box{
 
 } */
 .civilization-icon{
-    height: 45x;
+    height: 45px;
     width: 45px;
 }
 .civilization-name-box, .civilization-name-box:hover, .civilization-name-box:focus, .civilization-name-box:active{
@@ -160,6 +162,16 @@ body{
     font-weight: bold;
     color: #191919;
 }
+
+.civilization-button-box{
+    cursor: pointer;
+    width: 15px;
+}
+.plus-icon, .minus-icon{
+   height: 15px;
+   width: 15px;
+}
+
 
 @media only screen and (max-width: 1900px) {
     .input{

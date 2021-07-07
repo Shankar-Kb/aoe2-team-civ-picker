@@ -1,7 +1,13 @@
-let allCivs = ["Britons", "Byzantines", "Celts", "Chinese", "Franks", "Goths", "Japanese", "Mongols", "Persians", "Saracens", "Teutons", "Turks", "Vikings", "Aztecs", "Huns", "Koreans", "Mayans", "Spanish", "Incas", "Indians", "Italians", "Magyars", "Slavs", "Berbers", "Ethiopians", "Malians", "Portuguese", "Burmese", "Khmer", "Malay", "Vietnamese", "Bulgarians", "Cumans", "Lithuanians", "Tatars"];
-let dlcCivs = ["Burgundians", "Sicilians"];
-let greatCivs = ["Britons", "Byzantines", "Celts", "Franks", "Goths", "Mongols", "Persians", "Teutons", "Huns", "Spanish", "Magyars", "Cumans", "Lithuanians"];
-let restCivs = ["Chinese", "Japanese", "Saracens", "Vikings", "Aztecs", "Koreans", "Mayans", "Incas", "Indians", "Italians", "Slavs", "Berbers", "Ethiopians", "Malians", "Portuguese", "Burmese", "Malay", "Vietnamese", "Bulgarians", "Tatars"];
+//let allCivs = ["Britons", "Byzantines", "Celts", "Chinese", "Franks", "Goths", "Japanese", "Mongols", "Persians", "Saracens", "Teutons", "Turks", "Vikings", "Aztecs", "Huns", "Koreans", "Mayans", "Spanish", "Incas", "Indians", "Italians", "Magyars", "Slavs", "Berbers", "Ethiopians", "Malians", "Portuguese", "Burmese", "Khmer", "Malay", "Vietnamese", "Bulgarians", "Cumans", "Lithuanians", "Tatars"];
+let allCivs = ["Britons", "Byzantines", "Celts", "Chinese", "Franks", "Goths", "Japanese", "Mongols", "Persians", "Saracens", "Teutons", "Turks", "Vikings", "Aztecs", "Huns", "Koreans", "Mayans", "Spanish", "Incas", "Indians", "Italians", "Magyars", "Slavs", "Berbers", "Ethiopians", "Malians", "Portuguese", "Burmese", "Khmer", "Malay", "Vietnamese", "Bulgarians", "Cumans", "Lithuanians", "Tatars", "Burgundians", "Sicilians"];
+//let dlcCivs = ["Burgundians", "Sicilians"];
+let dlcCivs = [];
+//let greatCivs = ["Britons", "Byzantines", "Celts", "Franks", "Goths", "Mongols", "Persians", "Teutons", "Huns", "Spanish", "Magyars", "Cumans", "Lithuanians"];
+let greatCivs = ["Britons", "Byzantines", "Celts", "Franks", "Goths", "Mongols", "Persians", "Teutons", "Huns", "Spanish", "Magyars", "Cumans", "Lithuanians", "Burgundians", "Sicilians"];
+
+let restCivs = ["Chinese", "Japanese", "Saracens", "Turks", "Vikings", "Aztecs", "Koreans", "Mayans", "Incas", "Indians", "Italians", "Slavs", "Berbers", "Ethiopians", "Malians", "Portuguese", "Burmese", "Khmer", "Malay", "Vietnamese", "Bulgarians", "Tatars"];
+let greatCivsWithDlc = [...greatCivs, ...dlcCivs];
+let restCivsWithDlc = [...restCivs, ...dlcCivs];
 let playerColors = ["Blue", "Crimson", "Chartreuse", "Yellow", "Cyan", "DarkViolet", "Grey", "Orange"];
 let dlcOwners = ["Maniac", "Lezionare"];
 let brokenLinkCivs = ["Chinese", "Japanese", "Persians", "Aztecs", "Spanish", "Incas", "Indians", "Portuguese"];
@@ -191,7 +197,7 @@ function assignCivsToPlayers(playerNamesArr, playerCivsArr, playerColorsArr, app
     }
 }
 
-function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPlayerDepth, allCivsArr, dlcCivsArr, greatCivsArr, restCivsArr, dlcOwnersArr, ...playerNamesArgs){
+function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPlayerDepth, allCivsArr, dlcCivsArr, greatCivsArr, restCivsArr, greatCivsWithDlcArr, restCivsWithDlcArr, dlcOwnersArr, ...playerNamesArgs){
      
     let usedCivs = [];
     let teamOneGreatCivs = 0;
@@ -205,8 +211,8 @@ function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPl
     let dlcOwners = [...dlcOwnersArr];
 
     let allCivsWithDlc = [...allCivs, ...dlcCivs];
-    let greatCivsWithDlc = [...greatCivs, ...dlcCivs];
-    let restCivsWithDlc = [...restCivs, ...dlcCivs];
+    let greatCivsWithDlc = greatCivsWithDlcArr;
+    let restCivsWithDlc = restCivsWithDlcArr;
 
     allCivs = shuffleArray(allCivs);
     greatCivs = shuffleArray(greatCivs);
@@ -243,13 +249,17 @@ function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPl
           let [allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc] = [allCivsArr, greatCivsArr, restCivsArr, allCivsWithDlcArr, greatCivsWithDlcArr, restCivsWithDlcArr];
 
           if(greatCivCountArg === 0) {
+
               for(let j=playerCountArg/2; j<playerCountArg; j++) {
-                  playerCivs[j] = getRandomCiv("Rest", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc);
+
+                  if(checkDlcOwner(playerNames[j], dlcOwners)) getRandomCiv("Rest-DLC", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc);
+                   else playerCivs[j] = getRandomCiv("Rest", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc);
                   if(usedCivs.includes(playerCivs[j])) j--;
                    else usedCivs.push(playerCivs[j]);
               }
           }
-          else {
+          else if(greatCivCountArg > 0){
+
               for(let k=playerCountArg/2; k<playerCountArg; k++){
 
                   if(checkDlcOwner(playerNames[k], dlcOwners)) playerCivs[k] = getRandomCiv("Great-DLC", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc);
@@ -259,7 +269,9 @@ function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPl
               }
   
               for(let l=(playerCountArg/2)+greatCivCountArg; l<playerCountArg; l++){
-                  playerCivs[l] = getRandomCiv("Rest", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc);
+
+                  if(checkDlcOwner(playerNames[l], dlcOwners)) getRandomCiv("Rest-DLC", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc);
+                   else playerCivs[l] = getRandomCiv("Rest", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc);
                   if(usedCivs.includes(playerCivs[l])) l--;
                    else usedCivs.push(playerCivs[l]);
               }
@@ -328,7 +340,7 @@ function getInputsFromUser(){
         if(playerNames.length > 8) playerNames.length = 8;
 
         //console.log(playerCount, selectedTeamColors, selectedCivBalance, selectedSwapDepth, playerNames);
-        generateTeamCivs(playerCount, selectedTeamColors, selectedCivBalance, selectedSwapDepth, allCivs, dlcCivs, greatCivs, restCivs, dlcOwners, ...playerNames);
+        generateTeamCivs(playerCount, selectedTeamColors, selectedCivBalance, selectedSwapDepth, allCivs, dlcCivs, greatCivs, restCivs, dlcOwners, greatCivsWithDlc, restCivsWithDlc, ...playerNames);
 }
 
 function clearGeneratedTeams(){
@@ -341,6 +353,42 @@ function playAudio(fileName){
     audioObject.setAttribute("autoplay", "false");
     audioObject.setAttribute("preload", "auto");
     audioObject.play();
+}
+
+function deleteArrayElement(array, elementName){
+
+    for( let i = 0; i < array.length; i++){                     
+        if (array[i] === elementName) {
+            array.splice(i, 1);
+        }
+    }
+    return array;
+}
+
+function addGreatCiv(civName){
+    
+    if(dlcCivs.includes(civName)) {
+        greatCivsWithDlc.push(civName);
+        restCivsWithDlc = deleteArrayElement(restCivsWithDlc, civName);
+    }
+    else {
+        greatCivs.push(civName);
+        restCivs = deleteArrayElement(restCivs, civName);
+    }
+    displayAllCivs(allCivs, dlcCivs, brokenLinkCivs);
+}
+
+function removeGreatCiv(civName){
+
+    if(dlcCivs.includes(civName)) {
+        restCivsWithDlc.push(civName);
+        greatCivsWithDlc = deleteArrayElement(greatCivsWithDlc, civName);
+    }
+    else {
+        restCivs.push(civName);
+        greatCivs = deleteArrayElement(greatCivs, civName);
+    }
+    displayAllCivs(allCivs, dlcCivs, brokenLinkCivs);
 }
 
 function displayAllCivs(allCivsArr, dlcCivsArr, brokenLinkCivsArr){
@@ -363,8 +411,16 @@ function displayAllCivs(allCivsArr, dlcCivsArr, brokenLinkCivsArr){
     let leftBox = document.getElementById("leftBox");
     let rightBox = document.getElementById("rightBox");
 
-    function displayCivilization(civilizationArr, containerName){
+    leftBox.innerHTML = '';
+    rightBox.innerHTML = '';
+
+    function displayCivilization(civilizationArr, containerName, greatCivsArr, restCivsArr, greatCivsWithDlcArr, restCivsWithDlcArr){
     
+    let greatCivs = greatCivsArr;
+    let restCivs = restCivsArr;
+    let greatCivsWithDlc = greatCivsWithDlcArr;
+    let restCivsWithDlc = restCivsWithDlcArr;
+
     for(let z=0; z<civilizationArr.length; z++){
 
         let civBox = createHtmlElement('div', 'civilization-box');
@@ -381,11 +437,44 @@ function displayAllCivs(allCivsArr, dlcCivsArr, brokenLinkCivsArr){
         civName.target = "_blank";
         civName.innerHTML = `${civilizationArr[z]}`
 
-        civBox.append(civIcon, civName);
+        let civOperator = createHtmlElement('div', 'civilization-button-box');
+        
+
+        if(dlcCivs.includes(civilizationArr[z])){
+            
+            if(greatCivsWithDlc.includes(civilizationArr[z])) {
+                civOperator.innerHTML = `<img src="assets/img/minus-icon-outline.png" alt="Minus Icon" class="minus-icon">`;
+                civOperator.addEventListener('click', function(event){
+                    removeGreatCiv(civilizationArr[z]);
+                    });
+            }
+            else if(restCivsWithDlc.includes(civilizationArr[z])){ 
+                civOperator.innerHTML = `<img src="assets/img/plus-icon-outline.png" alt="Plus Icon" class="plus-icon">`;
+                civOperator.addEventListener('click', function(event){
+                    addGreatCiv(civilizationArr[z]);
+                    });
+            }
+        }
+        else{
+
+            if(greatCivs.includes(civilizationArr[z])) {
+                civOperator.innerHTML = `<img src="assets/img/minus-icon-outline.png" alt="Minus Icon" class="minus-icon">`;
+                civOperator.addEventListener('click', function(event){
+                    removeGreatCiv(civilizationArr[z]);
+                    });
+            }
+            else if(restCivs.includes(civilizationArr[z])){ 
+                civOperator.innerHTML = `<img src="assets/img/plus-icon-outline.png" alt="Plus Icon" class="plus-icon">`;
+                civOperator.addEventListener('click', function(event){
+                    addGreatCiv(civilizationArr[z]);
+                    });
+            }
+        }
+        civBox.append(civIcon, civName, civOperator);
         }
     }
-    displayCivilization(firstHalfCivs, leftBox);
-    displayCivilization(secondHalfCivs, rightBox);
+    displayCivilization(firstHalfCivs, leftBox, greatCivs, restCivs, greatCivsWithDlc, restCivsWithDlc);
+    displayCivilization(secondHalfCivs, rightBox, greatCivs, restCivs, greatCivsWithDlc, restCivsWithDlc);
 }
 
 document.getElementById("clearButton").addEventListener('click', function(event){
