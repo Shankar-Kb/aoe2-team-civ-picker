@@ -95,7 +95,6 @@ function displayGeneratedTeams(teamOnePlayersArr, teamTwoPlayersArr, teamOneCivs
     displayBox.appendChild(matchBox);
 
     //console.log(teamOnePlayersArr, teamOneCivsArr, teamOneColorsArr, teamTwoPlayersArr, teamTwoCivsArr, teamTwoColorsArr);
-    
     let teamOneBox = createHtmlElement('div', 'team-one-box');
     let versusBox = createHtmlElement('div', 'versus-box');
     let teamTwoBox = createHtmlElement('div', 'team-two-box');
@@ -117,13 +116,13 @@ function displayGeneratedTeams(teamOnePlayersArr, teamTwoPlayersArr, teamOneCivs
         let teamOnePlayerTextBox = createHtmlElement('div', 'player-text-box');
         let randomNumberOne = Math.floor(Math.random()*(10000-1+1)+1);
         let teamOnePlayerName  = createHtmlElement('div', 'player-name-box', teamOnePlayersArr[a]+randomNumberOne);
-        teamOnePlayerName.innerHTML = `${teamOnePlayersArr[a]}`
+        teamOnePlayerName.innerHTML = `${teamOnePlayersArr[a]}`;
         
         let teamOneCivName = createHtmlElement('a', 'civ-name-box');
         if(brokenLinkCivs.includes(teamOneCivsArr[a])) teamOneCivName.href = `https://ageofempires.fandom.com/wiki/${teamOneCivsArr[a]}_(Age_of_Empires_II)`;
         else teamOneCivName.href = `https://ageofempires.fandom.com/wiki/${teamOneCivsArr[a]}`;
         teamOneCivName.target = "_blank";
-        teamOneCivName.innerHTML = `${teamOneCivsArr[a]}`
+        teamOneCivName.innerHTML = `${teamOneCivsArr[a]}`;
         
         teamOnePlayerBox.append(teamOneCivIcon, teamOnePlayerTextBox);
         teamOnePlayerTextBox.append(teamOnePlayerName, teamOneCivName);
@@ -204,7 +203,7 @@ function assignCivsToPlayers(playerNamesArr, playerCivsArr, playerColorsArr, app
 function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPlayerDepth, allCivsArr, dlcCivsArr, greatCivsArr, restCivsArr, greatCivsWithDlcArr, restCivsWithDlcArr, dlcOwnersArr, ...playerNamesArgs){
      
     let usedCivs = [];
-    let teamOneGreatCivs = 0;
+    let greatCivCount = 0;
     let playerCivs = [];
     let playerNames = playerNamesArgs;
 
@@ -224,7 +223,7 @@ function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPl
     allCivsWithDlc = shuffleArray(allCivsWithDlc);
     greatCivsWithDlc = shuffleArray(greatCivsWithDlc);
     restCivsWithDlc = shuffleArray(restCivsWithDlc);
-    
+
     playerNames = swapPlayers(playerNames, swapPlayerDepth);
     
     if(applyCivBalance){
@@ -232,7 +231,7 @@ function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPl
       //Team 1 Logic
       for(let i=0; i<playerCount/2; i++){
           
-          if(teamOneGreatCivs >= (playerCount/2)-2) playerCivs[i] = getRandomCiv("Rest", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc);
+          if(greatCivCount >= (playerCount/2)-2) playerCivs[i] = getRandomCiv("Rest", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc);
           else {
             if(checkDlcOwner(playerNames[i], dlcOwners) === true) playerCivs[i] = getRandomCiv("All-DLC", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc);
             else playerCivs[i] = getRandomCiv("All", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc);
@@ -241,53 +240,38 @@ function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPl
           if(usedCivs.includes(playerCivs[i])) i--;
           else {
              usedCivs.push(playerCivs[i]);
-             if(greatCivs.includes(playerCivs[i])) teamOneGreatCivs++;     
+             if(greatCivs.includes(playerCivs[i])) greatCivCount++;     
           }
       }
-  
-      function buildBalancedTeamTwo(greatCivCountArg, playerCountArg, usedCivsArr, playerCivsArr, allCivsArr, greatCivsArr, restCivsArr, allCivsWithDlcArr, greatCivsWithDlcArr, restCivsWithDlcArr){
-          
-          let [playerCivs, usedCivs] = [playerCivsArr, usedCivsArr];
 
-          let [allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc] = [allCivsArr, greatCivsArr, restCivsArr, allCivsWithDlcArr, greatCivsWithDlcArr, restCivsWithDlcArr];
+      //Team 2 Logic
+      let civOrder = [];
+      for(let j=0; j<playerCount/2; j++){
 
-          if(greatCivCountArg === 0) {
-
-              for(let j=playerCountArg/2; j<playerCountArg; j++) {
-                  
-                  if(checkDlcOwner(playerNames[j], dlcOwners)) playerCivs[j] = getRandomCiv("Rest-DLC", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc);
-                   else playerCivs[j] = getRandomCiv("Rest", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc);
-                  if(usedCivs.includes(playerCivs[j])) j--;
-                   else usedCivs.push(playerCivs[j]);
-              }
+          while(greatCivCount>0){
+            civOrder.push("Great");
+            greatCivCount--;
+            j++;
           }
-          else if(greatCivCountArg > 0){
-              
-              //Shuffling Team Two Players
-              let teamTwoPlayers = [];
-              teamTwoPlayers = playerNames.splice(playerNames.length/2);
-              teamTwoPlayers = shuffleArray(teamTwoPlayers);
-              playerNames = playerNames.concat(teamTwoPlayers);
-
-              for(let k=playerCountArg/2; k<playerCountArg; k++){
-
-                  if(checkDlcOwner(playerNames[k], dlcOwners)) playerCivs[k] = getRandomCiv("Great-DLC", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc);
-                   else playerCivs[k] = getRandomCiv("Great", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc);
-                  if(usedCivs.includes(playerCivs[k])) k--;
-                   else usedCivs.push(playerCivs[k]);
-              }
-  
-              for(let l=(playerCountArg/2)+greatCivCountArg; l<playerCountArg; l++){
-
-                  if(checkDlcOwner(playerNames[l], dlcOwners)) playerCivs[l] = getRandomCiv("Rest-DLC", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc);
-                   else playerCivs[l] = getRandomCiv("Rest", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc);
-                  if(usedCivs.includes(playerCivs[l])) l--;
-                   else usedCivs.push(playerCivs[l]);
-              }
-          }
-          return [playerCivs, usedCivs];
+          civOrder.push("Rest");
       }
-      [playerCivs, usedCivs] = buildBalancedTeamTwo(teamOneGreatCivs, playerCount, usedCivs, playerCivs, allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc);
+      civOrder = shuffleArray(civOrder);
+
+      for(let k=0; k<civOrder.length; k++){
+
+          if(civOrder[k] === "Great"){
+                  if(checkDlcOwner(playerNames[k+playerCount/2], dlcOwners)) playerCivs[k+playerCount/2] = getRandomCiv("Great-DLC", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc);
+                   else playerCivs[k+playerCount/2] = getRandomCiv("Great", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc);
+                  if(usedCivs.includes(playerCivs[k+playerCount/2])) k--;
+                   else usedCivs.push(playerCivs[k+playerCount/2]);
+          }
+          else{
+                  if(checkDlcOwner(playerNames[k+playerCount/2], dlcOwners)) playerCivs[k+playerCount/2] = getRandomCiv("Rest-DLC", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc);
+                   else playerCivs[k+playerCount/2] = getRandomCiv("Rest", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc);
+                  if(usedCivs.includes(playerCivs[k+playerCount/2])) k--;
+                   else usedCivs.push(playerCivs[k+playerCount/2]);
+          }
+        }
     }
 
     else if(!applyCivBalance){
