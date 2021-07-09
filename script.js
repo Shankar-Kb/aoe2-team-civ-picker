@@ -289,10 +289,10 @@ function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPl
 
 
 function getInputsFromUser(){
-        
+
         let teamOneNames = document.getElementById('teamOneNames').value.trim();
         let teamTwoNames = document.getElementById('teamTwoNames').value.trim();
-        
+
         if(teamOneNames.includes(',') && teamTwoNames.includes(',')){
             teamOneNames = teamOneNames.split(',');
             teamTwoNames = teamTwoNames.split(',');
@@ -301,7 +301,12 @@ function getInputsFromUser(){
             teamOneNames = teamOneNames.split(' ');
             teamTwoNames = teamTwoNames.split(' ');
         }
+        else if(typeof(teamOneNames)==="string" && typeof(teamTwoNames)==="string" || typeof(teamOneNames)==="number" && typeof(teamTwoNames)==="number"){
+            teamOneNames = teamOneNames.split();
+            teamTwoNames = teamTwoNames.split();
+        }
         else return;
+
         let playerNames = teamOneNames.concat(teamTwoNames);
         
         playerNames = playerNames.map(elem => elem.trim());
@@ -323,7 +328,7 @@ function getInputsFromUser(){
 
         let teamColorsInput = document.getElementById('playerColors');
         let selectedTeamColors = teamColorsInput.checked;
-
+        
         let civBalanceInput = document.getElementById('civBalance');
         let selectedCivBalance = civBalanceInput.checked;
         
@@ -413,6 +418,9 @@ function displayAllCivs(allCivsArr, dlcCivsArr, brokenLinkCivsArr){
     let greatCivsWithDlc = greatCivsWithDlcArr;
     let restCivsWithDlc = restCivsWithDlcArr;
 
+    let civBalanceInput = document.getElementById('civBalance');
+    let selectedCivBalance = civBalanceInput.checked;
+
     for(let z=0; z<civilizationArr.length; z++){
 
         let civBox = createHtmlElement('div', 'civilization-box');
@@ -462,11 +470,16 @@ function displayAllCivs(allCivsArr, dlcCivsArr, brokenLinkCivsArr){
                     });
             }
         }
+        if(!selectedCivBalance) civOperator.style.display = "none";
         civBox.append(civIcon, civName, civOperator);
         }
     }
     displayCivilization(firstHalfCivs, leftBox, greatCivs, restCivs, greatCivsWithDlc, restCivsWithDlc);
     displayCivilization(secondHalfCivs, rightBox, greatCivs, restCivs, greatCivsWithDlc, restCivsWithDlc);
+}
+
+function displayAllCivsWithOperators(){
+    displayAllCivs(allCivs, dlcCivs, brokenLinkCivs);
 }
 
 document.getElementById("clearButton").addEventListener('click', function(event){
@@ -483,5 +496,5 @@ document.body.addEventListener('keypress', function(event){
         getInputsFromUser();
       }
     });
-
+  
 displayAllCivs(allCivs, dlcCivs, brokenLinkCivs);
