@@ -138,14 +138,16 @@ body{
     top: 25px;
 }
 .left-box{
-    max-height: 875px;
+    max-height: 840px;
 }
 .right-box{
-    max-height: 835px;
+    max-height: 800px;
 }
 .civilization-box{
     display: flex;
     flex-flow: row;
+    margin-bottom: 2.5px;
+    /* justify-content: space-between; */
 }
 .civilization-name-box{
     margin: 0px 5px;
@@ -154,8 +156,8 @@ body{
 
 } */
 .civilization-icon{
-    height: 45px;
-    width: 45px;
+    height: 40px;
+    width: 40px;
 }
 .civilization-name-box, .civilization-name-box:hover, .civilization-name-box:focus, .civilization-name-box:active{
     text-decoration: none;

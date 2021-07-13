@@ -13,7 +13,7 @@ let restCivsWithDlc = [...restCivs];
 //let dlcOwners = ["Maniac", "Lezionare"];
 let dlcOwners = [];
 
-let playerColors = ["Blue", "Crimson", "Chartreuse", "Yellow", "Cyan", "DarkViolet", "Grey", "Orange"];
+let playerColors = ["Blue", "Crimson", "Lime", "Yellow", "Cyan", "Fuchsia", "Grey", "Orange"];
 let brokenLinkCivs = ["Chinese", "Japanese", "Persians", "Aztecs", "Spanish", "Incas", "Indians", "Portuguese"];
 let normalCivLink = "https://ageofempires.fandom.com/wiki/CivName";
 let newCivLink = "https://ageofempires.fandom.com/wiki/CivName_(Age_of_Empires_II)";
@@ -301,7 +301,7 @@ function getInputsFromUser(){
             teamOneNames = teamOneNames.split(' ');
             teamTwoNames = teamTwoNames.split(' ');
         }
-        else if(typeof(teamOneNames)==="string" && typeof(teamTwoNames)==="string" || typeof(teamOneNames)==="number" && typeof(teamTwoNames)==="number"){
+        else if(typeof(teamOneNames)==="string" && typeof(teamTwoNames)==="string" && teamOneNames.length < 16 &&  teamOneNames.length < 16){
             teamOneNames = teamOneNames.split();
             teamTwoNames = teamTwoNames.split();
         }
@@ -439,7 +439,6 @@ function displayAllCivs(allCivsArr, dlcCivsArr, brokenLinkCivsArr){
 
         let civOperator = createHtmlElement('div', 'civilization-button-box');
         
-
         if(dlcCivs.includes(civilizationArr[z])){
             
             if(greatCivsWithDlc.includes(civilizationArr[z])) {
