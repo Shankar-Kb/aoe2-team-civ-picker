@@ -19,18 +19,28 @@ let normalCivLink = "https://ageofempires.fandom.com/wiki/CivName";
 let newCivLink = "https://ageofempires.fandom.com/wiki/CivName_(Age_of_Empires_II)";
 let civTreeLink = "https://aoe2techtree.net/#CivName";
 
-let playerMap = new Map();
+let playerSteamIds = new Map();
+playerSteamIds.set("protox", "76561198044613146");
+playerSteamIds.set("firehawk", "76561198207690565");
+playerSteamIds.set("maniac", "76561198088035394");
+playerSteamIds.set("hawk", "76561198087325373");
+playerSteamIds.set("glitch", "76561198032506144");
+playerSteamIds.set("kronos", "76561198159403850");
+playerSteamIds.set("lezionare", "76561198115672759");
+playerSteamIds.set("gunjack", "76561198308551669");
+playerSteamIds.set("kuroko", "76561198057496453");
+playerSteamIds.set("varun", "76561198057496453");
+playerSteamIds.set("retempest", "76561198823747771");
+playerSteamIds.set("tempest", "76561198823747771");
+playerSteamIds.set("farshan", "76561198131973106");
+playerSteamIds.set("anti", "76561198267206225");
+playerSteamIds.set("alpha", "76561198800446037");
+playerSteamIds.set("peace", "76561198039366732");
+playerSteamIds.set("zeltrax", "76561198065460225");
+playerSteamIds.set("jasz", "76561198155121580");
+playerSteamIds.set("avid", "76561198041682306");
+playerSteamIds.set("srisan", "76561198030393767");
 
-playerMap.set("maniac", "76561198088035394");
-playerMap.set("glitch", "76561198032506144"); 
-playerMap.set("firehawk", "76561198207690565"); 
-playerMap.set("protox", "76561198044613146"); 
-playerMap.set("kuroko", "76561198057496453"); 
-playerMap.set("hawk", "76561198087325373"); 
-playerMap.set("lezionare", "76561198115672759"); 
-playerMap.set("gunjack", "76561198308551669"); 
-playerMap.set("retempest", "76561198823747771"); 
-playerMap.set("kronos", "76561198159403850"); 
 
 function shuffleArray(array) {
 
@@ -92,6 +102,22 @@ function swapPlayers(playerNamesArr, swapDepthArg){
     return teamOnePlayers.concat(teamTwoPlayers);
 }
 
+async function getPlayerRating(playerName) {
+        
+    let leaderBoardId = 0;
+    let steamId = playerSteamIds.get(playerName.toLowerCase());
+    if (steamId !== null) {
+        const response = await fetch(`https://aoe2.net/api/player/ratinghistory?game=aoe2de&leaderboard_id=${leaderBoardId}&steam_id=${steamId}&count=1`)
+            .then(resp => resp.json())
+            .catch(err => console.log(err));
+        if(response.length > 0) return `[${response[0].rating}]`;
+        else return "[N/A]";
+    }
+    else {
+        return "[N/A]";
+    }
+}
+
 async function displayGeneratedTeams(teamOnePlayersArr, teamTwoPlayersArr, teamOneCivsArr, teamTwoCivsArr, brokenLinkCivsArr, teamOneColorsArr = false, teamTwoColorsArr = false){
 
     function createHtmlElement(element,  className='', id=''){
@@ -100,22 +126,8 @@ async function displayGeneratedTeams(teamOnePlayersArr, teamTwoPlayersArr, teamO
         elem.setAttribute('id', id);
         return elem;
     }
-
-    async function getPlayerElo(playerName) {
-        //let playername = document.getElementById('player').value.trim();
-        let leaderBoardId = 0;
-        let steamId = playerMap.get(playerName.toLowerCase());
-        if (steamId != null) {
-            const response = await fetch(`https://aoe2.net/api/player/ratinghistory?game=aoe2de&leaderboard_id=${leaderBoardId}&steam_id=${steamId}&count=1`)
-                .then(resp => resp.json())
-                .catch(err => console.log(err));
-            return response[0].rating;
-        }
-        else {
-            return "N/A";
-        }
-    }
-
+    
+    let ShouldDisplayRating = true;
     let brokenLinkCivs = brokenLinkCivsArr;
 
     let displayBox = document.getElementById('displayBox');
@@ -123,11 +135,20 @@ async function displayGeneratedTeams(teamOnePlayersArr, teamTwoPlayersArr, teamO
     displayBox.appendChild(matchBox);
 
     //console.log(teamOnePlayersArr, teamOneCivsArr, teamOneColorsArr, teamTwoPlayersArr, teamTwoCivsArr, teamTwoColorsArr);
-    let teamOneBox = createHtmlElement('div', 'team-one-box');
-    let versusBox = createHtmlElement('div', 'versus-box');
-    let teamTwoBox = createHtmlElement('div', 'team-two-box');
+    let teamOneBox = createHtmlElement('div', 'team-one-box', 'teamOneBox');
+    let versusBox = createHtmlElement('div', 'versus-box', 'versusBox');
+    let teamTwoBox = createHtmlElement('div', 'team-two-box', 'teamTwoBox');
     matchBox.append(teamOneBox, versusBox, teamTwoBox);
 
+    // if(ShouldDisplayRating){
+    //     document.getElementById("teamOneBox").style.marginLeft = "35px";
+    //     document.getElementById("teamTwoBox").style.marginLeft = "35px";
+    // }
+    // else{
+    //     document.getElementById("teamOneBox").style.marginLeft = "50px";
+    //     document.getElementById("teamTwoBox").style.marginLeft = "50px";
+    // }
+        
     versusBox.innerHTML = `<img src="assets/img/fancy-crossed-swords.png" alt="Versus Icon" class="versus-icon-box">`;
     
     for(let a=0; a<teamOnePlayersArr.length; a++){
@@ -140,12 +161,14 @@ async function displayGeneratedTeams(teamOnePlayersArr, teamTwoPlayersArr, teamO
         teamOneCivIcon.href = `https://aoe2techtree.net/#${teamOneCivsArr[a]}`;
         teamOneCivIcon.innerHTML = `<img src="assets/img/icons/${teamOneCivsArr[a]}.png" alt="${teamOneCivsArr[a]}" class="civ-icon">`;
         teamOneCivIcon.target = "_blank";
+         
+        let teamOnePlayerRating = "";
+        if(ShouldDisplayRating) teamOnePlayerRating = await getPlayerRating(teamOnePlayersArr[a]);
 
-        let playert1Elo = await getPlayerElo(teamOnePlayersArr[a].toLowerCase())
         let teamOnePlayerTextBox = createHtmlElement('div', 'player-text-box');
         let randomNumberOne = Math.floor(Math.random()*(10000-1+1)+1);
         let teamOnePlayerName  = createHtmlElement('div', 'player-name-box', teamOnePlayersArr[a]+randomNumberOne);
-        teamOnePlayerName.innerHTML = `${teamOnePlayersArr[a]} [${playert1Elo}]`;
+        teamOnePlayerName.innerHTML = `${teamOnePlayersArr[a]} ${teamOnePlayerRating}`;
         
         let teamOneCivName = createHtmlElement('a', 'civ-name-box');
         if(brokenLinkCivs.includes(teamOneCivsArr[a])) teamOneCivName.href = `https://ageofempires.fandom.com/wiki/${teamOneCivsArr[a]}_(Age_of_Empires_II)`;
@@ -166,11 +189,12 @@ async function displayGeneratedTeams(teamOnePlayersArr, teamTwoPlayersArr, teamO
         teamTwoCivIcon.innerHTML = `<img src="assets/img/icons/${teamTwoCivsArr[a]}.png" alt="${teamTwoCivsArr[a]}" class="civ-icon">`;
         teamTwoCivIcon.target = "_blank";
 
-        let playert2Elo = await getPlayerElo(teamTwoPlayersArr[a].toLowerCase())
+        let teamTwoPlayerRating = "";
+        if(ShouldDisplayRating) teamTwoPlayerRating = await getPlayerRating(teamTwoPlayersArr[a]);
         let teamTwoPlayerTextBox = createHtmlElement('div', 'player-text-box');
         let randomNumberTwo = Math.floor(Math.random()*(10000-1+1)+1+1);
         let teamTwoPlayerName  = createHtmlElement('div', 'player-name-box', teamTwoPlayersArr[a]+randomNumberTwo);
-        teamTwoPlayerName.innerHTML = `${teamTwoPlayersArr[a]} [${playert2Elo}]`;
+        teamTwoPlayerName.innerHTML = `${teamTwoPlayersArr[a]} ${teamTwoPlayerRating}`;
         
         let teamTwoCivName = createHtmlElement('a', 'civ-name-box');
         if(brokenLinkCivs.includes(teamTwoCivsArr[a])) teamTwoCivName.href = `https://ageofempires.fandom.com/wiki/${teamTwoCivsArr[a]}_(Age_of_Empires_II)`;
