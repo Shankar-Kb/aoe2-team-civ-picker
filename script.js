@@ -19,6 +19,19 @@ let normalCivLink = "https://ageofempires.fandom.com/wiki/CivName";
 let newCivLink = "https://ageofempires.fandom.com/wiki/CivName_(Age_of_Empires_II)";
 let civTreeLink = "https://aoe2techtree.net/#CivName";
 
+let playerMap = new Map();
+
+playerMap.set("maniac", "76561198088035394");
+playerMap.set("glitch", "76561198032506144"); 
+playerMap.set("firehawk", "76561198207690565"); 
+playerMap.set("protox", "76561198044613146"); 
+playerMap.set("kuroko", "76561198057496453"); 
+playerMap.set("hawk", "76561198087325373"); 
+playerMap.set("lezionare", "76561198115672759"); 
+playerMap.set("gunjack", "76561198308551669"); 
+playerMap.set("retempest", "76561198823747771"); 
+playerMap.set("kronos", "76561198159403850"); 
+
 function shuffleArray(array) {
 
     //Fisher–Yates Shuffle
@@ -79,13 +92,23 @@ function swapPlayers(playerNamesArr, swapDepthArg){
     return teamOnePlayers.concat(teamTwoPlayers);
 }
 
-function displayGeneratedTeams(teamOnePlayersArr, teamTwoPlayersArr, teamOneCivsArr, teamTwoCivsArr, brokenLinkCivsArr, teamOneColorsArr = false, teamTwoColorsArr = false){
+async function displayGeneratedTeams(teamOnePlayersArr, teamTwoPlayersArr, teamOneCivsArr, teamTwoCivsArr, brokenLinkCivsArr, teamOneColorsArr = false, teamTwoColorsArr = false){
 
     function createHtmlElement(element,  className='', id=''){
         let elem = document.createElement(element);
         elem.setAttribute('class', className);
         elem.setAttribute('id', id);
         return elem;
+    }
+
+    async function getPlayerElo(playerName) {
+        //let playername = document.getElementById('player').value.trim();
+        let leaderBoardId = 0;
+        let steamId = playerMap.get(playerName.toLowerCase());
+        const response = await fetch(`https://aoe2.net/api/player/ratinghistory?game=aoe2de&leaderboard_id=${leaderBoardId}&steam_id=${steamId}&count=1`)
+            .then(resp => resp.json())
+            .catch(err => console.log(err));
+        return response[0].rating;
     }
 
     let brokenLinkCivs = brokenLinkCivsArr;
@@ -113,10 +136,11 @@ function displayGeneratedTeams(teamOnePlayersArr, teamTwoPlayersArr, teamOneCivs
         teamOneCivIcon.innerHTML = `<img src="assets/img/icons/${teamOneCivsArr[a]}.png" alt="${teamOneCivsArr[a]}" class="civ-icon">`;
         teamOneCivIcon.target = "_blank";
 
+        let playert1Elo = await getPlayerElo(teamOnePlayersArr[a].toLowerCase())
         let teamOnePlayerTextBox = createHtmlElement('div', 'player-text-box');
         let randomNumberOne = Math.floor(Math.random()*(10000-1+1)+1);
         let teamOnePlayerName  = createHtmlElement('div', 'player-name-box', teamOnePlayersArr[a]+randomNumberOne);
-        teamOnePlayerName.innerHTML = `${teamOnePlayersArr[a]}`;
+        teamOnePlayerName.innerHTML = `${teamOnePlayersArr[a]} [${playert1Elo}]`;
         
         let teamOneCivName = createHtmlElement('a', 'civ-name-box');
         if(brokenLinkCivs.includes(teamOneCivsArr[a])) teamOneCivName.href = `https://ageofempires.fandom.com/wiki/${teamOneCivsArr[a]}_(Age_of_Empires_II)`;
@@ -137,10 +161,11 @@ function displayGeneratedTeams(teamOnePlayersArr, teamTwoPlayersArr, teamOneCivs
         teamTwoCivIcon.innerHTML = `<img src="assets/img/icons/${teamTwoCivsArr[a]}.png" alt="${teamTwoCivsArr[a]}" class="civ-icon">`;
         teamTwoCivIcon.target = "_blank";
 
+        let playert2Elo = await getPlayerElo(teamTwoPlayersArr[a].toLowerCase())
         let teamTwoPlayerTextBox = createHtmlElement('div', 'player-text-box');
         let randomNumberTwo = Math.floor(Math.random()*(10000-1+1)+1+1);
         let teamTwoPlayerName  = createHtmlElement('div', 'player-name-box', teamTwoPlayersArr[a]+randomNumberTwo);
-        teamTwoPlayerName.innerHTML = `${teamTwoPlayersArr[a]}`;
+        teamTwoPlayerName.innerHTML = `${teamTwoPlayersArr[a]} [${playert2Elo}]`;
         
         let teamTwoCivName = createHtmlElement('a', 'civ-name-box');
         if(brokenLinkCivs.includes(teamTwoCivsArr[a])) teamTwoCivName.href = `https://ageofempires.fandom.com/wiki/${teamTwoCivsArr[a]}_(Age_of_Empires_II)`;
@@ -286,7 +311,6 @@ function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPl
     }
     assignCivsToPlayers(playerNames, playerCivs, playerColors, applyPlayerColor);
 }
-
 
 function getInputsFromUser(){
 
@@ -480,6 +504,8 @@ function displayAllCivs(allCivsArr, dlcCivsArr, brokenLinkCivsArr){
 function displayAllCivsWithOperators(){
     displayAllCivs(allCivs, dlcCivs, brokenLinkCivs);
 }
+
+
 
 document.getElementById("clearButton").addEventListener('click', function(event){
     playAudio("Clear_Teams");
