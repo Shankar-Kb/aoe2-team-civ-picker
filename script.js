@@ -105,10 +105,15 @@ async function displayGeneratedTeams(teamOnePlayersArr, teamTwoPlayersArr, teamO
         //let playername = document.getElementById('player').value.trim();
         let leaderBoardId = 0;
         let steamId = playerMap.get(playerName.toLowerCase());
-        const response = await fetch(`https://aoe2.net/api/player/ratinghistory?game=aoe2de&leaderboard_id=${leaderBoardId}&steam_id=${steamId}&count=1`)
-            .then(resp => resp.json())
-            .catch(err => console.log(err));
-        return response[0].rating;
+        if (steamId != null) {
+            const response = await fetch(`https://aoe2.net/api/player/ratinghistory?game=aoe2de&leaderboard_id=${leaderBoardId}&steam_id=${steamId}&count=1`)
+                .then(resp => resp.json())
+                .catch(err => console.log(err));
+            return response[0].rating;
+        }
+        else {
+            return "N/A";
+        }
     }
 
     let brokenLinkCivs = brokenLinkCivsArr;
