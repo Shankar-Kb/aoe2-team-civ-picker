@@ -102,7 +102,7 @@ body{
     margin-left: 40px;
 }
 .team-two-box{
-    margin-left: 40px;
+    margin-left: 10px;
 }
 .player-box{
     display: flex;
@@ -138,10 +138,10 @@ body{
     top: 25px;
 }
 .left-box{
-    max-height: 840px;
+    max-height: 880px;
 }
 .right-box{
-    max-height: 800px;
+    max-height: 840px;
 }
 .civilization-box{
     display: flex;
