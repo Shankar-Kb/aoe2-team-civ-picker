@@ -12,6 +12,7 @@ let restCivsWithDlc = [...restCivs, "Sicilians"];
 //let restCivsWithDlc = [...restCivs];
 let dlcOwners = ["Maniac", "Lezionare"];
 //let dlcOwners = [];
+let mapPool = ["Acropolis", "Arabia", "Atacama", "Baltic", "Cenotes", "Coastal", "Continental", "Fortress", "Four Lakes", "Ghost Lake", "Golden Swamp", "Hideout", "Hill Fort", "Islands", "MegaRandom", "Scandinavia", "Socotra", "Valley"];
 
 let playerColors = ["Blue", "Crimson", "Lime", "Yellow", "Cyan", "Fuchsia", "Grey", "Orange"];
 let brokenLinkCivs = ["Chinese", "Japanese", "Persians", "Aztecs", "Spanish", "Incas", "Indians", "Portuguese"];
@@ -118,7 +119,7 @@ async function getPlayerRating(playerName) {
     }
 }
 
-async function displayGeneratedTeams(teamOnePlayersArr, teamTwoPlayersArr, teamOneCivsArr, teamTwoCivsArr, brokenLinkCivsArr, teamOneColorsArr = false, teamTwoColorsArr = false){
+async function displayGeneratedTeams(teamOnePlayersArr, teamTwoPlayersArr, teamOneCivsArr, teamTwoCivsArr, brokenLinkCivsArr, mapNamesArr, applyRandomMapArg, displayPlayerRatingArg, teamOneColorsArr = false, teamTwoColorsArr = false){
 
     function createHtmlElement(element,  className='', id=''){
         let elem = document.createElement(element);
@@ -127,7 +128,8 @@ async function displayGeneratedTeams(teamOnePlayersArr, teamTwoPlayersArr, teamO
         return elem;
     }
     
-    let ShouldDisplayRating = true;
+    let ShouldDisplayRating = displayPlayerRatingArg;
+    let shouldGenerateMap = applyRandomMapArg;
     let brokenLinkCivs = brokenLinkCivsArr;
 
     let displayBox = document.getElementById('displayBox');
@@ -148,8 +150,12 @@ async function displayGeneratedTeams(teamOnePlayersArr, teamTwoPlayersArr, teamO
     //     document.getElementById("teamOneBox").style.marginLeft = "50px";
     //     document.getElementById("teamTwoBox").style.marginLeft = "50px";
     // }
-        
-    versusBox.innerHTML = `<img src="assets/img/fancy-crossed-swords.png" alt="Versus Icon" class="versus-icon-box">`;
+    
+    if(shouldGenerateMap){
+        mapName = mapNamesArr[Math.floor(Math.random()*mapNamesArr.length)];
+        versusBox.innerHTML = `<img src="assets/img/maps/${mapName}.png" alt="${mapName}" class="map-icon-box">`
+    }
+    else versusBox.innerHTML = `<img src="assets/img/fancy-crossed-swords.png" alt="Versus Icon" class="versus-icon-box">`;
     
     for(let a=0; a<teamOnePlayersArr.length; a++){
         
@@ -231,7 +237,7 @@ async function displayGeneratedTeams(teamOnePlayersArr, teamTwoPlayersArr, teamO
     }
 }
 
-function assignCivsToPlayers(playerNamesArr, playerCivsArr, playerColorsArr, applyPlayerColorArg){
+function assignCivsToPlayers(playerNamesArr, playerCivsArr, playerColorsArr, mapNamesArr, applyRandomMapArg, displayPlayerRatingArg, applyPlayerColorArg){
     
     let teamOnePlayers = playerNamesArr.slice(0, playerNamesArr.length/2);
     let teamTwoPlayers = playerNamesArr.slice(playerNamesArr.length/2, playerNamesArr.length)
@@ -246,15 +252,15 @@ function assignCivsToPlayers(playerNamesArr, playerCivsArr, playerColorsArr, app
       let teamTwoColors = playerColorsArr.slice(playerCivsArr.length/2, playerCivsArr.length);
       //teamTwoColors = shuffleArray(teamTwoColors);
 
-      displayGeneratedTeams(teamOnePlayers, teamTwoPlayers, teamOneCivs, teamTwoCivs, brokenLinkCivs, teamOneColors, teamTwoColors);
+      displayGeneratedTeams(teamOnePlayers, teamTwoPlayers, teamOneCivs, teamTwoCivs, brokenLinkCivs, mapNamesArr, applyRandomMapArg, displayPlayerRatingArg, teamOneColors, teamTwoColors);
     }
     else if(!applyPlayerColorArg){
 
-        displayGeneratedTeams(teamOnePlayers, teamTwoPlayers, brokenLinkCivs, teamOneCivs, teamTwoCivs);
+        displayGeneratedTeams(teamOnePlayers, teamTwoPlayers, teamOneCivs, teamTwoCivs, brokenLinkCivs, mapNamesArr, applyRandomMapArg, displayPlayerRatingArg);
     }
 }
 
-function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPlayerDepth, allCivsArr, dlcCivsArr, greatCivsArr, restCivsArr, greatCivsWithDlcArr, restCivsWithDlcArr, dlcOwnersArr, ...playerNamesArgs){
+function generateTeamCivs(playerCount, applyRandomMap, applyPlayerRating, applyPlayerColor, applyCivBalance, swapPlayerDepth, allCivsArr, dlcCivsArr, greatCivsArr, restCivsArr, greatCivsWithDlcArr, restCivsWithDlcArr, dlcOwnersArr, mapPoolArr, ...playerNamesArgs){
      
     let usedCivs = [];
     let greatCivCount = 0;
@@ -277,6 +283,9 @@ function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPl
     allCivsWithDlc = shuffleArray(allCivsWithDlc);
     greatCivsWithDlc = shuffleArray(greatCivsWithDlc);
     restCivsWithDlc = shuffleArray(restCivsWithDlc);
+
+    let mapNames = mapPoolArr;
+    mapNames = shuffleArray(mapNames);
 
     playerNames = swapPlayers(playerNames, swapPlayerDepth);
     
@@ -338,8 +347,9 @@ function generateTeamCivs(playerCount, applyPlayerColor, applyCivBalance, swapPl
              else usedCivs.push(playerCivs[m]);
         }
     }
-    assignCivsToPlayers(playerNames, playerCivs, playerColors, applyPlayerColor);
+    assignCivsToPlayers(playerNames, playerCivs, playerColors, mapNames, applyRandomMap, applyPlayerRating, applyPlayerColor);
 }
+
 
 function getInputsFromUser(){
 
@@ -347,14 +357,14 @@ function getInputsFromUser(){
         let teamTwoNames = document.getElementById('teamTwoNames').value.trim();
 
         if(teamOneNames.includes(',') && teamTwoNames.includes(',')){
-            teamOneNames = teamOneNames.split(',');
-            teamTwoNames = teamTwoNames.split(',');
+            teamOneNames = teamOneNames.split(',').map(elem => elem.trim());
+            teamTwoNames = teamTwoNames.split(',').map(elem => elem.trim());
         }
         else if(teamOneNames.includes(' ') && teamTwoNames.includes(' ')){
             teamOneNames = teamOneNames.split(' ');
             teamTwoNames = teamTwoNames.split(' ');
         }
-        else if(typeof(teamOneNames)==="string" && typeof(teamTwoNames)==="string" && teamOneNames.length < 16 &&  teamOneNames.length < 16){
+        else if(typeof(teamOneNames)==="string" && typeof(teamTwoNames)==="string" && teamOneNames.length < 16 &&  teamTwoNames.length < 16){
             teamOneNames = teamOneNames.split();
             teamTwoNames = teamTwoNames.split();
         }
@@ -379,17 +389,41 @@ function getInputsFromUser(){
             }
         }
 
-        let teamColorsInput = document.getElementById('playerColors');
-        let selectedTeamColors = teamColorsInput.checked;
-        
         let civBalanceInput = document.getElementById('civBalance');
         let selectedCivBalance = civBalanceInput.checked;
+
+        let teamColorsInput = document.getElementById('playerColors');
+        let selectedTeamColors = teamColorsInput.checked;
+
+        let generateMapInput = document.getElementById('randomMap');
+        let shouldGenerateMap = generateMapInput.checked;
+
+        let playerRatingInput = document.getElementById('playerRating');
+        let displayPlayerRating = playerRatingInput.checked;
         
         if(selectedSwapDepth !== 0 && selectedSwapDepth > playerNames.length/2) selectedSwapDepth = playerNames.length/2;
         if(playerNames.length > 8) playerNames.length = 8;
 
         //console.log(playerCount, selectedTeamColors, selectedCivBalance, selectedSwapDepth, playerNames);
-        generateTeamCivs(playerCount, selectedTeamColors, selectedCivBalance, selectedSwapDepth, allCivs, dlcCivs, greatCivs, restCivs, greatCivsWithDlc, restCivsWithDlc, dlcOwners, ...playerNames);
+        generateTeamCivs(playerCount, shouldGenerateMap, displayPlayerRating, selectedTeamColors, selectedCivBalance, selectedSwapDepth, allCivs, dlcCivs, greatCivs, restCivs, greatCivsWithDlc, restCivsWithDlc, dlcOwners, mapPool, ...playerNames);
+}
+
+function addDlcOwners(){
+
+    let dlcPlayerNames = document.getElementById("dlcOwnerNames").value.trim();
+    if(dlcPlayerNames.includes(',')){
+        dlcPlayerNames = dlcPlayerNames.split(',').map(elem => elem.trim());
+    }
+    else if(dlcPlayerNames.includes(' ')){
+        dlcPlayerNames = dlcPlayerNames.split(' ');
+    }
+    else if(typeof(dlcPlayerNames)==="string" && dlcPlayerNames.length < 16){
+        dlcPlayerNames = dlcPlayerNames.split();
+    }
+    else return;
+    dlcPlayerNames.forEach(elem => {
+        if(dlcOwners.includes(elem) === false) dlcOwners.push(elem);
+    })
 }
 
 function clearGeneratedTeams(){
@@ -471,17 +505,8 @@ function displayAllCivs(allCivsArr, dlcCivsArr, brokenLinkCivsArr){
     let greatCivsWithDlc = greatCivsWithDlcArr;
     let restCivsWithDlc = restCivsWithDlcArr;
 
-    let civBalanceInput = document.getElementById('civBalance');
+    let civBalanceInput = document.getElementById('modifyGreatCivs');
     let selectedCivBalance = civBalanceInput.checked;
-
-    // <div class="form-check form-switch">
-    //   <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-    //   <label class="form-check-label" for="flexSwitchCheckDefault">Default switch checkbox input</label>
-    // </div>
-    // <div class="form-check form-switch">
-    //   <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
-    //   <label class="form-check-label" for="flexSwitchCheckChecked">Checked switch checkbox input</label>
-    // </div>
 
     for(let z=0; z<civilizationArr.length; z++){
 
@@ -499,18 +524,21 @@ function displayAllCivs(allCivsArr, dlcCivsArr, brokenLinkCivsArr){
         civName.target = "_blank";
         civName.innerHTML = `${civilizationArr[z]}`
 
+        let civOuterBox = createHtmlElement('div', 'civilization-outer-box');
+        civOuterBox.append(civIcon, civName);
+
         let civOperator = createHtmlElement('div', 'civilization-button-box');
         
         if(dlcCivs.includes(civilizationArr[z])){
-            
+                
             if(greatCivsWithDlc.includes(civilizationArr[z])) {
-                civOperator.innerHTML = `<img src="assets/img/minus-icon-outline.png" alt="Minus Icon" class="minus-icon">`;
+                civOperator.innerHTML = `<div class="form-switch form-switch-box"> <input class="form-check-input form-check-input-civ" type="checkbox" id="flexSwitchCheckChecked" checked> </div>`;
                 civOperator.addEventListener('click', function(event){
                     removeGreatCiv(civilizationArr[z]);
                     });
             }
             else if(restCivsWithDlc.includes(civilizationArr[z])){ 
-                civOperator.innerHTML = `<img src="assets/img/plus-icon-outline.png" alt="Plus Icon" class="plus-icon">`;
+                civOperator.innerHTML = `<div class="form-switch form-switch-box"> <input class="form-check-input form-check-input-civ" type="checkbox" id="flexSwitchCheckChecked"> </div>`;
                 civOperator.addEventListener('click', function(event){
                     addGreatCiv(civilizationArr[z]);
                     });
@@ -519,20 +547,20 @@ function displayAllCivs(allCivsArr, dlcCivsArr, brokenLinkCivsArr){
         else{
 
             if(greatCivs.includes(civilizationArr[z])) {
-                civOperator.innerHTML = `<img src="assets/img/minus-icon-outline.png" alt="Minus Icon" class="minus-icon">`;
+                civOperator.innerHTML = `<div class="form-switch form-switch-box"> <input class="form-check-input form-check-input-civ" type="checkbox" id="flexSwitchCheckChecked" checked> </div>`;
                 civOperator.addEventListener('click', function(event){
                     removeGreatCiv(civilizationArr[z]);
                     });
             }
             else if(restCivs.includes(civilizationArr[z])){ 
-                civOperator.innerHTML = `<img src="assets/img/plus-icon-outline.png" alt="Plus Icon" class="plus-icon">`;
+                civOperator.innerHTML = `<div class="form-switch form-switch-box"> <input class="form-check-input form-check-input-civ" type="checkbox" id="flexSwitchCheckChecked"> </div>`;
                 civOperator.addEventListener('click', function(event){
                     addGreatCiv(civilizationArr[z]);
                     });
             }
         }
         if(!selectedCivBalance) civOperator.style.display = "none";
-        civBox.append(civIcon, civName, civOperator);
+        civBox.append(civOuterBox, civOperator);
         }
     }
     displayCivilization(firstHalfCivs, leftBox, greatCivs, restCivs, greatCivsWithDlc, restCivsWithDlc);
@@ -542,8 +570,6 @@ function displayAllCivs(allCivsArr, dlcCivsArr, brokenLinkCivsArr){
 function displayAllCivsWithOperators(){
     displayAllCivs(allCivs, dlcCivs, brokenLinkCivs);
 }
-
-
 
 document.getElementById("clearButton").addEventListener('click', function(event){
     playAudio("Clear_Teams");

@@ -7,8 +7,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AoE 2 Team Civ Picker</title>
   <!-- <link rel="icon" href="http://example.com/favicon.png"> -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
     crossorigin="anonymous"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -20,6 +26,7 @@
 </head>
 
 <body>
+
   <div class="container-box">
     <div class="left-box" id="leftBox"></div>
 
@@ -66,17 +73,55 @@
 
           <div class="checkbox-box">
             <div class="form-check">
+              <label class="form-check-label" for="civBalance"> Apply Civ Balancer </label>
+              <input class="form-check-input" type="checkbox" 
+                name="applyCivBalancer" value="Yes" id="civBalance" checked>
+            </div>
+
+            <div class="form-check">
+              <label class="form-check-label" for="randomMap"> Generate Random Map </label>
+              <input class="form-check-input" type="checkbox" name="generateRandomMap" value="Yes" id="randomMap"
+                checked>
+            </div>
+          </div>
+        </div>
+
+
+        <button class="btn btn-outline-primary collapse-button" type="button" data-toggle="collapse"
+          data-target="#advancedSettings">
+          Advanced Settings
+        </button>
+
+        <div class="collapse more-options-box" id="advancedSettings">
+
+          <div class="add-dlc-Owners-box">
+            <input type="text" class="input-text-box" id="dlcOwnerNames" name="dlcOwners"
+              placeholder="Add DLC Owners: Owner 1, Owner 2">
+            <button type="button" class="btn functional-button functional-button-add" id="addButton"
+              onclick="addDlcOwners()">Add</button>
+          </div>
+
+          <div class="advanced-checkbox-box">
+            <div class="form-check advanced-checkbox">
               <label class="form-check-label" for="teamColors"> Apply Player Colors </label>
               <input class="form-check-input" type="checkbox" name="applyPlayerColors" value="Yes" id="playerColors"
                 checked>
             </div>
-            <div class="form-check">
-              <label class="form-check-label" for="civBalance"> Apply Civ Balancer </label>
+
+            <div class="form-check advanced-checkbox">
+              <label class="form-check-label" for="playerRating"> Display Player Rating </label>
+              <input class="form-check-input" type="checkbox" name="PlayerRatingValue" value="Yes" id="playerRating">
+            </div>
+
+            <div class="form-check advanced-checkbox">
+              <label class="form-check-label" for="greatCivs"> Modify Great Civs </label>
               <input class="form-check-input" type="checkbox" onchange="displayAllCivsWithOperators()"
-                name="applyCivBalancer" value="Yes" id="civBalance">
+              name="modifyGreatCivsValue" value="Yes" id="modifyGreatCivs">
             </div>
           </div>
         </div>
+
+
         <div class="button-box">
           <button type="button" class="btn functional-button" id="clearButton"
             onclick="clearGeneratedTeams()">Clear</button>

@@ -55,6 +55,27 @@ body{
     min-width: 700px;
     margin: 10px 0px;
 }
+.collapse-button{
+    margin-bottom: 10px;
+}
+.more-options-box{
+    margin-bottom: 10px;
+    max-width: 1000px;
+}
+.add-dlc-owner-box{
+    display: flex;
+    flex-flow: row;
+}
+.functional-button-add{
+    max-width: 100px;
+}
+.advanced-checkbox-box{
+    display: flex;
+    flex-flow: row;
+}
+.advanced-checkbox{
+    margin: 0px 5px;
+}
 .button-box{
     width: 600px;
     display: flex;
@@ -102,7 +123,8 @@ body{
     margin-left: 40px;
 }
 .team-two-box{
-    margin-left: 10px;
+    /* margin-left: 10px; */
+    margin-left: 40px;
 }
 .player-box{
     display: flex;
@@ -118,11 +140,14 @@ body{
 }
 .versus-box{
     align-self: center;
-    margin: 0px 80px;
 }
 .versus-icon-box{
     width: 75px;
     height: 75px;
+    margin: 0px 80px;
+}
+.map-icon-box{
+    margin: 0px 60px;
 }
 
 .left-box, .right-box{
@@ -147,7 +172,7 @@ body{
     display: flex;
     flex-flow: row;
     margin-bottom: 2.5px;
-    /* justify-content: space-between; */
+    justify-content: space-between;
 }
 .civilization-name-box{
     margin: 0px 5px;
@@ -165,9 +190,19 @@ body{
     color: #191919;
 }
 
-.civilization-button-box{
+/* .civilization-button-box{
+    
+} */
+/* .form-switch-box{
+    width: 0px;
+    padding-right: 0px;
+    margin-right: 0px;
+} */
+.form-check-input-civ{
     cursor: pointer;
-    width: 15px;
+    margin-top: 12.5px;
+    max-height: 17.5px;
+    max-width: 35px;
 }
 .plus-icon, .minus-icon{
    height: 15px;
