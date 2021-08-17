@@ -74,8 +74,8 @@
           <div class="checkbox-box">
             <div class="form-check">
               <label class="form-check-label" for="civBalance"> Apply Civ Balancer </label>
-              <input class="form-check-input" type="checkbox" 
-                name="applyCivBalancer" value="Yes" id="civBalance" checked>
+              <input class="form-check-input" type="checkbox" name="applyCivBalancer" value="Yes" id="civBalance"
+                checked>
             </div>
 
             <div class="form-check">
@@ -114,13 +114,18 @@
             </div>
 
             <div class="form-check advanced-checkbox">
-              <label class="form-check-label" for="greatCivs"> Modify Great Civs </label>
+              <label class="form-check-label" for="modifyGreatCivs"> Modify Great Civs </label>
               <input class="form-check-input" type="checkbox" onchange="displayAllCivsWithOperators()"
-              name="modifyGreatCivsValue" value="Yes" id="modifyGreatCivs">
+                name="modifyGreatCivsValue" value="Yes" id="modifyGreatCivs">
+            </div>
+
+            <div class="form-check advanced-checkbox">
+              <label class="form-check-label" for="modifyMapPool"> Modify Map Pool </label>
+              <input class="form-check-input" type="checkbox" onchange="displayAllMaps()" name="modifyMapPoolValue"
+                value="Yes" id="modifyMapPool">
             </div>
           </div>
         </div>
-
 
         <div class="button-box">
           <button type="button" class="btn functional-button" id="clearButton"
@@ -131,6 +136,7 @@
 
       </div>
       <div class="display-box" id="displayBox"></div>
+      <div class="all-maps-box" id="allMapsBox"></div>
     </div>
 
     <div class="right-box" id="rightBox"></div>

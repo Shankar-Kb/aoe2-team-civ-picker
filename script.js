@@ -12,7 +12,8 @@ let restCivsWithDlc = [...restCivs, "Sicilians"];
 //let restCivsWithDlc = [...restCivs];
 let dlcOwners = ["Maniac", "Lezionare"];
 //let dlcOwners = [];
-let mapPool = ["Acropolis", "Arabia", "Atacama", "Baltic", "Cenotes", "Coastal", "Continental", "Fortress", "Four Lakes", "Ghost Lake", "Golden Swamp", "Hideout", "Hill Fort", "Islands", "MegaRandom", "Scandinavia", "Socotra", "Valley"];
+let allMaps = ["Acropolis", "Arabia", "Atacama", "Baltic", "Cenotes", "Coastal", "Continental", "Fortress", "Four Lakes", "Ghost Lake", "Golden Swamp", "Hideout", "Hill Fort", "Islands", "MegaRandom", "Scandinavia", "Socotra", "Valley"];
+let selectedMaps = [...allMaps];
 
 let playerColors = ["Blue", "Crimson", "Lime", "Yellow", "Cyan", "Fuchsia", "Grey", "Orange"];
 let brokenLinkCivs = ["Chinese", "Japanese", "Persians", "Aztecs", "Spanish", "Incas", "Indians", "Portuguese"];
@@ -405,7 +406,7 @@ function getInputsFromUser(){
         if(playerNames.length > 8) playerNames.length = 8;
 
         //console.log(playerCount, selectedTeamColors, selectedCivBalance, selectedSwapDepth, playerNames);
-        generateTeamCivs(playerCount, shouldGenerateMap, displayPlayerRating, selectedTeamColors, selectedCivBalance, selectedSwapDepth, allCivs, dlcCivs, greatCivs, restCivs, greatCivsWithDlc, restCivsWithDlc, dlcOwners, mapPool, ...playerNames);
+        generateTeamCivs(playerCount, shouldGenerateMap, displayPlayerRating, selectedTeamColors, selectedCivBalance, selectedSwapDepth, allCivs, dlcCivs, greatCivs, restCivs, greatCivsWithDlc, restCivsWithDlc, dlcOwners, selectedMaps, ...playerNames);
 }
 
 function addDlcOwners(){
@@ -449,6 +450,7 @@ function deleteArrayElement(array, elementName){
     return array;
 }
 
+//Local Variable Dependant Function
 function addGreatCiv(civName){
     
     if(dlcCivs.includes(civName)) {
@@ -462,6 +464,7 @@ function addGreatCiv(civName){
     displayAllCivs(allCivs, dlcCivs, brokenLinkCivs);
 }
 
+//Local Variable Dependant Function
 function removeGreatCiv(civName){
 
     if(dlcCivs.includes(civName)) {
@@ -567,8 +570,58 @@ function displayAllCivs(allCivsArr, dlcCivsArr, brokenLinkCivsArr){
     displayCivilization(secondHalfCivs, rightBox, greatCivs, restCivs, greatCivsWithDlc, restCivsWithDlc);
 }
 
+//Local Variable Dependant Function
 function displayAllCivsWithOperators(){
     displayAllCivs(allCivs, dlcCivs, brokenLinkCivs);
+}
+
+function modifyMapPool(mapNamesArray, mapName){
+    
+    if(mapNamesArray.includes(mapName) === false) mapNamesArray.push(mapName);
+    else mapNamesArray = deleteArrayElement(mapNamesArray, mapName);
+    console.log(selectedMaps);
+}
+
+//Local Variable Dependant Function
+function displayAllMaps(){
+
+    function createHtmlElement(element,  className='', id=''){
+        let elem = document.createElement(element);
+        elem.setAttribute('class', className);
+        elem.setAttribute('id', id);
+        return elem;
+    }
+
+    let allMapsBox = document.getElementById('allMapsBox');
+    allMapsBox.innerHTML = '';
+
+    let modifyMapInput = document.getElementById('modifyMapPool');
+    let modifyMapInputValue = modifyMapInput.checked;
+
+    for(let z=0; z<allMaps.length; z++){
+        
+        let mapBox = createHtmlElement('div', 'map-box');
+        allMapsBox.appendChild(mapBox);
+
+        let mapIcon = createHtmlElement('img', 'map-icon-bottom');
+        mapIcon.src = `assets/img/maps/${allMaps[z]}.png`;
+        mapIcon.alt = allMaps[z];
+        
+        let mapToggle = createHtmlElement('div', 'form-switch map-toggle-box');
+        let mapToggleInput = createHtmlElement('input', 'form-check-input form-check-input-map', 'flexSwitchCheckChecked');
+        mapToggleInput.type = "checkbox";
+        
+        if(selectedMaps.includes(allMaps[z]) === true) mapToggleInput.checked = true;
+        else mapToggleInput.checked = false;
+
+        mapToggleInput.addEventListener('change', function(event){
+            modifyMapPool(selectedMaps, allMaps[z]);
+            });
+        mapToggle.appendChild(mapToggleInput);
+
+        mapBox.append(mapIcon, mapToggle);
+        if(!modifyMapInputValue) mapToggle.style.display = "none";
+        }
 }
 
 document.getElementById("clearButton").addEventListener('click', function(event){
@@ -587,3 +640,4 @@ document.body.addEventListener('keypress', function(event){
     });
   
 displayAllCivs(allCivs, dlcCivs, brokenLinkCivs);
+displayAllMaps();

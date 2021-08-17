@@ -16,7 +16,6 @@ body{
     align-items: center;
     font-size: 18px;
     font-weight: bold;
-    width: 80%;
     min-width: 1000px;
     margin: 25px auto;
     padding: 10px;
@@ -61,6 +60,9 @@ body{
 .more-options-box{
     margin-bottom: 10px;
     max-width: 1000px;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
 }
 .add-dlc-owner-box{
     display: flex;
@@ -193,7 +195,8 @@ body{
 /* .civilization-button-box{
     
 } */
-/* .form-switch-box{
+/* Unable to remove the extra space on the right side of the toggle switch
+.form-switch-box{
     width: 0px;
     padding-right: 0px;
     margin-right: 0px;
@@ -204,10 +207,31 @@ body{
     max-height: 17.5px;
     max-width: 35px;
 }
-.plus-icon, .minus-icon{
-   height: 15px;
-   width: 15px;
+.all-maps-box{
+    max-width: 1000px;
+    display: flex;
+    flex-flow: row wrap;
+    margin: 25px auto;
+    padding: 20px 10px;
+    border: 1px solid #191919;
+    border-radius: 5px;
+    box-shadow: 0px 0px 3px 0px #191919;
 }
+.map-box{
+    margin: 5px 15px;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+/* .map-icon-bottom{
+
+}
+.map-toggle-box{
+
+}
+.form-check-input-map{
+
+} */
 
 
 @media only screen and (max-width: 1900px) {
@@ -218,7 +242,7 @@ body{
         width: 450px;
     }
 }
-@media only screen and (max-width: 1500px) {
+@media only screen and (max-width: 1600px) {
     .container-box{
         justify-content: space-around;
     }
