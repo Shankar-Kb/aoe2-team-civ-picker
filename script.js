@@ -451,34 +451,40 @@ function deleteArrayElement(array, elementName){
     return array;
 }
 
-//Local Variable Dependant Function
-function addGreatCiv(civName){
-    
-    if(dlcCivs.includes(civName)) {
-        greatCivsWithDlc.push(civName);
-        restCivsWithDlc = deleteArrayElement(restCivsWithDlc, civName);
+//Local Variable & Function Dependant Function
+function modifyGreatCiv(civName, modifyType){
+
+    switch(modifyType){
+
+        case "Add":     
+            if(dlcCivs.includes(civName)) {
+            greatCivsWithDlc.push(civName);
+            restCivsWithDlc = deleteArrayElement(restCivsWithDlc, civName);
+        }
+        else {
+            greatCivs.push(civName);
+            restCivs = deleteArrayElement(restCivs, civName);
+        }
+        //console.log(greatCivs, restCivs, greatCivsWithDlc, restCivsWithDlc);
+        displayAllCivs(allCivs, dlcCivs, brokenLinkCivs);
+        break;
+
+        case "Remove": 
+            if(dlcCivs.includes(civName)) {
+            restCivsWithDlc.push(civName);
+            greatCivsWithDlc = deleteArrayElement(greatCivsWithDlc, civName);
+        }
+        else {
+            restCivs.push(civName);
+            greatCivs = deleteArrayElement(greatCivs, civName);
+        }
+        //console.log(greatCivs, restCivs, greatCivsWithDlc, restCivsWithDlc);
+        displayAllCivs(allCivs, dlcCivs, brokenLinkCivs);
+        break;
     }
-    else {
-        greatCivs.push(civName);
-        restCivs = deleteArrayElement(restCivs, civName);
-    }
-    displayAllCivs(allCivs, dlcCivs, brokenLinkCivs);
 }
 
 //Local Variable Dependant Function
-function removeGreatCiv(civName){
-
-    if(dlcCivs.includes(civName)) {
-        restCivsWithDlc.push(civName);
-        greatCivsWithDlc = deleteArrayElement(greatCivsWithDlc, civName);
-    }
-    else {
-        restCivs.push(civName);
-        greatCivs = deleteArrayElement(greatCivs, civName);
-    }
-    displayAllCivs(allCivs, dlcCivs, brokenLinkCivs);
-}
-
 function displayAllCivs(allCivsArr, dlcCivsArr, brokenLinkCivsArr){
    
     function createHtmlElement(element,  className='', id=''){
@@ -531,40 +537,50 @@ function displayAllCivs(allCivsArr, dlcCivsArr, brokenLinkCivsArr){
         let civOuterBox = createHtmlElement('div', 'civilization-outer-box');
         civOuterBox.append(civIcon, civName);
 
-        let civOperator = createHtmlElement('div', 'form-switch form-switch-box');
+        let civToggle = createHtmlElement('div', 'form-switch form-switch-box');
+        let civToggleInput = createHtmlElement('input', 'form-check-input form-check-input-civ', 'flexSwitchCheckChecked');
+        civToggleInput.type = "checkbox";
+        civToggle.appendChild(civToggleInput);
         
         if(dlcCivs.includes(civilizationArr[z])){
                 
-            if(greatCivsWithDlc.includes(civilizationArr[z])) {
-                civOperator.innerHTML = `<input class="form-check-input form-check-input-civ" type="checkbox" id="flexSwitchCheckChecked" checked>`;
-                civOperator.addEventListener('click', function(event){
-                    removeGreatCiv(civilizationArr[z]);
-                    });
+            if(greatCivsWithDlc.includes(civilizationArr[z])){    
+                    civToggleInput.checked = true;
+                    civToggleInput.addEventListener("change", function(event){
+                        modifyGreatCiv(civilizationArr[z], "Remove");
+                        });
             }
-            else if(restCivsWithDlc.includes(civilizationArr[z])){ 
-                civOperator.innerHTML = `<input class="form-check-input form-check-input-civ" type="checkbox" id="flexSwitchCheckChecked">`;
-                civOperator.addEventListener('click', function(event){
-                    addGreatCiv(civilizationArr[z]);
+            else{
+                civToggleInput.checked = false;
+                civToggleInput.addEventListener("change", function(event){
+                    modifyGreatCiv(civilizationArr[z], "Add");
                     });
             }
         }
+        else if(restCivsWithDlc.includes(civilizationArr[z])){ 
+             civToggleInput.checked = false;
+             civToggleInput.addEventListener("change", function(event){
+                 modifyGreatCiv(civilizationArr[z], "Add");
+                 });
+        }
+        
         else{
 
             if(greatCivs.includes(civilizationArr[z])) {
-                civOperator.innerHTML = `<input class="form-check-input form-check-input-civ" type="checkbox" id="flexSwitchCheckChecked" checked>`;
-                civOperator.addEventListener('click', function(event){
-                    removeGreatCiv(civilizationArr[z]);
+                civToggleInput.checked = true;
+                civToggleInput.addEventListener("change", function(event){
+                    modifyGreatCiv(civilizationArr[z], "Remove");
                     });
             }
             else if(restCivs.includes(civilizationArr[z])){ 
-                civOperator.innerHTML = `<input class="form-check-input form-check-input-civ" type="checkbox" id="flexSwitchCheckChecked">`;
-                civOperator.addEventListener('click', function(event){
-                    addGreatCiv(civilizationArr[z]);
+                civToggleInput.checked = false;
+                civToggleInput.addEventListener("change", function(event){
+                    modifyGreatCiv(civilizationArr[z], "Add");
                     });
             }
         }
-        if(!selectedCivBalance) civOperator.style.display = "none";
-        civBox.append(civOuterBox, civOperator);
+        if(!selectedCivBalance) civToggle.style.display = "none";
+        civBox.append(civOuterBox, civToggle);
         }
     }
     displayCivilization(firstHalfCivs, leftBox, greatCivs, restCivs, greatCivsWithDlc, restCivsWithDlc);
@@ -572,10 +588,11 @@ function displayAllCivs(allCivsArr, dlcCivsArr, brokenLinkCivsArr){
 }
 
 //Local Variable Dependant Function
-function displayAllCivsWithOperators(){
+function displayAllCivsWithToggle(){
     displayAllCivs(allCivs, dlcCivs, brokenLinkCivs);
 }
 
+//Local Function Dependant Function
 function modifyMapPool(mapNamesArray, mapName){
     
     if(mapNamesArray.includes(mapName) === false) mapNamesArray.push(mapName);
@@ -614,7 +631,7 @@ function displayAllMaps(){
         if(activeMaps.includes(allMaps[z]) === true) mapToggleInput.checked = true;
         else mapToggleInput.checked = false;
 
-        mapToggleInput.addEventListener('change', function(event){
+        mapToggleInput.addEventListener("change", function(event){
             modifyMapPool(activeMaps, allMaps[z]);
             });
         mapToggle.appendChild(mapToggleInput);
