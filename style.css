@@ -191,21 +191,16 @@ body{
     font-weight: bold;
     color: #191919;
 }
-
-/* .civilization-button-box{
-    
-} */
-/* Unable to remove the extra space on the right side of the toggle switch
 .form-switch-box{
-    width: 0px;
-    padding-right: 0px;
-    margin-right: 0px;
-} */
+    padding-left: 0px;
+}
 .form-check-input-civ{
     cursor: pointer;
-    margin-top: 12.5px;
     max-height: 17.5px;
     max-width: 35px;
+    margin-top: 12.5px;
+    margin-left: 5px !important;
+    margin-right: 5px;
 }
 .all-maps-box{
     max-width: 1000px;

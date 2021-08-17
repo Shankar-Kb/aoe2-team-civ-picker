@@ -530,18 +530,18 @@ function displayAllCivs(allCivsArr, dlcCivsArr, brokenLinkCivsArr){
         let civOuterBox = createHtmlElement('div', 'civilization-outer-box');
         civOuterBox.append(civIcon, civName);
 
-        let civOperator = createHtmlElement('div', 'civilization-button-box');
+        let civOperator = createHtmlElement('div', 'form-switch form-switch-box');
         
         if(dlcCivs.includes(civilizationArr[z])){
                 
             if(greatCivsWithDlc.includes(civilizationArr[z])) {
-                civOperator.innerHTML = `<div class="form-switch form-switch-box"> <input class="form-check-input form-check-input-civ" type="checkbox" id="flexSwitchCheckChecked" checked> </div>`;
+                civOperator.innerHTML = `<input class="form-check-input form-check-input-civ" type="checkbox" id="flexSwitchCheckChecked" checked>`;
                 civOperator.addEventListener('click', function(event){
                     removeGreatCiv(civilizationArr[z]);
                     });
             }
             else if(restCivsWithDlc.includes(civilizationArr[z])){ 
-                civOperator.innerHTML = `<div class="form-switch form-switch-box"> <input class="form-check-input form-check-input-civ" type="checkbox" id="flexSwitchCheckChecked"> </div>`;
+                civOperator.innerHTML = `<input class="form-check-input form-check-input-civ" type="checkbox" id="flexSwitchCheckChecked">`;
                 civOperator.addEventListener('click', function(event){
                     addGreatCiv(civilizationArr[z]);
                     });
@@ -550,13 +550,13 @@ function displayAllCivs(allCivsArr, dlcCivsArr, brokenLinkCivsArr){
         else{
 
             if(greatCivs.includes(civilizationArr[z])) {
-                civOperator.innerHTML = `<div class="form-switch form-switch-box"> <input class="form-check-input form-check-input-civ" type="checkbox" id="flexSwitchCheckChecked" checked> </div>`;
+                civOperator.innerHTML = `<input class="form-check-input form-check-input-civ" type="checkbox" id="flexSwitchCheckChecked" checked>`;
                 civOperator.addEventListener('click', function(event){
                     removeGreatCiv(civilizationArr[z]);
                     });
             }
             else if(restCivs.includes(civilizationArr[z])){ 
-                civOperator.innerHTML = `<div class="form-switch form-switch-box"> <input class="form-check-input form-check-input-civ" type="checkbox" id="flexSwitchCheckChecked"> </div>`;
+                civOperator.innerHTML = `<input class="form-check-input form-check-input-civ" type="checkbox" id="flexSwitchCheckChecked">`;
                 civOperator.addEventListener('click', function(event){
                     addGreatCiv(civilizationArr[z]);
                     });
