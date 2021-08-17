@@ -12,8 +12,9 @@ let restCivsWithDlc = [...restCivs, "Sicilians"];
 //let restCivsWithDlc = [...restCivs];
 let dlcOwners = ["Maniac", "Lezionare"];
 //let dlcOwners = [];
-let allMaps = ["Acropolis", "Arabia", "Atacama", "Baltic", "Cenotes", "Coastal", "Continental", "Fortress", "Four Lakes", "Ghost Lake", "Golden Swamp", "Hideout", "Hill Fort", "Islands", "MegaRandom", "Scandinavia", "Socotra", "Valley"];
-let selectedMaps = [...allMaps];
+let allMaps = ["Acropolis", "Arabia", "Arena", "Atacama", "Black Forest", "Cenotes", "Coastal", "Continental", "Four Lakes", "Ghost Lake", "Gold Rush", "Golden Pit", "Golden Swamp", "Hideout", "Hill Fort", "Islands", "Highland", "Meadow", "Mediterranean", "MegaRandom", "Scandinavia", "Socotra", "Team Islands", "Valley"];
+let removedMaps = [ "Baltic", "Fortress"];
+let activeMaps = ["Acropolis", "Arabia", "Atacama", "Cenotes", "Coastal", "Continental", "Four Lakes", "Ghost Lake", "Golden Swamp", "Hideout", "Hill Fort", "Islands", "MegaRandom", "Scandinavia", "Socotra", "Valley"];
 
 let playerColors = ["Blue", "Crimson", "Lime", "Yellow", "Cyan", "Fuchsia", "Grey", "Orange"];
 let brokenLinkCivs = ["Chinese", "Japanese", "Persians", "Aztecs", "Spanish", "Incas", "Indians", "Portuguese"];
@@ -406,7 +407,7 @@ function getInputsFromUser(){
         if(playerNames.length > 8) playerNames.length = 8;
 
         //console.log(playerCount, selectedTeamColors, selectedCivBalance, selectedSwapDepth, playerNames);
-        generateTeamCivs(playerCount, shouldGenerateMap, displayPlayerRating, selectedTeamColors, selectedCivBalance, selectedSwapDepth, allCivs, dlcCivs, greatCivs, restCivs, greatCivsWithDlc, restCivsWithDlc, dlcOwners, selectedMaps, ...playerNames);
+        generateTeamCivs(playerCount, shouldGenerateMap, displayPlayerRating, selectedTeamColors, selectedCivBalance, selectedSwapDepth, allCivs, dlcCivs, greatCivs, restCivs, greatCivsWithDlc, restCivsWithDlc, dlcOwners, activeMaps, ...playerNames);
 }
 
 function addDlcOwners(){
@@ -579,7 +580,6 @@ function modifyMapPool(mapNamesArray, mapName){
     
     if(mapNamesArray.includes(mapName) === false) mapNamesArray.push(mapName);
     else mapNamesArray = deleteArrayElement(mapNamesArray, mapName);
-    console.log(selectedMaps);
 }
 
 //Local Variable Dependant Function
@@ -611,11 +611,11 @@ function displayAllMaps(){
         let mapToggleInput = createHtmlElement('input', 'form-check-input form-check-input-map', 'flexSwitchCheckChecked');
         mapToggleInput.type = "checkbox";
         
-        if(selectedMaps.includes(allMaps[z]) === true) mapToggleInput.checked = true;
+        if(activeMaps.includes(allMaps[z]) === true) mapToggleInput.checked = true;
         else mapToggleInput.checked = false;
 
         mapToggleInput.addEventListener('change', function(event){
-            modifyMapPool(selectedMaps, allMaps[z]);
+            modifyMapPool(activeMaps, allMaps[z]);
             });
         mapToggle.appendChild(mapToggleInput);
 
