@@ -37,12 +37,12 @@
           <div class="team-one-text-box">
             <label for="teamOneNames">Team One:</label>
             <input type="text" class="input-text-box" id="teamOneNames" name="teamOne"
-              placeholder="Player-1 Player-2 Player-3 Player-4">
+              placeholder="Player 1, Player 2, Player 3, Player 4">
           </div>
           <div class="team-two-text-box">
             <label for="teamTwoNames">Team Two:</label>
             <input type="text" class="input-text-box" id="teamTwoNames" name="teamTwo"
-              placeholder="Player-5 Player-6 Player-7 Player-8">
+              placeholder="Player 5, Player 6, Player 7, Player 8">
           </div>
         </div>
 
@@ -94,8 +94,8 @@
 
         <div class="collapse more-options-box" id="advancedSettings">
 
-          <div class="add-dlc-Owners-box">
-            <input type="text" class="input-text-box" id="dlcOwnerNames" name="dlcOwners"
+          <div class="add-dlc-owners-box">
+            <input type="text" class="input-text-box add-dlc-owner-input-text-box" id="dlcOwnerNames" name="dlcOwners"
               placeholder="Add DLC Owners: Owner 1, Owner 2">
             <button type="button" class="btn functional-button functional-button-add" id="addButton"
               onclick="addDlcOwners()">Add</button>
@@ -103,7 +103,7 @@
 
           <div class="advanced-checkbox-box">
             <div class="form-check advanced-checkbox">
-              <label class="form-check-label" for="teamColors"> Apply Player Colors </label>
+              <label class="form-check-label" for="playerColors"> Apply Player Colors </label>
               <input class="form-check-input" type="checkbox" name="applyPlayerColors" value="Yes" id="playerColors"
                 checked>
             </div>
@@ -121,7 +121,7 @@
 
             <div class="form-check advanced-checkbox">
               <label class="form-check-label" for="modifyMapPool"> Modify Map Pool </label>
-              <input class="form-check-input" type="checkbox" onchange="displayAllMaps()" name="modifyMapPoolValue"
+              <input class="form-check-input" type="checkbox" onchange="displayAllMapsWithToggle()" name="modifyMapPoolValue"
                 value="Yes" id="modifyMapPool">
             </div>
           </div>
