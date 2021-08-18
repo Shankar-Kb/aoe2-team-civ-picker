@@ -147,7 +147,10 @@ async function displayGeneratedTeams(teamOnePlayersArr, teamTwoPlayersArr, teamO
     let teamTwoBox = createHtmlElement('div', 'team-two-box', 'teamTwoBox');
     matchBox.append(teamOneBox, versusBox, teamTwoBox);
 
+    if(mapNamesArr.length === 0) shouldGenerateMap = false;
+
     if(shouldGenerateMap){
+
         mapName = mapNamesArr[Math.floor(Math.random()*mapNamesArr.length)];
 
         let mapLinkBox = createHtmlElement('a', 'map-link-box');
@@ -228,7 +231,7 @@ async function displayGeneratedTeams(teamOnePlayersArr, teamTwoPlayersArr, teamO
     for (let element of civNamesArrSound) {
         if (element.getAttribute('listener') !== 'true'){
             element.setAttribute('listener', 'true');
-            element.addEventListener('click', function(event){
+            element.addEventListener('click', function(){
                 playAudio("Open_Civ");
             });
         }
@@ -237,7 +240,7 @@ async function displayGeneratedTeams(teamOnePlayersArr, teamTwoPlayersArr, teamO
     for (let element of civIconArrSound) {
         if (element.getAttribute('listener') !== 'true'){
             element.setAttribute('listener', 'true');
-            element.addEventListener('click', function(event){
+            element.addEventListener('click', function(){
                 playAudio("Open_Civ");
             });
         }
@@ -555,20 +558,20 @@ function displayAllCivs(allCivsArr, dlcCivsArr, brokenLinkCivsArr){
                 
             if(greatCivsWithDlc.includes(civilizationArr[z])){    
                     civToggleInput.checked = true;
-                    civToggleInput.addEventListener("change", function(event){
+                    civToggleInput.addEventListener("change", function(){
                         modifyGreatCiv(civilizationArr[z], "Remove");
                         });
             }
             else{
                 civToggleInput.checked = false;
-                civToggleInput.addEventListener("change", function(event){
+                civToggleInput.addEventListener("change", function(){
                     modifyGreatCiv(civilizationArr[z], "Add");
                     });
             }
         }
         else if(restCivsWithDlc.includes(civilizationArr[z])){ 
              civToggleInput.checked = false;
-             civToggleInput.addEventListener("change", function(event){
+             civToggleInput.addEventListener("change", function(){
                  modifyGreatCiv(civilizationArr[z], "Add");
                  });
         }
@@ -577,13 +580,13 @@ function displayAllCivs(allCivsArr, dlcCivsArr, brokenLinkCivsArr){
 
             if(greatCivs.includes(civilizationArr[z])) {
                 civToggleInput.checked = true;
-                civToggleInput.addEventListener("change", function(event){
+                civToggleInput.addEventListener("change", function(){
                     modifyGreatCiv(civilizationArr[z], "Remove");
                     });
             }
             else if(restCivs.includes(civilizationArr[z])){ 
                 civToggleInput.checked = false;
-                civToggleInput.addEventListener("change", function(event){
+                civToggleInput.addEventListener("change", function(){
                     modifyGreatCiv(civilizationArr[z], "Add");
                     });
             }
@@ -601,12 +604,12 @@ function displayAllCivsWithToggle(){
     displayAllCivs(allCivs, dlcCivs, brokenLinkCivs);
 }
 
-//Local Variable(allMaps, brokenLinkMaps) Dependant Function
+//Local Variable(allMaps, activeMaps, brokenLinkMaps) Dependant Function
 function displayAllMapsWithToggle(){
-    displayAllMaps(allMaps, brokenLinkMaps);
+    displayAllMaps(allMaps, activeMaps, brokenLinkMaps);
 }
 
-function modifyMapPool(mapNamesArray, mapName){
+function modifyMapPool(mapNamesArr, mapName){
 
     function deleteArrayElement(array, elementName){
 
@@ -618,11 +621,30 @@ function modifyMapPool(mapNamesArray, mapName){
         return array;
     }
     
-    if(mapNamesArray.includes(mapName) === false) mapNamesArray.push(mapName);
-    else mapNamesArray = deleteArrayElement(mapNamesArray, mapName);
+    if(mapNamesArr.includes(mapName) === false) mapNamesArr.push(mapName);
+    else mapNamesArr = deleteArrayElement(mapNamesArr, mapName);
 }
 
-function displayAllMaps(allMapsArr, brokenLinkMapsArr){
+
+//Variable(allMaps, activeMaps, brokenLinkMaps) Dependant Function
+function modifymapPoolToggle(actionType){
+
+    switch (actionType) {
+
+        case "Disable_All":
+            activeMaps.splice(0, activeMaps.length);
+            displayAllMaps(allMaps, activeMaps, brokenLinkMaps);
+            break;
+
+        case "Enable_All":
+            activeMaps.splice(0, activeMaps.length);
+            activeMaps = [...allMaps];
+            displayAllMaps(allMaps, activeMaps, brokenLinkMaps);
+            break;
+    }
+}
+
+function displayAllMaps(allMapsArr, activeMapsArr, brokenLinkMapsArr){
 
     function createHtmlElement(element,  className='', id=''){
         let elem = document.createElement(element);
@@ -630,9 +652,27 @@ function displayAllMaps(allMapsArr, brokenLinkMapsArr){
         elem.setAttribute('id', id);
         return elem;
     }
+     
+    allMapsArr = allMapsArr.sort();
 
     let allMapsBox = document.getElementById('allMapsBox');
     allMapsBox.innerHTML = '';
+
+    let buttonBox = createHtmlElement('div', 'input-group bottom-map-button-box');
+    let disableAllButton = createHtmlElement('button', 'btn btn-outline-danger bottom-map-button');
+    let enableAllButton = createHtmlElement('button', 'btn btn-outline-success bottom-map-button');
+    disableAllButton.innerHTML = 'Disable All';
+    enableAllButton.innerHTML = 'Enable All';
+
+    disableAllButton.addEventListener("click", function(){
+        modifymapPoolToggle("Disable_All");
+        });
+    enableAllButton.addEventListener("click", function(){
+        modifymapPoolToggle("Enable_All");
+        });
+
+    buttonBox.append(disableAllButton, enableAllButton);
+    allMapsBox.appendChild(buttonBox);
 
     let modifyMapInput = document.getElementById('modifyMapPool');
     let modifyMapInputValue = modifyMapInput.checked;
@@ -657,11 +697,11 @@ function displayAllMaps(allMapsArr, brokenLinkMapsArr){
         let mapToggleInput = createHtmlElement('input', 'form-check-input form-check-input-map', 'flexSwitchCheckChecked');
         mapToggleInput.type = "checkbox";
         
-        if(activeMaps.includes(allMapsArr[z]) === true) mapToggleInput.checked = true;
+        if(activeMapsArr.includes(allMapsArr[z]) === true) mapToggleInput.checked = true;
         else mapToggleInput.checked = false;
 
-        mapToggleInput.addEventListener("change", function(event){
-            modifyMapPool(activeMaps, allMapsArr[z]);
+        mapToggleInput.addEventListener("change", function(){
+            modifyMapPool(activeMapsArr, allMapsArr[z]);
             });
         mapToggleBox.appendChild(mapToggleInput);
 
@@ -670,15 +710,15 @@ function displayAllMaps(allMapsArr, brokenLinkMapsArr){
         }
 }
 
-document.getElementById("clearButton").addEventListener('click', function(event){
+document.getElementById("clearButton").addEventListener('click', function(){
     playAudio("Clear_Teams");
     });
 
-document.getElementById("generateButton").addEventListener('click', function(event){
+document.getElementById("generateButton").addEventListener('click', function(){
     playAudio("Generate_Teams");
     });
 
-document.body.addEventListener('keypress', function(event){
+document.body.addEventListener('keypress', function(){
     if(window.event.keyCode === 13) {
         playAudio("Generate_Teams");
         getInputsFromUser();
@@ -686,4 +726,4 @@ document.body.addEventListener('keypress', function(event){
     });
   
 displayAllCivs(allCivs, dlcCivs, brokenLinkCivs);
-displayAllMaps(allMaps, brokenLinkMaps);
+displayAllMaps(allMaps, activeMaps, brokenLinkMaps);
