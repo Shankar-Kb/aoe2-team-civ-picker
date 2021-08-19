@@ -353,10 +353,8 @@ function generateTeamCivs(playerCount, applyRandomMap, applyPlayerRating, applyP
             greatCivCount--;
             j++;
           }
-          //civOrder.push("Rest");
           if(playerCount > 2 || civOrder.length === 0) civOrder.push("Rest");
       }
-      console.log(civOrder);
       civOrder = shuffleArray(civOrder);
 
       for(let k=0; k<civOrder.length; k++){
