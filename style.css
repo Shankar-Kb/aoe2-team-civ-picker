@@ -134,8 +134,10 @@ body{
     margin-left: 40px;
 }
 .team-two-box{
-    /* margin-left: 10px; */
     margin-left: 40px;
+}
+.team-two-box-display-rating{
+    margin-left: 0px;
 }
 .player-box{
     display: flex;
@@ -151,6 +153,7 @@ body{
 }
 .versus-box{
     align-self: center;
+    margin: 15px 0px;
 }
 .versus-icon-box{
     width: 75px;

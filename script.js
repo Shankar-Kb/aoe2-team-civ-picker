@@ -14,7 +14,10 @@ let dlcOwners = ["Maniac", "Lezionare"];
 //let dlcOwners = [];
 
 let allMaps = ["Acropolis", "Arabia", "Arena", "Atacama", "Black_Forest", "Cenotes", "Coastal", "Continental", "Four_Lakes", "Ghost_Lake", "Gold_Rush", "Golden_Pit", "Golden_Swamp", "Hideout", "Hill_Fort", "Islands", "Highland", "Meadow", "Mediterranean", "MegaRandom", "Scandinavia", "Socotra", "Team_Islands", "Valley"];
-let removedMaps = [ "Baltic", "Fortress"];
+let removedMaps = ["Archipelago(Water)", "Baltic(Water)", "Coastal_Forest(Hybrid)", "Crater_Lake(Water)", "Fortress(Land)", "Lombardia(Land)", "Migration(Water)", "Sandbank(Hybrid)"];
+let landMaps = ["Acropolis", "Arabia", "Arena", "Atacama", "Black_Forest", "Cenotes", "Four_Lakes", "Ghost_Lake", "Gold_Rush", "Golden_Pit", "Hideout", "Hill_Fort", "Meadow", "MegaRandom", "Socotra", "Valley"];
+let hybridMaps = ["Coastal", "Continental", "Golden_Swamp", "Highland", "Mediterranean", "MegaRandom", "Scandinavia"];
+let waterMaps = ["Islands", "Team_Islands"];
 let activeMaps = ["Acropolis", "Arabia", "Atacama", "Cenotes", "Coastal", "Continental", "Four_Lakes", "Ghost_Lake", "Golden_Swamp", "Hideout", "Hill_Fort", "Islands", "MegaRandom", "Scandinavia", "Socotra", "Valley"];
 let brokenLinkMaps = ["Acropolis", "Fortress", "Hill_Fort"];
 let newMapLink = "https://ageofempires.fandom.com/wiki/MapName_(map)"
@@ -59,7 +62,17 @@ function shuffleArray(array) {
     }
     return array;
     //Old Version - array.sort(() => Math.random() - 0.5);
-  }
+ }
+
+function deleteArrayElement(array, elementName){
+
+    for( let i = 0; i < array.length; i++){                     
+        if (array[i] === elementName) {
+            array.splice(i, 1);
+        }
+    }
+    return array;
+ }
 
 function getRandomCiv(civPool, allCivsArr, greatCivsArr, restCivsArr, allCivsWithDlcArr, greatCivsWithDlcArr, restCivsWithDlcArr){
     
@@ -143,9 +156,13 @@ async function displayGeneratedTeams(teamOnePlayersArr, teamTwoPlayersArr, teamO
     displayBox.appendChild(matchBox);
 
     //console.log(teamOnePlayersArr, teamOneCivsArr, teamOneColorsArr, teamTwoPlayersArr, teamTwoCivsArr, teamTwoColorsArr);
+
     let teamOneBox = createHtmlElement('div', 'team-one-box', 'teamOneBox');
     let versusBox = createHtmlElement('div', 'versus-box', 'versusBox');
-    let teamTwoBox = createHtmlElement('div', 'team-two-box', 'teamTwoBox');
+    let teamTwoBox;
+    if(!ShouldDisplayRating) teamTwoBox = createHtmlElement('div', 'team-two-box', 'teamTwoBox');
+    else teamTwoBox = createHtmlElement('div', 'team-two-box team-two-box-display-rating', 'teamTwoBox');
+
     matchBox.append(teamOneBox, versusBox, teamTwoBox);
 
     if(mapNamesArr.length === 0) shouldGenerateMap = false;
@@ -465,16 +482,6 @@ function playAudio(fileName){
 //Local Variable(greatCivs, restCivs, greatCivsWithDlc, restCivsWithDlc) & Function(displayAllCivs) Dependant Function
 function modifyGreatCiv(civName, modifyType){
 
-    function deleteArrayElement(array, elementName){
-
-        for( let i = 0; i < array.length; i++){                     
-            if (array[i] === elementName) {
-                array.splice(i, 1);
-            }
-        }
-        return array;
-    }
-
     switch(modifyType){
 
         case "Add":     
@@ -619,16 +626,6 @@ function displayAllMapsWithToggle(){
 
 function modifyMapPool(mapNamesArr, mapName){
 
-    function deleteArrayElement(array, elementName){
-
-        for( let i = 0; i < array.length; i++){                     
-            if (array[i] === elementName) {
-                array.splice(i, 1);
-            }
-        }
-        return array;
-    }
-    
     if(mapNamesArr.includes(mapName) === false) mapNamesArr.push(mapName);
     else mapNamesArr = deleteArrayElement(mapNamesArr, mapName);
 }
@@ -649,6 +646,27 @@ function modifymapPoolToggle(actionType){
             activeMaps = [...allMaps];
             displayAllMaps(allMaps, activeMaps, brokenLinkMaps);
             break;
+            
+        case "Land_Maps":
+            activeMaps.splice(0, activeMaps.length);
+            activeMaps = [...landMaps];
+            displayAllMaps(allMaps, activeMaps, brokenLinkMaps);
+            break;
+
+        case "Hybrid_Maps":
+            activeMaps.splice(0, activeMaps.length);
+            activeMaps = [...hybridMaps];
+            displayAllMaps(allMaps, activeMaps, brokenLinkMaps);
+            break;
+
+        case "Water_Maps":
+            activeMaps.splice(0, activeMaps.length);
+            activeMaps = [...waterMaps];
+            displayAllMaps(allMaps, activeMaps, brokenLinkMaps);
+            break;
+
+                
+        
     }
 }
 
@@ -669,8 +687,15 @@ function displayAllMaps(allMapsArr, activeMapsArr, brokenLinkMapsArr){
     let buttonBox = createHtmlElement('div', 'input-group bottom-map-button-box');
     let disableAllButton = createHtmlElement('button', 'btn btn-outline-danger bottom-map-button');
     let enableAllButton = createHtmlElement('button', 'btn btn-outline-success bottom-map-button');
+    let landMapsButton = createHtmlElement('button', 'btn btn-outline-dark bottom-map-button');
+    let hybridMapsButton = createHtmlElement('button', 'btn btn-outline-dark bottom-map-button');
+    let waterMapsButton = createHtmlElement('button', 'btn btn-outline-dark bottom-map-button');
+
     disableAllButton.innerHTML = 'Disable All';
     enableAllButton.innerHTML = 'Enable All';
+    landMapsButton.innerHTML = 'Land';
+    hybridMapsButton.innerHTML = 'Hybrid';
+    waterMapsButton.innerHTML = 'Water';
 
     disableAllButton.addEventListener("click", function(){
         modifymapPoolToggle("Disable_All");
@@ -678,8 +703,17 @@ function displayAllMaps(allMapsArr, activeMapsArr, brokenLinkMapsArr){
     enableAllButton.addEventListener("click", function(){
         modifymapPoolToggle("Enable_All");
         });
+    landMapsButton.addEventListener("click", function(){
+        modifymapPoolToggle("Land_Maps");
+        });
+    hybridMapsButton.addEventListener("click", function(){
+        modifymapPoolToggle("Hybrid_Maps");
+        });
+    waterMapsButton.addEventListener("click", function(){
+        modifymapPoolToggle("Water_Maps");
+        });
 
-    buttonBox.append(disableAllButton, enableAllButton);
+    buttonBox.append(disableAllButton, landMapsButton, hybridMapsButton, waterMapsButton, enableAllButton);
     allMapsBox.appendChild(buttonBox);
 
     let modifyMapInput = document.getElementById('modifyMapPool');
