@@ -59,7 +59,7 @@ body{
     font-weight: bold;
 }
 .more-options-box{
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     max-width: 1000px;
     display: flex;
     flex-flow: column;
@@ -78,6 +78,7 @@ body{
 .advanced-checkbox-box{
     display: flex;
     flex-flow: row;
+    margin-top: 5px;
 }
 .advanced-checkbox{
     margin: 0px 5px;
@@ -215,7 +216,7 @@ body{
     display: flex;
     flex-flow: row wrap;
     margin: 25px auto;
-    padding: 20px 10px;
+    padding: 10px;
     border: 1px solid #191919;
     border-radius: 5px;
     box-shadow: 0px 0px 3px 0px #191919;
@@ -225,7 +226,7 @@ body{
     display: flex;
     flex-flow: row;
     justify-content: center;
-    margin-bottom: 10px;
+    margin: 10px 0px;
 }
 .bottom-map-button{
     font-weight: bold;

@@ -113,7 +113,7 @@ async function getPlayerRating(playerName) {
         
     let leaderBoardId = 0;
     let steamId = playerSteamIds.get(playerName.toLowerCase());
-    if (steamId !== null) {
+    if (steamId !== null && steamId !== undefined) {
         const response = await fetch(`https://aoe2.net/api/player/ratinghistory?game=aoe2de&leaderboard_id=${leaderBoardId}&steam_id=${steamId}&count=1`)
             .then(resp => resp.json())
             .catch(err => console.log(err));
