@@ -324,18 +324,23 @@ function generateTeamCivs(playerCount, applyRandomMap, applyPlayerRating, applyP
     if(applyCivBalance){
 
       //Team 1 Logic
+      let halfOfTeam = (playerCount/2)-2;
+      if(playerCount === 4) halfOfTeam = (playerCount/2)-1;
+      if(playerCount === 2) halfOfTeam = playerCount/2;
+
       for(let i=0; i<playerCount/2; i++){
-          
-          if(greatCivCount >= (playerCount/2)-2) playerCivs[i] = getRandomCiv("Rest", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc);
+
+          if(greatCivCount >= halfOfTeam) playerCivs[i] = getRandomCiv("Rest", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc);
           else {
             if(checkDlcOwner(playerNames[i], dlcOwners) === true) playerCivs[i] = getRandomCiv("All-DLC", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc);
-            else playerCivs[i] = getRandomCiv("All", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc);
+            else {
+                playerCivs[i] = getRandomCiv("All", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc);
+            }
           }
-  
           if(usedCivs.includes(playerCivs[i])) i--;
           else {
              usedCivs.push(playerCivs[i]);
-             if(greatCivs.includes(playerCivs[i])) greatCivCount++;     
+             if(greatCivs.includes(playerCivs[i])) greatCivCount++;   
           }
       }
 
@@ -348,8 +353,10 @@ function generateTeamCivs(playerCount, applyRandomMap, applyPlayerRating, applyP
             greatCivCount--;
             j++;
           }
-          civOrder.push("Rest");
+          //civOrder.push("Rest");
+          if(playerCount > 2 || civOrder.length === 0) civOrder.push("Rest");
       }
+      console.log(civOrder);
       civOrder = shuffleArray(civOrder);
 
       for(let k=0; k<civOrder.length; k++){
@@ -404,6 +411,10 @@ function getInputsFromUser(){
 
         if(teamOneNames.length !== teamTwoNames.length){
             alert("Both teams must have an equal number of players!");
+            return;
+        }
+        if(teamOneNames.includes("") && teamOneNames.includes("")){
+            alert("Enter player names!")
             return;
         }
 
@@ -492,6 +503,8 @@ function modifyGreatCiv(civName, modifyType){
         else {
             greatCivs.push(civName);
             restCivs = deleteArrayElement(restCivs, civName);
+            greatCivsWithDlc.push(civName);
+            restCivsWithDlc = deleteArrayElement(restCivsWithDlc, civName);
         }
         //console.log(greatCivs, restCivs, greatCivsWithDlc, restCivsWithDlc);
         displayAllCivs(allCivs, dlcCivs, brokenLinkCivs);
@@ -505,6 +518,8 @@ function modifyGreatCiv(civName, modifyType){
         else {
             restCivs.push(civName);
             greatCivs = deleteArrayElement(greatCivs, civName);
+            restCivsWithDlc.push(civName);
+            greatCivsWithDlc = deleteArrayElement(greatCivsWithDlc, civName);
         }
         //console.log(greatCivs, restCivs, greatCivsWithDlc, restCivsWithDlc);
         displayAllCivs(allCivs, dlcCivs, brokenLinkCivs);
