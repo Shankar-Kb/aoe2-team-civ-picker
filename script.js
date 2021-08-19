@@ -12,6 +12,7 @@ let restCivsWithDlc = [...restCivs, "Sicilians"];
 //let restCivsWithDlc = [...restCivs];
 let dlcOwners = ["Maniac", "Lezionare"];
 //let dlcOwners = [];
+
 let allMaps = ["Acropolis", "Arabia", "Arena", "Atacama", "Black_Forest", "Cenotes", "Coastal", "Continental", "Four_Lakes", "Ghost_Lake", "Gold_Rush", "Golden_Pit", "Golden_Swamp", "Hideout", "Hill_Fort", "Islands", "Highland", "Meadow", "Mediterranean", "MegaRandom", "Scandinavia", "Socotra", "Team_Islands", "Valley"];
 let removedMaps = [ "Baltic", "Fortress"];
 let activeMaps = ["Acropolis", "Arabia", "Atacama", "Cenotes", "Coastal", "Continental", "Four_Lakes", "Ghost_Lake", "Golden_Swamp", "Hideout", "Hill_Fort", "Islands", "MegaRandom", "Scandinavia", "Socotra", "Valley"];
@@ -19,11 +20,11 @@ let brokenLinkMaps = ["Acropolis", "Fortress", "Hill_Fort"];
 let newMapLink = "https://ageofempires.fandom.com/wiki/MapName_(map)"
 let mapLink = "https://ageofempires.fandom.com/wiki/MapName";
 
-let playerColors = ["Blue", "Crimson", "Lime", "Yellow", "Cyan", "Fuchsia", "Grey", "Orange"];
 let brokenLinkCivs = ["Chinese", "Japanese", "Persians", "Aztecs", "Spanish", "Incas", "Indians", "Portuguese"];
 let normalCivLink = "https://ageofempires.fandom.com/wiki/CivName";
 let newCivLink = "https://ageofempires.fandom.com/wiki/CivName_(Age_of_Empires_II)";
 let civTreeLink = "https://aoe2techtree.net/#CivName";
+let playerColors = ["Blue", "Crimson", "Lime", "Yellow", "Cyan", "Fuchsia", "Grey", "Orange"];
 
 let playerSteamIds = new Map();
 playerSteamIds.set("protox", "76561198044613146");
@@ -301,6 +302,8 @@ function generateTeamCivs(playerCount, applyRandomMap, applyPlayerRating, applyP
 
     playerNames = swapPlayers(playerNames, swapPlayerDepth);
     
+    if(applyCivBalance === true && playerCount > greatCivs.length && playerCount > greatCivsWithDlc.length) applyCivBalance = false;
+
     if(applyCivBalance){
 
       //Team 1 Logic
@@ -382,7 +385,13 @@ function getInputsFromUser(){
         }
         else return;
 
+        if(teamOneNames.length !== teamTwoNames.length){
+            alert("Both teams must have an equal number of players!");
+            return;
+        }
+
         let playerNames = teamOneNames.concat(teamTwoNames);
+        let playerCount = playerNames.length;
         
         playerNames = playerNames.map(elem => elem.trim());
         playerNames = playerNames.map(elem => {    
@@ -391,7 +400,6 @@ function getInputsFromUser(){
             return stringArr.join("");
         });
         
-        let playerCount = playerNames.length;
         let swapDepthInput = document.querySelectorAll('input[name="swapDepthLevel"]');
         let selectedSwapDepth = "";
         for (const elem of swapDepthInput) {
