@@ -103,19 +103,25 @@
 
           <div class="advanced-checkbox-box">
             <div class="form-check advanced-checkbox">
-              <label class="form-check-label" for="playerColors"> Apply Player Colors </label>
+              <label class="form-check-label" for="playerColors"> Player Colors </label>
               <input class="form-check-input" type="checkbox" name="applyPlayerColors" value="Yes" id="playerColors"
                 checked>
             </div>
 
             <div class="form-check advanced-checkbox">
-              <label class="form-check-label" for="playerRating"> Display Player Rating </label>
+              <label class="form-check-label" for="playerRating"> Player Rating </label>
               <input class="form-check-input" type="checkbox" name="PlayerRatingValue" value="Yes" id="playerRating">
             </div>
 
             <div class="form-check advanced-checkbox">
-              <label class="form-check-label" for="modifyGreatCivs"> Modify Great Civs </label>
+              <label class="form-check-label" for="modifyAllCivs"> Modify All Civs </label>
               <input class="form-check-input" type="checkbox" onchange="displayAllCivsWithToggle()"
+                name="modifyAllCivsValue" value="Yes" id="modifyAllCivs">
+            </div>
+
+            <div class="form-check advanced-checkbox">
+              <label class="form-check-label" for="modifyGreatCivs"> Modify Great Civs </label>
+              <input class="form-check-input" type="checkbox" onchange="displayGreatCivsWithToggle()"
                 name="modifyGreatCivsValue" value="Yes" id="modifyGreatCivs">
             </div>
 
