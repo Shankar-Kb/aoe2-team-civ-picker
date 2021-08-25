@@ -17,12 +17,12 @@ let dlcOwners = ["Maniac", "Lezionare"];
 
 let allCivsToDisplay = [...allCivs, ...dlcCivs];
 
-let allMaps = ["Acropolis", "Arabia", "Arena", "Atacama", "Black_Forest", "Cenotes", "Coastal", "Continental", "Four_Lakes", "Ghost_Lake", "Gold_Rush", "Golden_Pit", "Golden_Swamp", "Hideout", "Hill_Fort", "Islands", "Highland", "Meadow", "Mediterranean", "MegaRandom", "Scandinavia", "Socotra", "Team_Islands", "Valley"];
-let removedMaps = ["Archipelago(Water)", "Baltic(Water)", "Coastal_Forest(Hybrid)", "Crater_Lake(Water)", "Fortress(Land)", "Lombardia(Land)", "Migration(Water)", "Sandbank(Hybrid)"];
-let landMaps = ["Acropolis", "Arabia", "Arena", "Atacama", "Black_Forest", "Cenotes", "Four_Lakes", "Ghost_Lake", "Gold_Rush", "Golden_Pit", "Hideout", "Hill_Fort", "Meadow", "MegaRandom", "Socotra", "Valley"];
-let hybridMaps = ["Coastal", "Continental", "Golden_Swamp", "Highland", "Mediterranean", "MegaRandom", "Scandinavia"];
-let waterMaps = ["Islands", "Team_Islands"];
-let activeMaps = ["Acropolis", "Arabia", "Atacama", "Cenotes", "Coastal", "Continental", "Four_Lakes", "Ghost_Lake", "Golden_Swamp", "Hideout", "Hill_Fort", "Islands", "MegaRandom", "Scandinavia", "Socotra", "Valley"];
+let allMaps = ["Acropolis", "Arabia", "Arena", "Atacama", "Baltic", "Black_Forest", "Budapest", "Cenotes", "City_of_Lakes", "Coastal", "Continental", "Crater_Lake", "Four_Lakes", "Ghost_Lake", "Gold_Rush", "Golden_Pit", "Golden_Swamp", "Greenland", "Hideout", "Hill_Fort", "Islands", "Highland", "Meadow", "Mediterranean", "MegaRandom", "Michi", "Sandbank", "Scandinavia", "Socotra", "Team_Islands"];
+let removedMaps = ["Archipelago(Water)", "Coastal_Forest(Hybrid)", "Fortress(Land)", "Lombardia(Land)", "Migration(Water)", "Pacific_Islands(Water)", "Valley(Land)"];
+let landMaps = ["Acropolis", "Arabia", "Arena", "Atacama", "Black_Forest", "Cenotes", "Ghost_Lake", "Gold_Rush", "Golden_Pit", "Hideout", "Hill_Fort", "Meadow", "MegaRandom", "Michi", "Socotra"];
+let hybridMaps = ["Budapest", "City_of_Lakes", "Coastal", "Continental", "Four_Lakes", "Golden_Swamp", "Highland", "Mediterranean", "Sandbank", "Scandinavia"];
+let waterMaps = ["Baltic", "Crater_Lake", "Greenland", "Islands", "Team_Islands"];
+let activeMaps = ["Acropolis", "Arabia", "Atacama", "Cenotes", "Coastal", "Continental", "Ghost_Lake", "Golden_Swamp", "Hideout", "Hill_Fort", "Islands", "MegaRandom", "Scandinavia", "Socotra"];
 let brokenLinkMaps = ["Acropolis", "Fortress", "Hill_Fort"];
 let newMapLink = "https://ageofempires.fandom.com/wiki/MapName_(map)"
 let mapLink = "https://ageofempires.fandom.com/wiki/MapName";
@@ -66,6 +66,13 @@ function shuffleArray(array) {
     }
     return array;
     //Old Version - array.sort(() => Math.random() - 0.5);
+}
+
+function createHtmlElement(element, className = '', id = '') {
+    let elem = document.createElement(element);
+    elem.setAttribute('class', className);
+    elem.setAttribute('id', id);
+    return elem;
 }
 
 function deleteArrayElement(array, elementName) {
@@ -143,13 +150,6 @@ async function getPlayerRating(playerName) {
 }
 
 async function displayGeneratedTeams(teamOnePlayersArr, teamTwoPlayersArr, teamOneCivsArr, teamTwoCivsArr, brokenLinkCivsArr, brokenLinkMapsArr, mapNamesArr, applyRandomMapArg, displayPlayerRatingArg, teamOneColorsArr = false, teamTwoColorsArr = false) {
-
-    function createHtmlElement(element, className = '', id = '') {
-        let elem = document.createElement(element);
-        elem.setAttribute('class', className);
-        elem.setAttribute('id', id);
-        return elem;
-    }
 
     let ShouldDisplayRating = displayPlayerRatingArg;
     let shouldGenerateMap = applyRandomMapArg;
@@ -578,13 +578,6 @@ function modifyAllCiv(civName, modifyType) {
 
 function displayAllCivs(allCivsToDisplayArr, brokenLinkCivsArr, allCivsArr, greatCivsArr, restCivsArr, allCivsWithDlcArr, greatCivsWithDlcArr, restCivsWithDlcArr, toggleType = "") {
 
-    function createHtmlElement(element, className = '', id = '') {
-        let elem = document.createElement(element);
-        elem.setAttribute('class', className);
-        elem.setAttribute('id', id);
-        return elem;
-    }
-
     let allCivsToDisplay = [...allCivsToDisplayArr];
     allCivsToDisplay = allCivsToDisplay.sort();
 
@@ -754,6 +747,8 @@ function modifyMapPool(mapNamesArr, mapName) {
 //Variable(allMaps, activeMaps, brokenLinkMaps) Dependant Function
 function modifymapPoolToggle(actionType) {
 
+    if(!document.getElementById('modifyMapPool').checked) document.getElementById('modifyMapPool').checked = true;
+
     switch (actionType) {
 
         case "DISABLE_ALL":
@@ -788,13 +783,6 @@ function modifymapPoolToggle(actionType) {
 }
 
 function displayAllMaps(allMapsArr, activeMapsArr, brokenLinkMapsArr) {
-
-    function createHtmlElement(element, className = '', id = '') {
-        let elem = document.createElement(element);
-        elem.setAttribute('class', className);
-        elem.setAttribute('id', id);
-        return elem;
-    }
 
     allMapsArr = allMapsArr.sort();
 
