@@ -162,6 +162,8 @@ body{
 }
 .map-icon-box{
     margin: 0px 60px;
+    height: 168px;
+    width: 157px;
 }
 
 .left-box, .right-box{
