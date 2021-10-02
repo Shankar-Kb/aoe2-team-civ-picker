@@ -17,12 +17,13 @@ let dlcOwners = ["Maniac", "Lezionare"];
 
 let allCivsToDisplay = [...allCivs, ...dlcCivs];
 
-let allMaps = ["Acropolis", "Arabia", "Arena", "Atacama", "Baltic", "Black_Forest", "Budapest", "Cenotes", "City_of_Lakes", "Coastal", "Continental", "Crater_Lake", "Four_Lakes", "Ghost_Lake", "Gold_Rush", "Golden_Pit", "Golden_Swamp", "Greenland", "Hideout", "Hill_Fort", "Islands", "Highland", "Meadow", "Mediterranean", "MegaRandom", "Michi", "Sandbank", "Scandinavia", "Socotra", "Team_Islands"];
-let removedMaps = ["Archipelago(Water)", "Coastal_Forest(Hybrid)", "Fortress(Land)", "Lombardia(Land)", "Migration(Water)", "Pacific_Islands(Water)", "Valley(Land)"];
-let landMaps = ["Acropolis", "Arabia", "Arena", "Atacama", "Black_Forest", "Cenotes", "Ghost_Lake", "Gold_Rush", "Golden_Pit", "Hideout", "Hill_Fort", "Meadow", "MegaRandom", "Michi", "Socotra"];
+let allMaps = ["Acropolis", "Arabia", "Arena", "Baltic", "Black_Forest", "Bog_Islands", "Budapest", "Cenotes", "City_of_Lakes", "Coastal", "Continental", "Crater_Lake", "Four_Lakes", "Ghost_Lake", "Gold_Rush", "Golden_Pit", "Golden_Swamp", "Greenland", "Hideout", "Hill_Fort", "Islands", "Highland", "Meadow", "Mediterranean", "MegaRandom", "Michi", "Sandbank", "Scandinavia", "Socotra", "Team_Islands"];
+let removedMaps = ["Acclivity(LND)", "Acropolis(LND)", "African_Clearing(LND)", "Alpine_Lakes(LND)", "Amazon_Tunnel(LND)", "Archipelago(WTR)", "Atacama(LND)", "Bogland(HYB)", "Coastal_Forest(HYB)", "Crater(LND)", "Crossroads(HYB)", "Eruption(LND)", "Fortress(LND)", "Frigid_Lake(HYB)", "Hamburger(HYB)", "Kilimanjaro(LND)", "Land_Nomad(LND)", "Lombardia(LND)", "Lowland(LND)", "Mangrove_Jungle(WTR)", "Marketplace(LND)", "Migration(WTR)", "Mongolia(LND)", "Mountain_Pass(LND)", "Mountain_Range(HYB)", "Mountain_Ridge(LND)", "Nile_Delta(WTR)", "Nomad(HYB)", "Northern_Isles(WTR)", "Oasis(LND)", "Pacific_Islands(WTR)", "Ravines(LND)", "Ring_Fortress(LND)", "Rivers(HYB)", "Runestones(LND)", "Salt_Marsh(WTR)", "Seize_the_Mountain(WTR)", "Serengeti(LND)", "Steppe(LND)", "Team_Moats(HYB)", "Valley(LND)", "Volcanic_Island(HYB)", "Water_Nomad(WTR)", "Wolf_Hill(LND)", "Yucatan(LND)"];
+
+let landMaps = ["Acropolis", "Arabia", "Arena", "Black_Forest", "Cenotes", "Ghost_Lake", "Gold_Rush", "Golden_Pit", "Hideout", "Hill_Fort", "Meadow", "Michi", "Socotra"];
 let hybridMaps = ["Budapest", "City_of_Lakes", "Coastal", "Continental", "Four_Lakes", "Golden_Swamp", "Highland", "Mediterranean", "Sandbank", "Scandinavia"];
-let waterMaps = ["Baltic", "Crater_Lake", "Greenland", "Islands", "Team_Islands"];
-let activeMaps = ["Acropolis", "Arabia", "Atacama", "Cenotes", "Coastal", "Continental", "Ghost_Lake", "Golden_Swamp", "Hideout", "Hill_Fort", "Islands", "MegaRandom", "Scandinavia", "Socotra"];
+let waterMaps = ["Baltic", "Bog_Islands", "Crater_Lake", "Greenland", "Islands", "Team_Islands"];
+let activeMaps = ["Acropolis", "Arabia", "Cenotes", "Coastal", "Continental", "Ghost_Lake", "Golden_Swamp", "Hideout", "Hill_Fort", "Islands", "MegaRandom", "Scandinavia", "Socotra"];
 let brokenLinkMaps = ["Acropolis", "Fortress", "Hill_Fort"];
 let newMapLink = "https://ageofempires.fandom.com/wiki/MapName_(map)"
 let mapLink = "https://ageofempires.fandom.com/wiki/MapName";
@@ -321,7 +322,7 @@ function generateTeamCivs(playerCount, applyRandomMap, applyPlayerRating, applyP
 
     playerNames = swapPlayers(playerNames, swapPlayerDepth);
 
-    if (applyCivBalance === true && playerCount > greatCivs.length && playerCount > greatCivsWithDlc.length) applyCivBalance = false;
+    if (applyCivBalance === true && playerCount > greatCivs.length && playerCount > greatCivsWithDlc.length && greatCivs.length >= 2 && greatCivsWithDlc.length >= 2) applyCivBalance = false;
 
     if (applyCivBalance) {
 
