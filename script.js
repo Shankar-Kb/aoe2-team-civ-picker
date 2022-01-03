@@ -8,11 +8,11 @@ let greatCivs = ["Britons", "Byzantines", "Celts", "Franks", "Goths", "Mongols",
 //let greatCivs = ["Britons", "Byzantines", "Celts", "Franks", "Goths", "Mongols", "Persians", "Teutons", "Huns", "Spanish", "Magyars", "Cumans", "Lithuanians", "Burgundians", "Bohemians", "Poles"];
 let restCivs = ["Chinese", "Japanese", "Saracens", "Turks", "Vikings", "Aztecs", "Koreans", "Mayans", "Incas", "Indians", "Italians", "Slavs", "Berbers", "Ethiopians", "Malians", "Portuguese", "Burmese", "Khmer", "Malay", "Vietnamese", "Bulgarians", "Tatars"];
 //let restCivs = ["Chinese", "Japanese", "Saracens", "Turks", "Vikings", "Aztecs", "Koreans", "Mayans", "Incas", "Indians", "Italians", "Slavs", "Berbers", "Ethiopians", "Malians", "Portuguese", "Burmese", "Khmer", "Malay", "Vietnamese", "Bulgarians", "Tatars", "Sicilians"];
-let greatCivsWithDlc = [...greatCivs, "Burgundians", "Bohemians", "Poles", "Sicilians"];
+let greatCivsWithDlc = [...greatCivs, "Burgundians", "Bohemians", "Poles"];
 //let greatCivsWithDlc = [...greatCivs];
-let restCivsWithDlc = [...restCivs];
+let restCivsWithDlc = [...restCivs, "Sicilians"];
 //let restCivsWithDlc = [...restCivs];
-let dlcOwners = ["Maniac", "Lezionare", "Firehawk", "Kronos"];
+let dlcOwners = ["Maniac", "Lezionare", "Firehawk", "Kronos", "Protox"];
 //let dlcOwners = [];
 
 let allCivsToDisplay = [...allCivs, ...dlcCivs];
@@ -22,9 +22,9 @@ let allMaps = ["Acropolis", "Amazon_Tunnel", "Arabia", "Arena", "Atacama", "Balt
 let removedMaps = ["Acclivity(LND)", "African_Clearing(LND)", "Alpine_Lakes(LND)", "Archipelago(WTR)", "Bogland(HYB)", "Budapest(LND)", "Cenotes(SPL)", "City_of_Lakes(HYB)", "Coastal_Forest(HYB)", "Crater(LND)", "Crossroads(HYB)", "Eruption(LND)", "Fortress(SPL)", "Frigid_Lake(HYB)", "Hamburger(HYB)", "Kilimanjaro(LND)", "Land_Nomad(LND)", "Lowland(LND)", "Mangrove_Jungle(WTR)", "Marketplace(LND)", "Michi(LND)", "Migration(WTR)", "Mongolia(LND)", "Mountain_Pass(LND)", "Mountain_Ridge(LND)", "Nile_Delta(WTR)", "Nomad(HYB)", "Northern_Isles(WTR)", "Oasis(LND)", "Pacific_Islands(WTR)", "Ravines(LND)", "Ring_Fortress(LND)", "Rivers(HYB)", "Salt_Marsh(WTR)", "Seize_the_Mountain(WTR)", "Serengeti(LND)", "Snake_Forest(LND)", "Steppe(LND)", "Team_Moats(HYB)", "Valley(LND)", "Volcanic_Island(HYB)", "Water_Nomad(WTR)", "Wolf_Hill(LND)", "Yucatan(LND)", "Border_Stones(LND)", "Canyons(HYB)", "Enemy_Archipelago(WTR)", "Far_Out(LND)", "Holy_Line(HYB)", "Inner_Circle(LND)", "Journey_South(HYB)", "Jungle_Islands(WTR)", "Jungle_Lanes(LND)", "Motherland(WTR)", "Snakepit(HYB)", "Sprawling_Streams(HYB)", "Swirling_River(HYB)", "The_Eye(HYB)", "Twin_Forests(HYB)", "Yin_Yang(HYB)"];
 
 let landMaps = ["Acropolis", "Amazon_Tunnel", "Arabia", "Arena", "Atacama", "Black_Forest", "Front_Line", "Ghost_Lake", "Gold_Rush", "Golden_Pit", "Hideout", "Hill_Fort", "Lombardia", "Meadow", "Open_Plains", "Runestones", "Snake_Forest", "Socotra"];
-let hybridMaps = ["Coastal", "Continental", "Four_Lakes", "Golden_Swamp", "Highland", "Mediterranean", "Mountain_Range", "Ring_of_Water", "Sandbank", "Scandinavia", "The_Eye"];
+let hybridMaps = ["Coastal", "Continental", "Four_Lakes", "Golden_Swamp", "Highland", "Mediterranean", "Mountain_Range", "Ring_of_Water", "Sandbank", "Scandinavia"];
 let waterMaps = ["Baltic", "Bog_Islands", "Crater_Lake", "Enemy_Islands", "Greenland", "Islands", "Team_Islands"];
-let activeMaps = ["Acropolis", "Arabia", "Cenotes", "Coastal", "Continental", "Ghost_Lake", "Golden_Swamp", "Hideout", "Hill_Fort", "Islands", "MegaRandom", "Scandinavia", "Socotra"];
+let activeMaps = ["Acropolis", "Arabia", "Arena", "Coastal", "Front_Line", "Ghost_Lake", "Golden_Swamp", "Hideout", "Islands", "MegaRandom", "Open_Plains", "Scandinavia", "Socotra", "Team_Islands"];
 let brokenLinkMaps = ["Acropolis", "Fortress", "Hill_Fort"];
 let newMapLink = "https://ageofempires.fandom.com/wiki/MapName_(map)"
 let mapLink = "https://ageofempires.fandom.com/wiki/MapName";
@@ -835,6 +835,7 @@ function displayAllMaps(allMapsArr, activeMapsArr, brokenLinkMapsArr) {
     let modifyMapInput = document.getElementById('modifyMapPool');
     let modifyMapInputValue = modifyMapInput.checked;
 
+
     for (let z = 0; z < allMapsArr.length; z++) {
 
         let mapBox = createHtmlElement('div', 'map-box');
@@ -842,7 +843,7 @@ function displayAllMaps(allMapsArr, activeMapsArr, brokenLinkMapsArr) {
 
         let mapLinkBox = createHtmlElement('a', 'map-link-box');
 
-        if (brokenLinkMapsArr.includes(allMapsArr[z])) mapBox.href = `https://ageofempires.fandom.com/wiki/${allMapsArr[z]}_(map)`;
+        if (brokenLinkMapsArr.includes(allMapsArr[z])) mapLinkBox.href = `https://ageofempires.fandom.com/wiki/${allMapsArr[z]}_(map)`;
         else mapLinkBox.href = `https://ageofempires.fandom.com/wiki/${allMapsArr[z]}`;
         mapLinkBox.target = "_blank";
 
