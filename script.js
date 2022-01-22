@@ -19,11 +19,11 @@ let allCivsToDisplay = [...allCivs, ...dlcCivs];
 
 let allMaps = ["Acropolis", "Amazon_Tunnel", "Arabia", "Arena", "Atacama", "Baltic", "Black_Forest", "Bog_Islands", "Coastal", "Continental", "Crater_Lake", "Enemy_Islands", "Four_Lakes", "Front_Line", "Ghost_Lake", "Gold_Rush", "Golden_Pit", "Golden_Swamp", "Greenland", "Hideout", "Hill_Fort", "Highland", "Islands", "Lombardia", "Meadow", "Mediterranean", "MegaRandom", "Mountain_Range", "Open_Plains", "Ring_of_Water", "Runestones", "Sandbank", "Scandinavia", "Socotra", "Team_Islands", "The_Eye"];
 
-let removedMaps = ["Acclivity(LND)", "African_Clearing(LND)", "Alpine_Lakes(LND)", "Archipelago(WTR)", "Bogland(HYB)", "Budapest(LND)", "Cenotes(SPL)", "City_of_Lakes(HYB)", "Coastal_Forest(HYB)", "Crater(LND)", "Crossroads(HYB)", "Eruption(LND)", "Fortress(SPL)", "Frigid_Lake(HYB)", "Hamburger(HYB)", "Kilimanjaro(LND)", "Land_Nomad(LND)", "Lowland(LND)", "Mangrove_Jungle(WTR)", "Marketplace(LND)", "Michi(LND)", "Migration(WTR)", "Mongolia(LND)", "Mountain_Pass(LND)", "Mountain_Ridge(LND)", "Nile_Delta(WTR)", "Nomad(HYB)", "Northern_Isles(WTR)", "Oasis(LND)", "Pacific_Islands(WTR)", "Ravines(LND)", "Ring_Fortress(LND)", "Rivers(HYB)", "Salt_Marsh(WTR)", "Seize_the_Mountain(WTR)", "Serengeti(LND)", "Snake_Forest(LND)", "Steppe(LND)", "Team_Moats(HYB)", "Valley(LND)", "Volcanic_Island(HYB)", "Water_Nomad(WTR)", "Wolf_Hill(LND)", "Yucatan(LND)", "Border_Stones(LND)", "Canyons(HYB)", "Enemy_Archipelago(WTR)", "Far_Out(LND)", "Holy_Line(HYB)", "Inner_Circle(LND)", "Journey_South(HYB)", "Jungle_Islands(WTR)", "Jungle_Lanes(LND)", "Motherland(WTR)", "Snakepit(HYB)", "Sprawling_Streams(HYB)", "Swirling_River(HYB)", "The_Eye(HYB)", "Twin_Forests(HYB)", "Yin_Yang(HYB)"];
+let removedMaps = ["Acclivity(LND)", "African_Clearing(LND)", "Alpine_Lakes(LND)", "Archipelago(WTR)", "Bogland(HYB)", "Budapest(LND)", "Cenotes(SPL)", "City_of_Lakes(HYB)", "Coastal_Forest(HYB)", "Crater(LND)", "Crossroads(HYB)", "Eruption(LND)", "Fortress(SPL)", "Frigid_Lake(HYB)", "Hamburger(HYB)", "Kilimanjaro(LND)", "Land_Nomad(LND)", "Lowland(LND)", "Mangrove_Jungle(WTR)", "Marketplace(LND)", "Michi(LND)", "Migration(WTR)", "Mongolia(LND)", "Mountain_Pass(LND)", "Mountain_Ridge(LND)", "Nile_Delta(WTR)", "Nomad(HYB)", "Northern_Isles(WTR)", "Oasis(LND)", "Pacific_Islands(WTR)", "Ravines(LND)", "Ring_Fortress(LND)", "Rivers(HYB)", "Salt_Marsh(WTR)", "Seize_the_Mountain(WTR)", "Serengeti(LND)", "Snake_Forest(LND)", "Steppe(LND)", "Team_Moats(HYB)", "Valley(LND)", "Volcanic_Island(HYB)", "Water_Nomad(WTR)", "Wolf_Hill(LND)", "Yucatan(LND)", "Border_Stones(LND)", "Canyons(HYB)", "Enemy_Archipelago(WTR)", "Far_Out(LND)", "Holy_Line(HYB)", "Inner_Circle(LND)", "Journey_South(HYB)", "Jungle_Islands(WTR)", "Jungle_Lanes(LND)", "Motherland(WTR)", "Snakepit(HYB)", "Sprawling_Streams(HYB)", "Swirling_River(HYB)", "Twin_Forests(HYB)", "Yin_Yang(HYB)"];
 
-let landMaps = ["Acropolis", "Amazon_Tunnel", "Arabia", "Arena", "Atacama", "Black_Forest", "Front_Line", "Ghost_Lake", "Gold_Rush", "Golden_Pit", "Hideout", "Hill_Fort", "Lombardia", "Meadow", "Open_Plains", "Runestones", "Snake_Forest", "Socotra"];
+let landMaps = ["Acropolis", "Amazon_Tunnel", "Arabia", "Arena", "Atacama", "Black_Forest", "Front_Line", "Ghost_Lake", "Gold_Rush", "Golden_Pit", "Hideout", "Hill_Fort", "Lombardia", "Meadow", "Open_Plains", "Runestones", "Socotra"];
 let hybridMaps = ["Coastal", "Continental", "Four_Lakes", "Golden_Swamp", "Highland", "Mediterranean", "Mountain_Range", "Ring_of_Water", "Sandbank", "Scandinavia"];
-let waterMaps = ["Baltic", "Bog_Islands", "Crater_Lake", "Enemy_Islands", "Greenland", "Islands", "Team_Islands"];
+let waterMaps = ["Baltic", "Bog_Islands", "Crater_Lake", "Enemy_Islands", "Greenland", "Islands", "Team_Islands", "The_Eye"];
 let activeMaps = ["Acropolis", "Arabia", "Arena", "Coastal", "Front_Line", "Ghost_Lake", "Golden_Swamp", "Hideout", "Islands", "MegaRandom", "Open_Plains", "Scandinavia", "Socotra", "Team_Islands"];
 let brokenLinkMaps = ["Acropolis", "Fortress", "Hill_Fort"];
 let newMapLink = "https://ageofempires.fandom.com/wiki/MapName_(map)"
@@ -45,9 +45,7 @@ playerSteamIds.set("kronos", "76561198159403850");
 playerSteamIds.set("lezionare", "76561198115672759");
 playerSteamIds.set("gunjack", "76561198308551669");
 playerSteamIds.set("kuroko", "76561198057496453");
-playerSteamIds.set("varun", "76561198057496453");
 playerSteamIds.set("retempest", "76561198823747771");
-playerSteamIds.set("tempest", "76561198823747771");
 playerSteamIds.set("farshan", "76561198131973106");
 playerSteamIds.set("anti", "76561198267206225");
 playerSteamIds.set("alpha", "76561198800446037");
@@ -123,14 +121,14 @@ function swapPlayers(playerNamesArr, swapDepthArg) {
     if (swapDepthArg === 0) return playerNamesArr;
 
     else if (swapDepthArg > 0) {
-        for (let n = 0; n < swapDepthArg; n++) {
-
+        // for (let n = 0; n < swapDepthArg; n++) { // Top to Bottom Swap
+        for (let n = playerNamesArr.length/2 -1; n > playerNamesArr.length/2 -1 - swapDepthArg; n--) {
+            
             if (Math.floor((Math.random() * 100) + 1) % 2 !== 0) {
 
                 [teamTwoPlayers[n], teamOnePlayers[n]] = [teamOnePlayers[n], teamTwoPlayers[n]];
             }
         }
-
     }
     return teamOnePlayers.concat(teamTwoPlayers);
 }
@@ -754,8 +752,7 @@ function modifyMapPool(mapNamesArr, mapName) {
     else mapNamesArr = deleteArrayElement(mapNamesArr, mapName);
 }
 
-
-//Variable(allMaps, activeMaps, brokenLinkMaps) Dependant Function
+//Variable(allMaps, activeMaps, brokenLinkMaps, landMaps, hybridMaps, waterMaps, removedMaps) Dependant Function
 function modifymapPoolToggle(actionType) {
 
     if(!document.getElementById('modifyMapPool').checked) document.getElementById('modifyMapPool').checked = true;
@@ -793,6 +790,44 @@ function modifymapPoolToggle(actionType) {
     }
 }
 
+function hideExtraMaps(){
+
+    if(allMaps.length < removedMaps.length) return;
+    let removedMapsNew = [...removedMaps];
+    
+    removedMapsNew = removedMapsNew.map(elem => elem = elem.slice(0, -5));
+    allMaps = allMaps.filter(elem => !removedMapsNew.includes(elem));
+    landMaps = landMaps.filter(elem => !removedMapsNew.includes(elem));
+    hybridMaps = hybridMaps.filter(elem => !removedMapsNew.includes(elem));
+    waterMaps = waterMaps.filter(elem => !removedMapsNew.includes(elem));
+    
+    displayAllMaps(allMaps, activeMaps, brokenLinkMaps);
+}
+
+function showExtraMaps(){
+
+    if(allMaps.length > removedMaps.length) return;
+    
+    removedMaps.forEach(elem => {
+        let category = '';
+        category = elem.slice(-5);
+        elem = elem.slice(0, -5);
+        switch (category) {
+            case "(LND)": 
+                landMaps.push(elem);
+                break;
+            case "(HYB)": 
+                hybridMaps.push(elem);
+                break;
+            case "(WTR)": 
+                waterMaps.push(elem);
+                break;
+        }
+        allMaps.push(elem);
+    })
+    displayAllMaps(allMaps, activeMaps, brokenLinkMaps);
+}
+
 function displayAllMaps(allMapsArr, activeMapsArr, brokenLinkMapsArr) {
 
     allMapsArr = allMapsArr.sort();
@@ -803,15 +838,19 @@ function displayAllMaps(allMapsArr, activeMapsArr, brokenLinkMapsArr) {
     let buttonBox = createHtmlElement('div', 'input-group bottom-map-button-box');
     let disableAllButton = createHtmlElement('button', 'btn btn-outline-danger bottom-map-button');
     let enableAllButton = createHtmlElement('button', 'btn btn-outline-success bottom-map-button');
-    let landMapsButton = createHtmlElement('button', 'btn btn-outline-dark bottom-map-button');
-    let hybridMapsButton = createHtmlElement('button', 'btn btn-outline-dark bottom-map-button');
-    let waterMapsButton = createHtmlElement('button', 'btn btn-outline-dark bottom-map-button');
+    let landMapsButton = createHtmlElement('button', 'btn btn-outline-warning bottom-map-button');
+    let hybridMapsButton = createHtmlElement('button', 'btn btn-outline-secondary bottom-map-button');
+    let waterMapsButton = createHtmlElement('button', 'btn btn-outline-primary bottom-map-button');
+    let hideExtraButton = createHtmlElement('button', 'btn btn-outline-dark bottom-map-button');
+    let showExtraButton = createHtmlElement('button', 'btn btn-outline-dark bottom-map-button');
 
     disableAllButton.innerHTML = 'Disable All';
     enableAllButton.innerHTML = 'Enable All';
     landMapsButton.innerHTML = 'Land';
     hybridMapsButton.innerHTML = 'Hybrid';
     waterMapsButton.innerHTML = 'Water';
+    hideExtraButton.innerHTML = 'Hide Extra';
+    showExtraButton.innerHTML = 'Show Extra';
 
     disableAllButton.addEventListener("click", function () {
         modifymapPoolToggle("DISABLE_ALL");
@@ -828,8 +867,14 @@ function displayAllMaps(allMapsArr, activeMapsArr, brokenLinkMapsArr) {
     waterMapsButton.addEventListener("click", function () {
         modifymapPoolToggle("WATER_MAPS");
     });
+    hideExtraButton.addEventListener("click", function () {
+        hideExtraMaps();
+    });
+    showExtraButton.addEventListener("click", function () {
+        showExtraMaps();
+    });
 
-    buttonBox.append(disableAllButton, landMapsButton, hybridMapsButton, waterMapsButton, enableAllButton);
+    buttonBox.append(disableAllButton, hideExtraButton, landMapsButton, hybridMapsButton, waterMapsButton, showExtraButton, enableAllButton);
     allMapsBox.appendChild(buttonBox);
 
     let modifyMapInput = document.getElementById('modifyMapPool');
