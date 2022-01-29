@@ -12,10 +12,12 @@ let greatCivsWithDlc = [...greatCivs, "Burgundians", "Bohemians", "Poles"];
 //let greatCivsWithDlc = [...greatCivs];
 let restCivsWithDlc = [...restCivs, "Sicilians"];
 //let restCivsWithDlc = [...restCivs];
-let dlcOwners = ["Maniac", "Lezionare", "Firehawk", "Kronos", "Protox"];
+let dlcOwners = ["Maniac", "Lezionare", "Firehawk", "Kronos", "Protox", "Hawk", "Gunjack"];
 //let dlcOwners = [];
 
 let allCivsToDisplay = [...allCivs, ...dlcCivs];
+let waterCivs = ["Berbers", "Britons", "Byzantines", "Chinese", "Goths", "Italians", "Japanese", "Koreans", "Malay", "Mayans", "Mongols", "Portuguese", "Saracens", "Spanish", "Teutons", "Turks", "Vikings", "Huns", "Indians", "Vietnamese"];
+let waterCivsWithDlc = ["Sicilians"];
 
 let allMaps = ["Acropolis", "Amazon_Tunnel", "Arabia", "Arena", "Atacama", "Baltic", "Black_Forest", "Bog_Islands", "Coastal", "Continental", "Crater_Lake", "Enemy_Islands", "Four_Lakes", "Front_Line", "Ghost_Lake", "Gold_Rush", "Golden_Pit", "Golden_Swamp", "Greenland", "Hideout", "Hill_Fort", "Highland", "Islands", "Lombardia", "Meadow", "Mediterranean", "MegaRandom", "Mountain_Range", "Open_Plains", "Ring_of_Water", "Runestones", "Sandbank", "Scandinavia", "Socotra", "Team_Islands", "The_Eye"];
 
@@ -24,10 +26,10 @@ let removedMaps = ["Acclivity(LND)", "African_Clearing(LND)", "Alpine_Lakes(LND)
 let landMaps = ["Acropolis", "Amazon_Tunnel", "Arabia", "Arena", "Atacama", "Black_Forest", "Front_Line", "Ghost_Lake", "Gold_Rush", "Golden_Pit", "Hideout", "Hill_Fort", "Lombardia", "Meadow", "Open_Plains", "Runestones", "Socotra"];
 let hybridMaps = ["Coastal", "Continental", "Four_Lakes", "Golden_Swamp", "Highland", "Mediterranean", "Mountain_Range", "Ring_of_Water", "Sandbank", "Scandinavia"];
 let waterMaps = ["Baltic", "Bog_Islands", "Crater_Lake", "Enemy_Islands", "Greenland", "Islands", "Team_Islands", "The_Eye"];
-let activeMaps = ["Acropolis", "Arabia", "Arena", "Coastal", "Front_Line", "Ghost_Lake", "Golden_Swamp", "Hideout", "Islands", "MegaRandom", "Open_Plains", "Scandinavia", "Socotra", "Team_Islands"];
 let brokenLinkMaps = ["Acropolis", "Fortress", "Hill_Fort"];
-let newMapLink = "https://ageofempires.fandom.com/wiki/MapName_(map)"
+let newMapLink = "https://ageofempires.fandom.com/wiki/MapName_(map)";
 let mapLink = "https://ageofempires.fandom.com/wiki/MapName";
+let activeMaps = ["Acropolis", "Arabia", "Arena", "Coastal", "Front_Line", "Ghost_Lake", "Golden_Swamp", "Hideout", "Islands", "MegaRandom", "Open_Plains", "Scandinavia", "Socotra", "Team_Islands"];
 
 let brokenLinkCivs = ["Chinese", "Japanese", "Persians", "Aztecs", "Spanish", "Incas", "Indians", "Portuguese"];
 let normalCivLink = "https://ageofempires.fandom.com/wiki/CivName";
@@ -35,25 +37,15 @@ let newCivLink = "https://ageofempires.fandom.com/wiki/CivName_(Age_of_Empires_I
 let civTreeLink = "https://aoe2techtree.net/#CivName";
 let playerColors = ["Blue", "Crimson", "Lime", "Yellow", "Cyan", "Fuchsia", "Grey", "Orange"];
 
-let playerSteamIds = new Map();
-playerSteamIds.set("protox", "76561198044613146");
-playerSteamIds.set("firehawk", "76561198207690565");
-playerSteamIds.set("maniac", "76561198088035394");
-playerSteamIds.set("hawk", "76561198087325373");
-playerSteamIds.set("glitch", "76561198032506144");
-playerSteamIds.set("kronos", "76561198159403850");
-playerSteamIds.set("lezionare", "76561198115672759");
-playerSteamIds.set("gunjack", "76561198308551669");
-playerSteamIds.set("kuroko", "76561198057496453");
-playerSteamIds.set("retempest", "76561198823747771");
-playerSteamIds.set("farshan", "76561198131973106");
-playerSteamIds.set("anti", "76561198267206225");
-playerSteamIds.set("alpha", "76561198800446037");
-playerSteamIds.set("peace", "76561198039366732");
-playerSteamIds.set("zeltrax", "76561198065460225");
-playerSteamIds.set("jasz", "76561198155121580");
-playerSteamIds.set("avid", "76561198041682306");
-playerSteamIds.set("srisan", "76561198030393767");
+let playerSteamIds = {};
+let myInit = { method: 'GET',
+               headers:{'Content-Type': 'apllication/json'},
+               mode: 'cors',
+               cache: 'default' };
+let myRequest = new Request("./player-ids.json", myInit);
+fetch(myRequest)
+    .then( resp => resp.json() )
+        .then( data => playerSteamIds = data );
 
 
 function shuffleArray(array) {
@@ -136,7 +128,7 @@ function swapPlayers(playerNamesArr, swapDepthArg) {
 async function getPlayerRating(playerName) {
 
     let leaderBoardId = 0;
-    let steamId = playerSteamIds.get(playerName.toLowerCase());
+    let steamId = playerSteamIds[playerName.toLowerCase()];
     if (steamId !== null && steamId !== undefined) {
         const response = await fetch(`https://aoe2.net/api/player/ratinghistory?game=aoe2de&leaderboard_id=${leaderBoardId}&steam_id=${steamId}&count=1`)
             .then(resp => resp.json())
@@ -189,66 +181,42 @@ async function displayGeneratedTeams(teamOnePlayersArr, teamTwoPlayersArr, teamO
     }
     else versusBox.innerHTML = `<img src="assets/img/fancy-crossed-swords.png" alt="Versus Icon" class="versus-icon-box">`;
 
-    for (let a = 0; a < teamOnePlayersArr.length; a++) {
+    async function displayPlayer(teamBox, civName, playerName, playerColor, displayRating){
 
-        //Team One Players
-        let teamOnePlayerBox = createHtmlElement('div', 'player-box');
-        teamOneBox.appendChild(teamOnePlayerBox);
+        let playerOuterBox = createHtmlElement('div', 'player-box');
+        teamBox.appendChild(playerOuterBox);
 
-        let teamOneCivIcon = createHtmlElement('a', 'civ-icon-box');
-        teamOneCivIcon.href = `https://aoe2techtree.net/#${teamOneCivsArr[a]}`;
-        teamOneCivIcon.innerHTML = `<img src="assets/img/icons/${teamOneCivsArr[a]}.png" alt="${teamOneCivsArr[a]}" class="civ-icon">`;
-        teamOneCivIcon.target = "_blank";
+        let civIconBox = createHtmlElement('a', 'civ-icon-box');
+        civIconBox.href = `https://aoe2techtree.net/#${civName}`;
+        civIconBox.innerHTML = `<img src="assets/img/icons/${civName}.png" alt="${civName}" class="civ-icon">`;
+        civIconBox.target = "_blank";
 
-        let teamOnePlayerRating = "";
-        if (ShouldDisplayRating) teamOnePlayerRating = await getPlayerRating(teamOnePlayersArr[a]);
+        let playerRating = "";
+        if (displayRating) playerRating = await getPlayerRating(playerName);
 
-        let teamOnePlayerTextBox = createHtmlElement('div', 'player-text-box');
-        let randomNumberOne = Math.floor(Math.random() * (10000 - 1 + 1) + 1);
-        let teamOnePlayerName = createHtmlElement('div', 'player-name-box', teamOnePlayersArr[a] + randomNumberOne);
-        teamOnePlayerName.innerHTML = `${teamOnePlayersArr[a]} ${teamOnePlayerRating}`;
+        let playerTextBox = createHtmlElement('div', 'player-text-box');
+        let randomNumber = Math.floor(Math.random() * (10000 - 1 + 1) + 1);
+        let playerNameBox = createHtmlElement('div', 'player-name-box', playerName + randomNumber);
+        playerNameBox.innerHTML = `${playerName} ${playerRating}`;
 
-        let teamOneCivName = createHtmlElement('a', 'civ-name-box');
-        if (brokenLinkCivs.includes(teamOneCivsArr[a])) teamOneCivName.href = `https://ageofempires.fandom.com/wiki/${teamOneCivsArr[a]}_(Age_of_Empires_II)`;
-        else teamOneCivName.href = `https://ageofempires.fandom.com/wiki/${teamOneCivsArr[a]}`;
-        teamOneCivName.target = "_blank";
-        teamOneCivName.innerHTML = `${teamOneCivsArr[a]}`;
+        let civNameBox = createHtmlElement('a', 'civ-name-box');
+        if (brokenLinkCivs.includes(civName)) civNameBox.href = `https://ageofempires.fandom.com/wiki/${civName}_(Age_of_Empires_II)`;
+        else civNameBox.href = `https://ageofempires.fandom.com/wiki/${civName}`;
+        civNameBox.target = "_blank";
+        civNameBox.innerHTML = `${civName}`;
 
-        teamOnePlayerBox.append(teamOneCivIcon, teamOnePlayerTextBox);
-        teamOnePlayerTextBox.append(teamOnePlayerName, teamOneCivName);
+        playerOuterBox.append(civIconBox, playerTextBox);
+        playerTextBox.append(playerNameBox, civNameBox);
 
-
-        //Team Two Players
-        let teamTwoPlayerBox = createHtmlElement('div', 'player-box');
-        teamTwoBox.appendChild(teamTwoPlayerBox);
-
-        let teamTwoCivIcon = createHtmlElement('a', 'civ-icon-box');
-        teamTwoCivIcon.href = `https://aoe2techtree.net/#${teamTwoCivsArr[a]}`;
-        teamTwoCivIcon.innerHTML = `<img src="assets/img/icons/${teamTwoCivsArr[a]}.png" alt="${teamTwoCivsArr[a]}" class="civ-icon">`;
-        teamTwoCivIcon.target = "_blank";
-
-        let teamTwoPlayerRating = "";
-        if (ShouldDisplayRating) teamTwoPlayerRating = await getPlayerRating(teamTwoPlayersArr[a]);
-        let teamTwoPlayerTextBox = createHtmlElement('div', 'player-text-box');
-        let randomNumberTwo = Math.floor(Math.random() * (10000 - 1 + 1) + 1 + 1);
-        let teamTwoPlayerName = createHtmlElement('div', 'player-name-box', teamTwoPlayersArr[a] + randomNumberTwo);
-        teamTwoPlayerName.innerHTML = `${teamTwoPlayersArr[a]} ${teamTwoPlayerRating}`;
-
-        let teamTwoCivName = createHtmlElement('a', 'civ-name-box');
-        if (brokenLinkCivs.includes(teamTwoCivsArr[a])) teamTwoCivName.href = `https://ageofempires.fandom.com/wiki/${teamTwoCivsArr[a]}_(Age_of_Empires_II)`;
-        else teamTwoCivName.href = `https://ageofempires.fandom.com/wiki/${teamTwoCivsArr[a]}`;
-        teamTwoCivName.target = "_blank";
-        teamTwoCivName.innerHTML = `${teamTwoCivsArr[a]}`;
-
-        teamTwoPlayerBox.append(teamTwoCivIcon, teamTwoPlayerTextBox);
-        teamTwoPlayerTextBox.append(teamTwoPlayerName, teamTwoCivName);
-
-        if (teamOneColorsArr.length > 0 && teamTwoColorsArr.length > 0) {
-
-            document.getElementById(teamOnePlayersArr[a] + randomNumberOne).style.color = teamOneColorsArr[a];
-            document.getElementById(teamTwoPlayersArr[a] + randomNumberTwo).style.color = teamTwoColorsArr[a];
-        }
+        if (playerColor) document.getElementById(playerName + randomNumber).style.color = playerColor;
     }
+    
+    for (let a = 0; a < teamOnePlayersArr.length; a++) {
+        
+        await displayPlayer(teamOneBox, teamOneCivsArr[a], teamOnePlayersArr[a], teamOneColorsArr[a], ShouldDisplayRating);
+        await displayPlayer(teamTwoBox, teamTwoCivsArr[a], teamTwoPlayersArr[a], teamTwoColorsArr[a], ShouldDisplayRating);
+    }
+
     let civNamesArrSound = document.getElementsByClassName("civ-name-box");
     for (let element of civNamesArrSound) {
         if (element.getAttribute('listener') !== 'true') {
@@ -271,7 +239,7 @@ async function displayGeneratedTeams(teamOnePlayersArr, teamTwoPlayersArr, teamO
     document.getElementById('generateButton').disabled = false;
 }
 
-function assignCivsToPlayers(playerNamesArr, playerCivsArr, playerColorsArr, mapNamesArr, brokenLinkCivsArr, brokenLinkMapsArr, applyRandomMapArg, displayPlayerRatingArg, applyPlayerColorArg) {
+function assignCivsToPlayers(playerNamesArr, playerCivsArr, playerColorsArr, mapNamesArr, brokenLinkCivsArr, brokenLinkMapsArr, applyRandomMapArg, displayPlayerRatingArg, applyPlayerColorArg, applyTeamPosArg) {
 
     let teamOnePlayers = playerNamesArr.slice(0, playerNamesArr.length / 2);
     let teamTwoPlayers = playerNamesArr.slice(playerNamesArr.length / 2, playerNamesArr.length)
@@ -280,12 +248,21 @@ function assignCivsToPlayers(playerNamesArr, playerCivsArr, playerColorsArr, map
 
     if (applyPlayerColorArg) {
 
-        playerColorsArr = shuffleArray(playerColorsArr);
-        let teamOneColors = playerColorsArr.slice(0, playerCivsArr.length / 2);
-        //teamOneColors = shuffleArray(teamOneColors);
-        let teamTwoColors = playerColorsArr.slice(playerCivsArr.length / 2, playerCivsArr.length);
-        //teamTwoColors = shuffleArray(teamTwoColors);
+        let teamOneColors, teamTwoColors = [];
+        let playerColorsNew = [...playerColorsArr];
 
+        if (applyTeamPosArg) {
+            playerColorsNew = playerColorsNew.slice(0, playerNamesArr.length);
+            teamOneColors = playerColorsNew.filter((elem, index) => index%2 !== 0);
+            teamOneColors = shuffleArray(teamOneColors);
+            teamTwoColors = playerColorsNew.filter((elem, index) => index%2 === 0);
+            teamTwoColors = shuffleArray(teamTwoColors);
+        }
+        else {
+            playerColorsNew = shuffleArray(playerColorsNew);
+            teamOneColors = playerColorsNew.slice(0, playerCivsArr.length / 2);
+            teamTwoColors = playerColorsNew.slice(playerCivsArr.length / 2, playerCivsArr.length);
+        }
         displayGeneratedTeams(teamOnePlayers, teamTwoPlayers, teamOneCivs, teamTwoCivs, brokenLinkCivsArr, brokenLinkMapsArr, mapNamesArr, applyRandomMapArg, displayPlayerRatingArg, teamOneColors, teamTwoColors);
     }
     else if (!applyPlayerColorArg) {
@@ -294,7 +271,7 @@ function assignCivsToPlayers(playerNamesArr, playerCivsArr, playerColorsArr, map
     }
 }
 
-function generateTeamCivs(playerCount, applyRandomMap, applyPlayerRating, applyPlayerColor, applyCivBalance, swapPlayerDepth, allCivsArr, greatCivsArr, restCivsArr, allCivsWithDlcArr, greatCivsWithDlcArr, restCivsWithDlcArr, brokenLinkCivsArr, brokenLinkMapsArr, dlcOwnersArr, mapPoolArr, ...playerNamesArgs) {
+function generateTeamCivs(playerCount, applyRandomMap, applyPlayerRating, applyPlayerColor, applyTeamPos, applyCivBalance, swapPlayerDepth, allCivsArr, greatCivsArr, restCivsArr, allCivsWithDlcArr, greatCivsWithDlcArr, restCivsWithDlcArr, brokenLinkCivsArr, brokenLinkMapsArr, dlcOwnersArr, mapPoolArr, ...playerNamesArgs) {
 
     let usedCivs = [];
     let greatCivCount = 0;
@@ -396,7 +373,7 @@ function generateTeamCivs(playerCount, applyRandomMap, applyPlayerRating, applyP
             else usedCivs.push(playerCivs[m]);
         }
     }
-    assignCivsToPlayers(playerNames, playerCivs, playerColors, mapNames, brokenLinkCivsArr, brokenLinkMapsArr, applyRandomMap, applyPlayerRating, applyPlayerColor);
+    assignCivsToPlayers(playerNames, playerCivs, playerColors, mapNames, brokenLinkCivsArr, brokenLinkMapsArr, applyRandomMap, applyPlayerRating, applyPlayerColor, applyTeamPos);
 }
 
 
@@ -453,6 +430,9 @@ function getInputsFromUser() {
     let teamColorsInput = document.getElementById('playerColors');
     let selectedTeamColors = teamColorsInput.checked;
 
+    let teamPositionInput = document.getElementById('teamPosition');
+    let selectedTeamPos = teamPositionInput.checked;
+
     let generateMapInput = document.getElementById('randomMap');
     let shouldGenerateMap = generateMapInput.checked;
 
@@ -466,7 +446,7 @@ function getInputsFromUser() {
     document.getElementById('generateButton').disabled = true;
 
     //console.log(playerCount, selectedTeamColors, selectedCivBalance, selectedSwapDepth, playerNames);
-    generateTeamCivs(playerCount, shouldGenerateMap, displayPlayerRating, selectedTeamColors, selectedCivBalance, selectedSwapDepth, allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc, brokenLinkCivs, brokenLinkMaps, dlcOwners, activeMaps, ...playerNames);
+    generateTeamCivs(playerCount, shouldGenerateMap, displayPlayerRating, selectedTeamColors, selectedTeamPos, selectedCivBalance, selectedSwapDepth, allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc, brokenLinkCivs, brokenLinkMaps, dlcOwners, activeMaps, ...playerNames);
 }
 
 function addDlcOwners() {
@@ -512,7 +492,6 @@ function modifyAllCiv(civName, modifyType) {
                 restCivsWithDlc = deleteArrayElement(restCivsWithDlc, civName);
 
                 if(!allCivs.includes(civName) && !allCivsWithDlc.includes(civName)){
-                    console.log(`Adding ${civName} to allCivs: ${allCivs} and allCivsWithDlc`);
                     allCivs.push(civName);
                     allCivsWithDlc.push(civName);
                 }
@@ -792,6 +771,8 @@ function modifymapPoolToggle(actionType) {
 
 function hideExtraMaps(){
 
+    document.getElementById('hideExtraButton').style.display = 'none';
+    document.getElementById('showExtraButton').style.display = 'block';
     if(allMaps.length < removedMaps.length) return;
     let removedMapsNew = [...removedMaps];
     
@@ -805,6 +786,9 @@ function hideExtraMaps(){
 }
 
 function showExtraMaps(){
+
+    document.getElementById('showExtraButton').style.display = 'none';
+    document.getElementById('hideExtraButton').style.display = 'block';
 
     if(allMaps.length > removedMaps.length) return;
     
@@ -828,21 +812,31 @@ function showExtraMaps(){
     displayAllMaps(allMaps, activeMaps, brokenLinkMaps);
 }
 
-function displayAllMaps(allMapsArr, activeMapsArr, brokenLinkMapsArr) {
+function goToTop(){
+    document.getElementById('goTopButton').style.display = 'none';
+    document.getElementById('goBottomButton').style.display = 'block';
+    document.body.scrollIntoView(true);
+}
+function goToBottom(){
+    document.getElementById('goBottomButton').style.display = 'none';
+    document.getElementById('goTopButton').style.display = 'block';
+    document.body.scrollIntoView(false);
+}
 
-    allMapsArr = allMapsArr.sort();
+function buildMapButtons(){
 
     let allMapsBox = document.getElementById('allMapsBox');
-    allMapsBox.innerHTML = '';
 
     let buttonBox = createHtmlElement('div', 'input-group bottom-map-button-box');
-    let disableAllButton = createHtmlElement('button', 'btn btn-outline-danger bottom-map-button');
-    let enableAllButton = createHtmlElement('button', 'btn btn-outline-success bottom-map-button');
+    let disableAllButton = createHtmlElement('button', 'btn btn-outline-danger bottom-map-button', 'disableAllButton');
+    let enableAllButton = createHtmlElement('button', 'btn btn-outline-success bottom-map-button', 'enableAllButton');
     let landMapsButton = createHtmlElement('button', 'btn btn-outline-warning bottom-map-button');
     let hybridMapsButton = createHtmlElement('button', 'btn btn-outline-secondary bottom-map-button');
     let waterMapsButton = createHtmlElement('button', 'btn btn-outline-primary bottom-map-button');
-    let hideExtraButton = createHtmlElement('button', 'btn btn-outline-dark bottom-map-button');
-    let showExtraButton = createHtmlElement('button', 'btn btn-outline-dark bottom-map-button');
+    let hideExtraButton = createHtmlElement('button', 'btn btn-outline-dark bottom-map-button', 'hideExtraButton');
+    let showExtraButton = createHtmlElement('button', 'btn btn-outline-dark bottom-map-button', 'showExtraButton');
+    let goTopButton = createHtmlElement('button', 'btn btn-outline-dark bottom-map-button', 'goTopButton');
+    let goBottomButton = createHtmlElement('button', 'btn btn-outline-dark bottom-map-button', 'goBottomButton');
 
     disableAllButton.innerHTML = 'Disable All';
     enableAllButton.innerHTML = 'Enable All';
@@ -851,6 +845,8 @@ function displayAllMaps(allMapsArr, activeMapsArr, brokenLinkMapsArr) {
     waterMapsButton.innerHTML = 'Water';
     hideExtraButton.innerHTML = 'Hide Extra';
     showExtraButton.innerHTML = 'Show Extra';
+    goTopButton.innerHTML = 'Go Top';
+    goBottomButton.innerHTML = 'Go Bottom';
 
     disableAllButton.addEventListener("click", function () {
         modifymapPoolToggle("DISABLE_ALL");
@@ -873,18 +869,34 @@ function displayAllMaps(allMapsArr, activeMapsArr, brokenLinkMapsArr) {
     showExtraButton.addEventListener("click", function () {
         showExtraMaps();
     });
+    goTopButton.addEventListener("click", function () {
+        goToTop();
+    });
+    goBottomButton.addEventListener("click", function () {
+        goToBottom();
+    });
 
-    buttonBox.append(disableAllButton, hideExtraButton, landMapsButton, hybridMapsButton, waterMapsButton, showExtraButton, enableAllButton);
+    buttonBox.append(disableAllButton, hideExtraButton, showExtraButton, landMapsButton, hybridMapsButton, waterMapsButton, goTopButton, goBottomButton, enableAllButton);
     allMapsBox.appendChild(buttonBox);
+
+    let allMapsInnerBox = createHtmlElement('div', 'all-maps-inner-box', 'allMapsInnerBox');
+    allMapsBox.appendChild(allMapsInnerBox);
+}
+buildMapButtons();
+
+function displayAllMaps(allMapsArr, activeMapsArr, brokenLinkMapsArr) {
+
+    let allMapsInnerBox = document.getElementById("allMapsInnerBox");
+    allMapsInnerBox.innerHTML = '';
 
     let modifyMapInput = document.getElementById('modifyMapPool');
     let modifyMapInputValue = modifyMapInput.checked;
-
-
+    allMapsArr = allMapsArr.sort();
+    
     for (let z = 0; z < allMapsArr.length; z++) {
 
         let mapBox = createHtmlElement('div', 'map-box');
-        allMapsBox.appendChild(mapBox);
+        allMapsInnerBox.appendChild(mapBox);
 
         let mapLinkBox = createHtmlElement('a', 'map-link-box');
 
@@ -929,8 +941,22 @@ document.body.addEventListener("keypress", function () {
     }
 });
 
+window.onscroll = function(event) {
+    
+    if (window.scrollY === 0) {
+        document.getElementById('goTopButton').style.display = 'none';
+        document.getElementById('goBottomButton').style.display = 'block';
+    }
+    if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight) {
+        document.getElementById('goTopButton').style.display = 'block';
+        document.getElementById('goBottomButton').style.display = 'none';
+    }
+};
+
 document.getElementById('modifyAllCivs').checked = false;
 document.getElementById('modifyGreatCivs').checked = false;
+document.getElementById('hideExtraButton').style.display = 'none';
+document.getElementById('goTopButton').style.display = 'none';
 
 displayAllCivs(allCivsToDisplay, brokenLinkCivs, allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc);
 displayAllMaps(allMaps, activeMaps, brokenLinkMaps);

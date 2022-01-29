@@ -1,7 +1,7 @@
 body{
     background: url("assets/img/bg_aoe2_hd_paper.jpg") repeat local;
     font-family: 'Merriweather', serif;
-    min-width: 1200px;
+    min-width: 1280px;
 }
 .container-box{
     display:flex;
@@ -82,6 +82,10 @@ body{
 }
 .advanced-checkbox{
     margin: 0px 5px;
+    max-width: 125px;
+}
+.advanced-checkbox > input{
+    margin-top: 15px;
 }
 .button-box{
     width: 600px;
@@ -125,15 +129,16 @@ body{
      color: black;
 }
 .team-one-box, .team-two-box{
-    min-width: 200px;
     display: flex;
     flex-flow: column;
     justify-content: center;
 }
 .team-one-box{
+    min-width: 190px;
     margin-left: 40px;
 }
 .team-two-box{
+    min-width: 210px;
     margin-left: 40px;
 }
 .team-two-box-display-rating{
@@ -217,19 +222,23 @@ body{
 }
 .all-maps-box{
     max-width: 1000px;
-    display: flex;
-    flex-flow: row wrap;
     margin: 25px auto;
     padding: 10px;
     border: 1px solid #191919;
     border-radius: 5px;
     box-shadow: 0px 0px 3px 0px #191919;
 }
+.all-maps-inner-box{
+    display: flex;
+    flex-flow: row wrap;
+}
 .bottom-map-button-box{
     display: flex;
     flex-flow: row;
     justify-content: center;
     margin: 10px 0px;
+    position: sticky;
+    top: 10px;
 }
 .bottom-map-button{
     font-weight: bold;
