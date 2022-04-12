@@ -12,7 +12,7 @@ let greatCivsWithDlc = [...greatCivs, "Burgundians", "Bohemians", "Poles"];
 //let greatCivsWithDlc = [...greatCivs];
 let restCivsWithDlc = [...restCivs, "Sicilians"];
 //let restCivsWithDlc = [...restCivs];
-let dlcOwners = ["Maniac", "Lezionare", "Firehawk", "Kronos", "Protox", "Hawk", "Gunjack"];
+let dlcOwners = ["maniac", "lezionare", "firehawk", "kronos", "protox", "hawk", "gunjack"];
 //let dlcOwners = [];
 
 let allCivsToDisplay = [...allCivs, ...dlcCivs];
@@ -107,20 +107,37 @@ function checkDlcOwner(playerNameArg, dlcOwnersArr) {
     return false;
 }
 
-function swapPlayers(playerNamesArr, swapDepthArg) {
-
-    let teamOnePlayers = playerNamesArr.slice(0, playerNamesArr.length / 2);
-    let teamTwoPlayers = playerNamesArr.slice(playerNamesArr.length / 2, playerNamesArr.length);
+function swapPlayers(playerNamesArr, swapDepthArg,  swapModeArg) {
 
     if (swapDepthArg === 0) return playerNamesArr;
 
     else if (swapDepthArg > 0) {
-        // for (let n = 0; n < swapDepthArg; n++) { // Top to Bottom Swap
-        for (let n = playerNamesArr.length/2 -1; n > playerNamesArr.length/2 -1 - swapDepthArg; n--) {
-            
-            if (Math.floor((Math.random() * 100) + 1) % 2 !== 0) {
+        let teamOnePlayers = playerNamesArr.slice(0, playerNamesArr.length / 2);
+        let teamTwoPlayers = playerNamesArr.slice(playerNamesArr.length / 2, playerNamesArr.length);
 
-                [teamTwoPlayers[n], teamOnePlayers[n]] = [teamOnePlayers[n], teamTwoPlayers[n]];
+        if (swapModeArg === "FULL") {
+            let newPlayersArr = [...playerNamesArr];
+            if (swapDepthArg >= playerNamesArr.length / 2) {
+                return shuffleArray(newPlayersArr);
+            }
+            else {
+                let teamOneShuffle = teamOnePlayers.splice(-swapDepthArg, swapDepthArg);
+                let teamTwoShuffle = teamTwoPlayers.splice(-swapDepthArg, swapDepthArg);
+                let shuffleTeams = teamOneShuffle.concat(teamTwoShuffle);
+                shuffleTeams = shuffleArray(shuffleTeams);
+                teamOnePlayers = teamOnePlayers.concat(shuffleTeams.slice(0, Math.ceil(shuffleTeams.length / 2)));
+                teamTwoPlayers = teamTwoPlayers.concat(shuffleTeams.slice(Math.ceil(shuffleTeams.length / 2, shuffleTeams.length - 1)));
+                return teamOnePlayers.concat(teamTwoPlayers);
+            }
+        }
+        else if (swapModeArg === "PAIR") {
+            // for (let n = 0; n < swapDepthArg; n++) { // Top to Bottom Swap
+            for (let n = (playerNamesArr.length / 2) - 1; n > (playerNamesArr.length / 2) - 1 - swapDepthArg; n--) {
+
+                if (Math.floor((Math.random() * 100) + 1) % 2 !== 0) {
+
+                    [teamTwoPlayers[n], teamOnePlayers[n]] = [teamOnePlayers[n], teamTwoPlayers[n]];
+                }
             }
         }
     }
@@ -273,7 +290,7 @@ function assignCivsToPlayers(playerNamesArr, playerCivsArr, playerColorsArr, map
     }
 }
 
-function generateTeamCivs(playerCount, applyRandomMap, applyPlayerRating, applyPlayerColor, applyTeamPos, applyCivBalance, swapPlayerDepth, allCivsArr, greatCivsArr, restCivsArr, allCivsWithDlcArr, greatCivsWithDlcArr, restCivsWithDlcArr, brokenLinkCivsArr, brokenLinkMapsArr, dlcOwnersArr, mapPoolArr, ...playerNamesArgs) {
+function generateTeamCivs(playerCount, applyRandomMap, applyPlayerRating, applyPlayerColor, applyTeamPos, applyCivBalance, swapPlayerDepth, swapPlayerMode, allCivsArr, greatCivsArr, restCivsArr, allCivsWithDlcArr, greatCivsWithDlcArr, restCivsWithDlcArr, brokenLinkCivsArr, brokenLinkMapsArr, dlcOwnersArr, mapPoolArr, ...playerNamesArgs) {
 
     let usedCivs = [];
     let greatCivCount = 0;
@@ -307,7 +324,7 @@ function generateTeamCivs(playerCount, applyRandomMap, applyPlayerRating, applyP
     restCivsWithDlc = shuffleArray(restCivsWithDlc);
     mapNames = shuffleArray(mapNames);
 
-    playerNames = swapPlayers(playerNames, swapPlayerDepth);
+    playerNames = swapPlayers(playerNames, swapPlayerDepth, swapPlayerMode);
 
     if (applyCivBalance === true && playerCount > greatCivs.length && playerCount > greatCivsWithDlc.length && greatCivs.length >= 2 && greatCivsWithDlc.length >= 2) applyCivBalance = false;
 
@@ -426,6 +443,15 @@ function getInputsFromUser() {
         }
     }
 
+    let swapModeInput = document.querySelectorAll('input[name="swapMode"]');
+    let selectedSwapMode = "";
+    for (const elem of swapModeInput) {
+        if (elem.checked) {
+            selectedSwapMode = elem.value;
+            break;
+        }
+    }
+
     let civBalanceInput = document.getElementById('civBalance');
     let selectedCivBalance = civBalanceInput.checked;
 
@@ -448,7 +474,7 @@ function getInputsFromUser() {
     document.getElementById('generateButton').disabled = true;
 
     //console.log(playerCount, selectedTeamColors, selectedCivBalance, selectedSwapDepth, playerNames);
-    generateTeamCivs(playerCount, shouldGenerateMap, displayPlayerRating, selectedTeamColors, selectedTeamPos, selectedCivBalance, selectedSwapDepth, allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc, brokenLinkCivs, brokenLinkMaps, dlcOwners, activeMaps, ...playerNames);
+    generateTeamCivs(playerCount, shouldGenerateMap, displayPlayerRating, selectedTeamColors, selectedTeamPos, selectedCivBalance, selectedSwapDepth, selectedSwapMode, allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc, brokenLinkCivs, brokenLinkMaps, dlcOwners, activeMaps, ...playerNames);
 }
 
 function addDlcOwners() {

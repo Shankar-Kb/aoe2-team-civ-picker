@@ -49,10 +49,17 @@ body{
 .options-box{
     display:flex;
     flex-flow: row;
-    justify-content: space-between;
     min-height: 50px;
-    min-width: 700px;
+    width: 100%;
     margin: 10px 0px;
+}
+.radio-outer-box{
+    display: flex;
+    flex-flow: row;
+    margin: 0px 50px;
+}
+.radio-box{
+    margin: 0px 5px;
 }
 .collapse-button{
     margin-bottom: 10px;
