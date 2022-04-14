@@ -113,6 +113,11 @@
               placeholder="Add DLC Owners: Owner 1, Owner 2">
             <button type="button" class="btn functional-button functional-button-add" id="addButton"
               onclick="addDlcOwners()">Add</button>
+            <div class="form-check free-dlc-checkbox-box">
+              <label class="form-check-label" for="freeDlcEventCheckbox"> Free DLC Event </label>
+              <input class="form-check-input" type="checkbox" name="freeDlcEvent" id="freeDlcEventCheckbox"
+                onchange="handleFreeDlcEvent()">
+            </div>
           </div>
 
           <div class="advanced-checkbox-box">

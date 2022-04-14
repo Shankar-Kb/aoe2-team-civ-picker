@@ -79,6 +79,9 @@ body{
 /* .add-dlc-owner-input-text-box{
 
 } */
+.free-dlc-checkbox-box{
+    margin-top: 5px;
+}
 .functional-button-add{
     max-width: 100px;
 }

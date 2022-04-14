@@ -1,23 +1,121 @@
 {
-    "protox": "76561198044613146",
-    "firehawk": "76561198207690565",
-    "maniac": "76561198088035394",
-    "hawk": "76561198087325373",
-    "glitch": "76561198032506144",
-    "kronos": "76561198159403850",
-    "lezionare": "76561198115672759",
-    "gunjack": "76561198308551669",
-    "kuroko": "76561198057496453",
-    "retempest": "76561198823747771",
-    "farshan": "76561198131973106",
-    "anti": "76561198267206225",
-    "alpha": "76561198800446037",
-    "peace": "76561198039366732",
-    "zeltrax": "76561198065460225",
-    "jasz": "76561198155121580",
-    "avid": "76561198041682306",
-    "srisan": "76561198030393767",
-    "igi": "76561198139116368",
-    "poshy": "76561198066332840",
-    "leo": "76561198027901392"
+    "protox": {
+        "id": "76561198044613146",
+        "dlc_civs": [
+            "Burgundians",
+            "Sicilians",
+            "Bohemians",
+            "Poles"
+        ]
+    },
+    "firehawk": {
+        "id": "76561198207690565",
+        "dlc_civs": [
+            "Burgundians",
+            "Sicilians",
+            "Bohemians",
+            "Poles"
+        ]
+    },
+    "maniac": {
+        "id": "76561198088035394",
+        "dlc_civs": [
+            "Burgundians",
+            "Sicilians",
+            "Bohemians",
+            "Poles"
+        ]
+    },
+    "hawk": {
+        "id": "76561198087325373",
+        "dlc_civs": [
+            "Burgundians",
+            "Sicilians",
+            "Bohemians",
+            "Poles"
+        ]
+    },
+    "kronos": {
+        "id": "76561198159403850",
+        "dlc_civs": [
+            "Burgundians",
+            "Sicilians",
+            "Bohemians",
+            "Poles"
+        ]
+    },
+    "lezionare": {
+        "id": "76561198115672759",
+        "dlc_civs": [
+            "Burgundians",
+            "Sicilians",
+            "Bohemians",
+            "Poles"
+        ]
+    },
+    "gunjack": {
+        "id": "76561198308551669",
+        "dlc_civs": [
+            "Burgundians",
+            "Sicilians",
+            "Bohemians",
+            "Poles"
+        ]
+    },
+    "glitch": {
+        "id": "76561198032506144",
+        "dlc_civs": []
+    },
+    "kuroko": {
+        "id": "76561198057496453",
+        "dlc_civs": []
+    },
+    "retempest": {
+        "id": "76561198823747771",
+        "dlc_civs": []
+    },
+    "farshan": {
+        "id": "76561198131973106",
+        "dlc_civs": []
+    },
+    "srisan": {
+        "id": "76561198030393767",
+        "dlc_civs": []
+    },
+    "peace": {
+        "id": "76561198039366732",
+        "dlc_civs": []
+    },
+    "zeltrax": {
+        "id": "76561198065460225",
+        "dlc_civs": []
+    },
+    "jasz": {
+        "id": "76561198155121580",
+        "dlc_civs": []
+    },
+    "avid": {
+        "id": "76561198041682306",
+        "dlc_civs": []
+    },
+    "igi": {
+        "id": "76561198139116368",
+        "dlc_civs": []
+    },
+    "leo": {
+        "id": "76561198027901392",
+        "dlc_civs": []
+    },
+    "poshy": {
+        "id": "76561198066332840",
+        "dlc_civs": []
+    },
+    "alpha": {
+        "id": "76561198800446037",
+        "dlc_civs": []
+    },
+    "anti": {
+        "id": "76561198267206225",
+        "dlc_civs": []
+    }
 }
