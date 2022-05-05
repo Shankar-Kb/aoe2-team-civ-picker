@@ -14,7 +14,10 @@
             "Burgundians",
             "Sicilians",
             "Bohemians",
-            "Poles"
+            "Poles",
+            "Bengalis",
+            "Dravidians",
+            "Gurjaras"
         ]
     },
     "maniac": {
@@ -23,7 +26,10 @@
             "Burgundians",
             "Sicilians",
             "Bohemians",
-            "Poles"
+            "Poles",
+            "Bengalis",
+            "Dravidians",
+            "Gurjaras"
         ]
     },
     "hawk": {
@@ -41,7 +47,10 @@
             "Burgundians",
             "Sicilians",
             "Bohemians",
-            "Poles"
+            "Poles",
+            "Bengalis",
+            "Dravidians",
+            "Gurjaras"
         ]
     },
     "lezionare": {
@@ -50,7 +59,10 @@
             "Burgundians",
             "Sicilians",
             "Bohemians",
-            "Poles"
+            "Poles",
+            "Bengalis",
+            "Dravidians",
+            "Gurjaras"
         ]
     },
     "gunjack": {
@@ -104,7 +116,11 @@
     },
     "leo": {
         "id": "76561198027901392",
-        "dlc_civs": []
+        "dlc_civs": [
+            "Bengalis",
+            "Dravidians",
+            "Gurjaras"
+        ]
     },
     "poshy": {
         "id": "76561198066332840",

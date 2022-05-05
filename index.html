@@ -111,6 +111,29 @@
           <div class="add-dlc-owners-box">
             <input type="text" class="input-text-box add-dlc-owner-input-text-box" id="dlcOwnerNames" name="dlcOwners"
               placeholder="Add DLC Owners: Owner 1, Owner 2">
+              <div class="dropdown-box">
+                <button class="btn functional-button functional-button-select dropdown-toggle" type="button" id="dropdownMenuButton"
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Select DLC
+                </button>
+                <div class="dropdown-menu dlc-dropdown-menu">
+                  <div class="form-check">
+                    <label class="form-check-label" for="dlcCivOne"> Lords of the West </label>
+                    <input class="form-check-input" type="checkbox" name="dlcCivPacksCheckbox" value="Burgundians Sicilians"
+                      id="dlcCivOne" checked>
+                  </div>
+                  <div class="form-check">
+                    <label class="form-check-label" for="dlcCivTwo"> Dawn of the Dukes </label>
+                    <input class="form-check-input" type="checkbox" name="dlcCivPacksCheckbox" value="Bohemians Poles" id="dlcCivTwo"
+                      checked>
+                  </div>
+                  <div class="form-check">
+                    <label class="form-check-label" for="dlcCivThree"> Dynasties of India </label>
+                    <input class="form-check-input" type="checkbox" name="dlcCivPacksCheckbox" value="Bengalis Dravidians Gurjaras"
+                      id="dlcCivThree" checked>
+                  </div>
+                </div>
+              </div>
             <button type="button" class="btn functional-button functional-button-add" id="addButton"
               onclick="addDlcOwners()">Add</button>
             <div class="form-check free-dlc-checkbox-box">

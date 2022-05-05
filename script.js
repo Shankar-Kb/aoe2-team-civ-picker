@@ -1,35 +1,34 @@
-let allCivs = ["Britons", "Byzantines", "Celts", "Chinese", "Franks", "Goths", "Japanese", "Mongols", "Persians", "Saracens", "Teutons", "Turks", "Vikings", "Aztecs", "Huns", "Koreans", "Mayans", "Spanish", "Incas", "Indians", "Italians", "Magyars", "Slavs", "Berbers", "Ethiopians", "Malians", "Portuguese", "Burmese", "Khmer", "Malay", "Vietnamese", "Bulgarians", "Cumans", "Lithuanians", "Tatars"];
-let dlcCivs = ["Burgundians", "Sicilians", "Bohemians", "Poles"];
-let allCivsWithDlc = [...allCivs, ...dlcCivs];
+let allCivs = ["Britons", "Byzantines", "Celts", "Chinese", "Franks", "Goths", "Japanese", "Mongols", "Persians", "Saracens", "Teutons", "Turks", "Vikings", "Aztecs", "Huns", "Koreans", "Mayans", "Spanish", "Incas", "Hindustanis", "Italians", "Magyars", "Slavs", "Berbers", "Ethiopians", "Malians", "Portuguese", "Burmese", "Khmer", "Malay", "Vietnamese", "Bulgarians", "Cumans", "Lithuanians", "Tatars"];
+let dlcCivs = ["Burgundians", "Sicilians", "Bohemians", "Poles", "Bengalis", "Dravidians", "Gurjaras"];
 let greatCivs = ["Britons", "Byzantines", "Celts", "Franks", "Goths", "Mongols", "Persians", "Teutons", "Huns", "Spanish", "Magyars", "Cumans", "Lithuanians"];
-let restCivs = ["Chinese", "Japanese", "Saracens", "Turks", "Vikings", "Aztecs", "Koreans", "Mayans", "Incas", "Indians", "Italians", "Slavs", "Berbers", "Ethiopians", "Malians", "Portuguese", "Burmese", "Khmer", "Malay", "Vietnamese", "Bulgarians", "Tatars"];
+let restCivs = ["Chinese", "Japanese", "Saracens", "Turks", "Vikings", "Aztecs", "Koreans", "Mayans", "Incas", "Hindustanis", "Italians", "Slavs", "Berbers", "Ethiopians", "Malians", "Portuguese", "Burmese", "Khmer", "Malay", "Vietnamese", "Bulgarians", "Tatars"];
+let allCivsWithDlc = [...allCivs, ...dlcCivs];
 let greatCivsWithDlc = [...greatCivs, "Burgundians", "Bohemians", "Poles"];
 let restCivsWithDlc = [...restCivs, "Sicilians"];
 let dlcOwners = [];
+let playerColors = ["Blue", "Crimson", "Lime", "Yellow", "Cyan", "Fuchsia", "Grey", "Orange"];
 
 let allCivsToDisplay = [...allCivs, ...dlcCivs];
-let waterCivs = ["Berbers", "Britons", "Byzantines", "Chinese", "Goths", "Italians", "Japanese", "Koreans", "Malay", "Mayans", "Mongols", "Portuguese", "Saracens", "Spanish", "Teutons", "Turks", "Vikings", "Huns", "Indians", "Vietnamese"];
-let waterCivsWithDlc = ["Sicilians"];
+let waterCivs = ["Berbers", "Britons", "Byzantines", "Chinese", "Goths", "Italians", "Japanese", "Koreans", "Malay", "Mayans", "Mongols", "Portuguese", "Saracens", "Spanish", "Teutons", "Turks", "Vikings", "Huns", "Hindustanis", "Vietnamese"];
+let waterCivsWithDlc = ["Sicilians", "Bengalis", "Dravidians", "Gurjaras"];
 
 let allMaps = ["Acropolis", "Amazon_Tunnel", "Arabia", "Arena", "Atacama", "Baltic", "Black_Forest", "Bog_Islands", "Coastal", "Continental", "Crater_Lake", "Enemy_Islands", "Four_Lakes", "Front_Line", "Ghost_Lake", "Gold_Rush", "Golden_Pit", "Golden_Swamp", "Greenland", "Hideout", "Hill_Fort", "Highland", "Islands", "Lombardia", "Meadow", "Mediterranean", "MegaRandom", "Mountain_Range", "Open_Plains", "Ring_of_Water", "Runestones", "Sandbank", "Scandinavia", "Socotra", "Team_Islands", "The_Eye"];
-
-let removedMaps = ["Acclivity(LND)", "African_Clearing(LND)", "Alpine_Lakes(LND)", "Archipelago(WTR)", "Bogland(HYB)", "Budapest(LND)", "Cenotes(SPL)", "City_of_Lakes(HYB)", "Coastal_Forest(HYB)", "Crater(LND)", "Crossroads(HYB)", "Eruption(LND)", "Fortress(SPL)", "Frigid_Lake(HYB)", "Hamburger(HYB)", "Kilimanjaro(LND)", "Land_Nomad(LND)", "Lowland(LND)", "Mangrove_Jungle(WTR)", "Marketplace(LND)", "Michi(SPL)", "Migration(WTR)", "Mongolia(LND)", "Mountain_Pass(LND)", "Mountain_Ridge(LND)", "Nile_Delta(WTR)", "Nomad(HYB)", "Northern_Isles(WTR)", "Oasis(LND)", "Pacific_Islands(WTR)", "Ravines(LND)", "Ring_Fortress(LND)", "Rivers(HYB)", "Salt_Marsh(WTR)", "Seize_the_Mountain(WTR)", "Serengeti(LND)", "Snake_Forest(LND)", "Steppe(LND)", "Team_Moats(HYB)", "Valley(LND)", "Volcanic_Island(HYB)", "Water_Nomad(WTR)", "Wolf_Hill(LND)", "Yucatán(LND)", "Border_Stones(LND)", "Canyons(HYB)", "Enemy_Archipelago(WTR)", "Far_Out(LND)", "Holy_Line(HYB)", "Inner_Circle(LND)", "Journey_South(HYB)", "Jungle_Islands(WTR)", "Jungle_Lanes(LND)", "Motherland(WTR)", "Snakepit(HYB)", "Sprawling_Streams(HYB)", "Swirling_River(HYB)", "Twin_Forests(HYB)", "Yin_Yang(HYB)"];
-
 let landMaps = ["Acropolis", "Amazon_Tunnel", "Arabia", "Arena", "Atacama", "Black_Forest", "Front_Line", "Ghost_Lake", "Gold_Rush", "Golden_Pit", "Hideout", "Hill_Fort", "Lombardia", "Meadow", "Open_Plains", "Runestones", "Socotra"];
 let hybridMaps = ["Coastal", "Continental", "Four_Lakes", "Golden_Swamp", "Highland", "Mediterranean", "Mountain_Range", "Ring_of_Water", "Sandbank", "Scandinavia"];
 let waterMaps = ["Baltic", "Bog_Islands", "Crater_Lake", "Enemy_Islands", "Greenland", "Islands", "Team_Islands", "The_Eye"];
+let activeMaps = ["Acropolis", "Arabia", "Arena", "Coastal", "Front_Line", "Ghost_Lake", "Golden_Swamp", "Hideout", "Islands", "MegaRandom", "Open_Plains", "Scandinavia", "Socotra", "Team_Islands"];
+let removedMaps = ["Acclivity(LND)", "African_Clearing(LND)", "Alpine_Lakes(LND)", "Archipelago(WTR)", "Bogland(HYB)", "Budapest(LND)", "Cenotes(SPL)", "City_of_Lakes(HYB)", "Coastal_Forest(HYB)", "Crater(LND)", "Crossroads(HYB)", "Eruption(LND)", "Fortress(SPL)", "Frigid_Lake(HYB)", "Hamburger(HYB)", "Kilimanjaro(LND)", "Land_Nomad(LND)", "Lowland(LND)", "Mangrove_Jungle(WTR)", "Marketplace(LND)", "Michi(SPL)", "Migration(WTR)", "Mongolia(LND)", "Mountain_Pass(LND)", "Mountain_Ridge(LND)", "Nile_Delta(WTR)", "Nomad(HYB)", "Northern_Isles(WTR)", "Oasis(LND)", "Pacific_Islands(WTR)", "Ravines(LND)", "Ring_Fortress(LND)", "Rivers(HYB)", "Salt_Marsh(WTR)", "Seize_the_Mountain(WTR)", "Serengeti(LND)", "Snake_Forest(LND)", "Steppe(LND)", "Team_Moats(HYB)", "Valley(LND)", "Volcanic_Island(HYB)", "Water_Nomad(WTR)", "Wolf_Hill(LND)", "Yucatán(LND)", "Border_Stones(LND)", "Canyons(HYB)", "Enemy_Archipelago(WTR)", "Far_Out(LND)", "Holy_Line(HYB)", "Inner_Circle(LND)", "Journey_South(HYB)", "Jungle_Islands(WTR)", "Jungle_Lanes(LND)", "Motherland(WTR)", "Snakepit(HYB)", "Sprawling_Streams(HYB)", "Swirling_River(HYB)", "Twin_Forests(HYB)", "Yin_Yang(HYB)"];
+
 let brokenLinkMaps = ["Acropolis", "Fortress", "Hill_Fort", "Yucatán"];
 let liquipediaLinkMaps = ["Acclivity", "African_Clearing", "Amazon_Tunnel", "Atacama", "Coastal_Forest", "Crossroads", "Eruption", "Frigid_Lake", "Greenland", "Lowland", "Marketplace", "Meadow", "Michi", "Mountain_Range", "Northern_Isles", "Ring_Fortress", "Runestones", "Seize_the_Mountain", "Snake_Forest", "Sprawling_Streams", "Swirling_River", "Team_Moats", "Twin_Forests", "Volcanic_Island"];
-let liquipediaMapLink = "https://liquipedia.net/ageofempires/MapName";
-let brokenMapLink = "https://ageofempires.fandom.com/wiki/MapName_(map)";
-let mapLink = "https://ageofempires.fandom.com/wiki/MapName";
-let activeMaps = ["Acropolis", "Arabia", "Arena", "Coastal", "Front_Line", "Ghost_Lake", "Golden_Swamp", "Hideout", "Islands", "MegaRandom", "Open_Plains", "Scandinavia", "Socotra", "Team_Islands"];
+let liquipediaMapLink = (mapName) => `https://liquipedia.net/ageofempires/${mapName}`;
+let brokenMapLink = (mapName) => `https://ageofempires.fandom.com/wiki/${mapName}_(map)`;
+let mapLink = (mapName) => `https://ageofempires.fandom.com/wiki/${mapName}`;
 
-let brokenLinkCivs = ["Chinese", "Japanese", "Persians", "Aztecs", "Spanish", "Incas", "Indians", "Portuguese"];
-let normalCivLink = "https://ageofempires.fandom.com/wiki/CivName";
-let newCivLink = "https://ageofempires.fandom.com/wiki/CivName_(Age_of_Empires_II)";
-let civTreeLink = "https://aoe2techtree.net/#CivName";
-let playerColors = ["Blue", "Crimson", "Lime", "Yellow", "Cyan", "Fuchsia", "Grey", "Orange"];
+let brokenLinkCivs = ["Chinese", "Japanese", "Persians", "Aztecs", "Spanish", "Incas", "Portuguese"];
+let defaultCivLink = (civName) => `https://ageofempires.fandom.com/wiki/${civName}`;
+let brokenCivLink = (civName) => `https://ageofempires.fandom.com/wiki/${civName}_(Age_of_Empires_II)`;
+let civTreeLink = (civName) => `https://aoe2techtree.net/#${civName}`;
 
 let freeDlcEvent = false;
 function handleFreeDlcEvent() {
@@ -50,12 +49,12 @@ let myInit = {
     mode: 'cors',
     cache: 'default'
 };
-let myRequest = new Request("./player-ids.json", myInit);
+let playerDataRequest = new Request("./player-data.json", myInit);
 async function getData() {
     if (Object.keys(playerData.length > 0))
         for (let key in playerData) delete playerData[key];
 
-    let resp = await fetch(myRequest);
+    let resp = await fetch(playerDataRequest);
     playerData = await resp.json();
     if (!freeDlcEvent) {
         for (let player in playerData) {
@@ -126,11 +125,7 @@ function getRandomCiv(civPool, allCivsArr, greatCivsArr, restCivsArr, allCivsWit
 
 function checkDlcOwner(playerNameArg, dlcOwnersArr) {
 
-    for (let i = 0; i < dlcOwnersArr.length; i++) {
-
-        if (playerNameArg.toUpperCase() === dlcOwnersArr[i].toUpperCase()) return true;
-    }
-    return false;
+    return dlcOwnersArr.includes(playerNameArg.toLowerCase());
 }
 
 function swapPlayers(playerNamesArr, swapDepthArg,  swapModeArg) {
@@ -316,7 +311,7 @@ function assignCivsToPlayers(playerNamesArr, playerCivsArr, playerColorsArr, map
     }
 }
 
-function generateTeamCivs(playerCount, applyRandomMap, applyPlayerRating, applyPlayerColor, applyTeamPos, applyCivBalance, swapPlayerDepth, swapPlayerMode, allCivsArr, greatCivsArr, restCivsArr, allCivsWithDlcArr, greatCivsWithDlcArr, restCivsWithDlcArr, brokenLinkCivsArr, brokenLinkMapsArr, dlcOwnersArr, mapPoolArr, ...playerNamesArgs) {
+function generateTeamCivsMain(playerCount, applyRandomMap, applyPlayerRating, applyPlayerColor, applyTeamPos, applyCivBalance, swapPlayerDepth, swapPlayerMode, allCivsArr, greatCivsArr, restCivsArr, allCivsWithDlcArr, greatCivsWithDlcArr, restCivsWithDlcArr, brokenLinkCivsArr, brokenLinkMapsArr, dlcOwnersArr, mapPoolArr, ...playerNamesArgs) {
 
     let usedCivs = [];
     let greatCivCount = 0;
@@ -393,17 +388,18 @@ function generateTeamCivs(playerCount, applyRandomMap, applyPlayerRating, applyP
 
         for (let k = 0; k < civOrder.length; k++) {
 
+            let currentIndex = k + playerCount / 2;
             if (civOrder[k] === "GREAT") {
-                if (checkDlcOwner(playerNames[k + playerCount / 2], dlcOwners)) playerCivs[k + playerCount / 2] = getRandomCiv("GREAT-DLC", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc, playerNames[k]);
-                else playerCivs[k + playerCount / 2] = getRandomCiv("GREAT", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc, playerNames[k]);
-                if (usedCivs.includes(playerCivs[k + playerCount / 2])) k--;
-                else usedCivs.push(playerCivs[k + playerCount / 2]);
+                if (checkDlcOwner(playerNames[currentIndex], dlcOwners)) playerCivs[currentIndex] = getRandomCiv("GREAT-DLC", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc, playerNames[k]);
+                else playerCivs[currentIndex] = getRandomCiv("GREAT", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc, playerNames[k]);
+                if (usedCivs.includes(playerCivs[currentIndex])) k--;
+                else usedCivs.push(playerCivs[currentIndex]);
             }
             else {
-                if (checkDlcOwner(playerNames[k + playerCount / 2], dlcOwners)) playerCivs[k + playerCount / 2] = getRandomCiv("REST-DLC", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc, playerNames[k]);
-                else playerCivs[k + playerCount / 2] = getRandomCiv("REST", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc, playerNames[k]);
-                if (usedCivs.includes(playerCivs[k + playerCount / 2])) k--;
-                else usedCivs.push(playerCivs[k + playerCount / 2]);
+                if (checkDlcOwner(playerNames[currentIndex], dlcOwners)) playerCivs[currentIndex] = getRandomCiv("REST-DLC", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc, playerNames[k]);
+                else playerCivs[currentIndex] = getRandomCiv("REST", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc, playerNames[k]);
+                if (usedCivs.includes(playerCivs[currentIndex])) k--;
+                else usedCivs.push(playerCivs[currentIndex]);
             }
         }
     }
@@ -500,7 +496,7 @@ function getInputsFromUser() {
     document.getElementById('generateButton').disabled = true;
 
     //console.log(playerCount, selectedTeamColors, selectedCivBalance, selectedSwapDepth, playerNames);
-    generateTeamCivs(playerCount, shouldGenerateMap, displayPlayerRating, selectedTeamColors, selectedTeamPos, selectedCivBalance, selectedSwapDepth, selectedSwapMode, allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc, brokenLinkCivs, brokenLinkMaps, dlcOwners, activeMaps, ...playerNames);
+    generateTeamCivsMain(playerCount, shouldGenerateMap, displayPlayerRating, selectedTeamColors, selectedTeamPos, selectedCivBalance, selectedSwapDepth, selectedSwapMode, allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc, brokenLinkCivs, brokenLinkMaps, dlcOwners, activeMaps, ...playerNames);
 }
 
 function addDlcOwners() {
@@ -517,11 +513,18 @@ function addDlcOwners() {
         dlcPlayerNames = dlcPlayerNames.split();
     }
     else return;
+    let selectedDlcPacks = document.querySelectorAll('input[name="dlcCivPacksCheckbox"]');
+    let selectedDlcArr = [];
+    for (const elem of selectedDlcPacks) {
+        if (elem.checked) {
+            selectedDlcArr = selectedDlcArr.concat(...elem.value.split(' '));
+        }
+    }
     dlcPlayerNames.forEach(elem => {
         let elemLowerCase = elem.toLowerCase();
         if (dlcOwners.includes(elemLowerCase) === false) {
             dlcOwners.push(elemLowerCase);
-            playerData[elemLowerCase] = [...dlcCivs];
+            playerData[elemLowerCase] = [...selectedDlcArr];
         }
     })
 }
