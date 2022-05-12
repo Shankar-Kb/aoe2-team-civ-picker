@@ -175,6 +175,7 @@ body{
     width: 50px;
 }
 .player-name-box{
+    text-transform: capitalize;
     font-weight: bold;
 }
 .versus-box{

@@ -390,14 +390,14 @@ function generateTeamCivsMain(playerCount, applyRandomMap, applyPlayerRating, ap
 
             let currentIndex = k + playerCount / 2;
             if (civOrder[k] === "GREAT") {
-                if (checkDlcOwner(playerNames[currentIndex], dlcOwners)) playerCivs[currentIndex] = getRandomCiv("GREAT-DLC", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc, playerNames[k]);
-                else playerCivs[currentIndex] = getRandomCiv("GREAT", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc, playerNames[k]);
+                if (checkDlcOwner(playerNames[currentIndex], dlcOwners)) playerCivs[currentIndex] = getRandomCiv("GREAT-DLC", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc, playerNames[currentIndex]);
+                else playerCivs[currentIndex] = getRandomCiv("GREAT", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc, playerNames[currentIndex]);
                 if (usedCivs.includes(playerCivs[currentIndex])) k--;
                 else usedCivs.push(playerCivs[currentIndex]);
             }
             else {
-                if (checkDlcOwner(playerNames[currentIndex], dlcOwners)) playerCivs[currentIndex] = getRandomCiv("REST-DLC", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc, playerNames[k]);
-                else playerCivs[currentIndex] = getRandomCiv("REST", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc, playerNames[k]);
+                if (checkDlcOwner(playerNames[currentIndex], dlcOwners)) playerCivs[currentIndex] = getRandomCiv("REST-DLC", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc, playerNames[currentIndex]);
+                else playerCivs[currentIndex] = getRandomCiv("REST", allCivs, greatCivs, restCivs, allCivsWithDlc, greatCivsWithDlc, restCivsWithDlc, playerNames[currentIndex]);
                 if (usedCivs.includes(playerCivs[currentIndex])) k--;
                 else usedCivs.push(playerCivs[currentIndex]);
             }
@@ -450,11 +450,6 @@ function getInputsFromUser() {
     let playerCount = playerNames.length;
 
     playerNames = playerNames.map(elem => elem.trim());
-    playerNames = playerNames.map(elem => {
-        let stringArr = elem.split("");
-        stringArr[0] = stringArr[0].toUpperCase();
-        return stringArr.join("");
-    });
 
     let swapDepthInput = document.querySelectorAll('input[name="swapDepthLevel"]');
     let selectedSwapDepth = "";
