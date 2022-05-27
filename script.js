@@ -782,10 +782,15 @@ function displayAllMapsWithToggle() {
     displayAllMaps(allMaps, activeMaps, brokenLinkMaps);
 }
 
+function refreshMapCount() {
+    document.getElementById('selectedMapCount').innerHTML = `${activeMaps.length} Selected`;
+}
+
 function modifyMapPool(mapNamesArr, mapName) {
 
     if (mapNamesArr.includes(mapName) === false) mapNamesArr.push(mapName);
     else mapNamesArr = deleteArrayElement(mapNamesArr, mapName);
+    refreshMapCount();
 }
 
 //Variable(allMaps, activeMaps, brokenLinkMaps, landMaps, hybridMaps, waterMaps, removedMaps) Dependant Function
@@ -824,6 +829,7 @@ function modifymapPoolToggle(actionType) {
             displayAllMaps(allMaps, activeMaps, brokenLinkMaps);
             break;
     }
+    refreshMapCount();
 }
 
 function hideExtraMaps(){
@@ -934,12 +940,32 @@ function buildMapButtons(){
     });
 
     buttonBox.append(disableAllButton, hideExtraButton, showExtraButton, landMapsButton, hybridMapsButton, waterMapsButton, goTopButton, goBottomButton, enableAllButton);
-    allMapsBox.appendChild(buttonBox);
+
+    let searchBox = createHtmlElement('div', 'input-group bottom-map-search-box');
+    let searchInput = createHtmlElement('input', 'search-bar', 'searchInput');
+    let mapsCount = createHtmlElement('button', 'btn btn-outline-dark selected-count-button', 'selectedMapCount');
+    searchInput.type = 'text';
+    searchInput.placeholder = 'Search by Map Name'
+    mapsCount.innerHTML = `${activeMaps.length} Selected`;
+    searchInput.addEventListener("input", function (e) {
+        handleMapSearch(e.target.value);
+    });
+
+    searchBox.append(searchInput, mapsCount);
+    allMapsBox.append(buttonBox, searchBox);
 
     let allMapsInnerBox = createHtmlElement('div', 'all-maps-inner-box', 'allMapsInnerBox');
     allMapsBox.appendChild(allMapsInnerBox);
 }
 buildMapButtons();
+
+function handleMapSearch(searchValue) {
+    if(!searchValue) displayAllMaps(allMaps, activeMaps, brokenLinkMaps);
+    let filteredAllMaps = allMaps.filter(elem => {
+        return elem.toLowerCase().includes(searchValue.toLowerCase());
+    });
+    displayAllMaps(filteredAllMaps, activeMaps, brokenLinkMaps);
+}
 
 function displayAllMaps(allMapsArr, activeMapsArr, brokenLinkMapsArr) {
 
