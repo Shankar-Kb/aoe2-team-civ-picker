@@ -45,6 +45,15 @@ body{
     /* border:1px solid #191919;
     box-shadow: 0 0 1px #191919; */
 }
+.selected-count-button{
+    min-width: 115px;
+}
+.selected-count-button:focus{
+    box-shadow: none;
+}
+.selected-count-button:focus-visible{
+    outline: none;
+}
 .team-one-text-box{
     margin-right: 20px;
 }

@@ -961,8 +961,10 @@ buildMapButtons();
 
 function handleMapSearch(searchValue) {
     if(!searchValue) displayAllMaps(allMaps, activeMaps, brokenLinkMaps);
+    searchValue = searchValue.trim();
+    let modifiedSearchValue = searchValue.replace(' ', '_');
     let filteredAllMaps = allMaps.filter(elem => {
-        return elem.toLowerCase().includes(searchValue.toLowerCase());
+        return elem.toLowerCase().startsWith(modifiedSearchValue.toLowerCase());
     });
     displayAllMaps(filteredAllMaps, activeMaps, brokenLinkMaps);
 }
