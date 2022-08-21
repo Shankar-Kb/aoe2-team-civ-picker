@@ -792,8 +792,9 @@ function goToBottom(){
 let shouldFilterMaps = true;
 function handleFilterSelectedMaps(){
 
+    document.getElementById ("modifyMapPool").checked = false;
     if (shouldFilterMaps) {
-        const filteredAllMaps = [...activeMaps];
+        let filteredAllMaps = [...activeMaps];
         displayAllMaps(filteredAllMaps, activeMaps, brokenLinkMaps);
     }
     else {
