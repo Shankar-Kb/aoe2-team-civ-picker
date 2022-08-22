@@ -318,7 +318,10 @@ function generateTeamCivsMain(playerCount, applyRandomMap, applyPlayerRating, ap
     assignCivsToPlayers(playerNames, playerCivs, playerColors, mapNames, brokenLinkCivsArr, brokenLinkMapsArr, applyRandomMap, applyPlayerRating, applyPlayerColor, applyTeamPos);
 }
 
-document.getElementById ("generateButton").addEventListener ("click", getInputsFromUser);
+document.getElementById("generateButton").addEventListener("click", (event) => {
+    event.target.blur();
+    getInputsFromUser();
+});
 
 function getInputsFromUser() {
 
@@ -428,7 +431,10 @@ function addDlcOwners() {
     })
 }
 
-document.getElementById ("clearButton").addEventListener ("click", clearGeneratedTeams);
+document.getElementById("clearButton").addEventListener("click", (event) => {
+    event.target.blur();
+    clearGeneratedTeams();
+});
 
 function clearGeneratedTeams() {
     console.clear();
@@ -938,6 +944,7 @@ document.getElementById("generateButton").addEventListener('click', function () 
 });
 
 document.body.addEventListener("keypress", function () {
+    console.log(window.event.keyCode);
     if (window.event.keyCode === 13) {
         playAudio("Generate_Teams");
         getInputsFromUser();
