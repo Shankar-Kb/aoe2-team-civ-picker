@@ -944,7 +944,6 @@ document.getElementById("generateButton").addEventListener('click', function () 
 });
 
 document.body.addEventListener("keypress", function () {
-    console.log(window.event.keyCode);
     if (window.event.keyCode === 13) {
         playAudio("Generate_Teams");
         getInputsFromUser();
