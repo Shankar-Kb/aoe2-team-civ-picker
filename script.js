@@ -9,6 +9,15 @@ import {
     getPlayerRating,
 } from './utils.js';
 
+import {
+    modifymapPoolToggle,
+    goToTop,
+    goToBottom,
+    handleFilterSelectedMaps,
+    handleMapSearch,
+    displayAllMaps,
+} from './displayMaps.js';
+
 let allCivs = ["Britons", "Byzantines", "Celts", "Chinese", "Franks", "Goths", "Japanese", "Mongols", "Persians", "Saracens", "Teutons", "Turks", "Vikings", "Aztecs", "Huns", "Koreans", "Mayans", "Spanish", "Incas", "Hindustanis", "Italians", "Magyars", "Slavs", "Berbers", "Ethiopians", "Malians", "Portuguese", "Burmese", "Khmer", "Malay", "Vietnamese", "Bulgarians", "Cumans", "Lithuanians", "Tatars"];
 let dlcCivs = ["Burgundians", "Sicilians", "Bohemians", "Poles", "Bengalis", "Dravidians", "Gurjaras"];
 let greatCivs = ["Britons", "Byzantines", "Celts", "Franks", "Goths", "Mongols", "Persians", "Teutons", "Huns", "Spanish", "Magyars", "Cumans", "Lithuanians"];
@@ -526,6 +535,7 @@ function modifyAllCiv(civName, modifyType) {
     }
 }
 
+
 function displayAllCivs(allCivsToDisplayArr, brokenLinkCivsArr, allCivsArr, greatCivsArr, restCivsArr, allCivsWithDlcArr, greatCivsWithDlcArr, restCivsWithDlcArr, toggleType = "") {
 
     let allCivsToDisplay = [...allCivsToDisplayArr];
@@ -672,6 +682,7 @@ function displayAllCivs(allCivsToDisplayArr, brokenLinkCivsArr, allCivsArr, grea
     displayCivilization(secondHalfCivs, rightBox, greatCivs, greatCivsWithDlc);
 }
 
+
 document.getElementById ("modifyAllCivs").addEventListener ("change", displayAllCivsWithToggle);
 document.getElementById ("modifyGreatCivs").addEventListener ("change", displayGreatCivsWithToggle);
 document.getElementById ("modifyMapPool").addEventListener ("change", displayAllMapsWithToggle);
@@ -691,125 +702,51 @@ function displayAllMapsWithToggle() {
     displayAllMaps(allMaps, activeMaps, brokenLinkMaps);
 }
 
-function refreshMapCount() {
-    document.getElementById('selectedMapCount').innerHTML = `${activeMaps.length} Selected`;
-}
 
-function modifyMapPool(mapNamesArr, mapName) {
-
-    if (mapNamesArr.includes(mapName) === false) mapNamesArr.push(mapName);
-    else mapNamesArr = deleteArrayElement(mapNamesArr, mapName);
-    refreshMapCount();
-}
-
-//Variable(allMaps, activeMaps, brokenLinkMaps, landMaps, hybridMaps, waterMaps, removedMaps) Dependant Function
-function modifymapPoolToggle(actionType) {
-
-    if(!document.getElementById('modifyMapPool').checked) document.getElementById('modifyMapPool').checked = true;
-
-    switch (actionType) {
-
-        case "DISABLE_ALL":
-            activeMaps.splice(0, activeMaps.length);
-            displayAllMaps(allMaps, activeMaps, brokenLinkMaps);
-            break;
-
-        case "ENABLE_ALL":
-            activeMaps.splice(0, activeMaps.length);
-            activeMaps = [...allMaps];
-            displayAllMaps(allMaps, activeMaps, brokenLinkMaps);
-            break;
-
-        case "LAND_MAPS":
-            activeMaps.splice(0, activeMaps.length);
-            activeMaps = [...landMaps];
-            displayAllMaps(allMaps, activeMaps, brokenLinkMaps);
-            break;
-
-        case "HYBRID_MAPS":
-            activeMaps.splice(0, activeMaps.length);
-            activeMaps = [...hybridMaps];
-            displayAllMaps(allMaps, activeMaps, brokenLinkMaps);
-            break;
-
-        case "WATER_MAPS":
-            activeMaps.splice(0, activeMaps.length);
-            activeMaps = [...waterMaps];
-            displayAllMaps(allMaps, activeMaps, brokenLinkMaps);
-            break;
-    }
-    refreshMapCount();
-}
-
-function hideExtraMaps(){
+function hideExtraMaps(allMapsArr, activeMapsArr, brokenLinkMapsArr, landMapsArr, hybridMapsArr, waterMapsArr, removedMapsArr){
 
     document.getElementById('hideExtraButton').style.display = 'none';
     document.getElementById('showExtraButton').style.display = 'block';
-    if(allMaps.length < removedMaps.length) return;
-    let removedMapsNew = [...removedMaps];
+    if(allMapsArr.length < removedMapsArr.length) return;
+    let removedMapsNew = [...removedMapsArr];
     
     removedMapsNew = removedMapsNew.map(elem => elem = elem.slice(0, -5));
-    allMaps = allMaps.filter(elem => !removedMapsNew.includes(elem));
-    landMaps = landMaps.filter(elem => !removedMapsNew.includes(elem));
-    hybridMaps = hybridMaps.filter(elem => !removedMapsNew.includes(elem));
-    waterMaps = waterMaps.filter(elem => !removedMapsNew.includes(elem));
+    allMapsArr = allMapsArr.filter(elem => !removedMapsNew.includes(elem));
+    landMapsArr = landMapsArr.filter(elem => !removedMapsNew.includes(elem));
+    hybridMapsArr = hybridMapsArr.filter(elem => !removedMapsNew.includes(elem));
+    waterMapsArr = waterMapsArr.filter(elem => !removedMapsNew.includes(elem));
     
-    displayAllMaps(allMaps, activeMaps, brokenLinkMaps);
+    displayAllMaps(allMapsArr, activeMapsArr, brokenLinkMapsArr);
 }
 
-function showExtraMaps(){
+function showExtraMaps(allMapsArr, activeMapsArr, brokenLinkMapsArr, landMapsArr, hybridMapsArr, waterMapsArr, removedMapsArr){
 
     document.getElementById('showExtraButton').style.display = 'none';
     document.getElementById('hideExtraButton').style.display = 'block';
 
     if(allMaps.length > removedMaps.length) return;
     
-    removedMaps.forEach(elem => {
+    removedMapsArr.forEach(elem => {
         let category = '';
         category = elem.slice(-5);
         elem = elem.slice(0, -5);
         switch (category) {
             case "(LND)": 
-                landMaps.push(elem);
+                landMapsArr.push(elem);
                 break;
             case "(HYB)": 
-                hybridMaps.push(elem);
+                hybridMapsArr.push(elem);
                 break;
             case "(WTR)": 
-                waterMaps.push(elem);
+                waterMapsArr.push(elem);
                 break;
         }
-        allMaps.push(elem);
+        allMapsArr.push(elem);
     })
-    displayAllMaps(allMaps, activeMaps, brokenLinkMaps);
+    displayAllMaps(allMapsArr, activeMapsArr, brokenLinkMapsArr);
 }
 
-function goToTop(){
-    document.getElementById('goTopButton').style.display = 'none';
-    document.getElementById('goBottomButton').style.display = 'block';
-    document.body.scrollIntoView(true);
-}
-function goToBottom(){
-    document.getElementById('goBottomButton').style.display = 'none';
-    document.getElementById('goTopButton').style.display = 'block';
-    document.body.scrollIntoView(false);
-}
-
-let shouldFilterMaps = true;
-function handleFilterSelectedMaps(){
-
-    document.getElementById ("modifyMapPool").checked = false;
-    if (shouldFilterMaps) {
-        let filteredAllMaps = [...activeMaps];
-        displayAllMaps(filteredAllMaps, activeMaps, brokenLinkMaps);
-    }
-    else {
-        displayAllMaps(allMaps, activeMaps, brokenLinkMaps);
-    }
-    shouldFilterMaps = !shouldFilterMaps;
-}
-
-function buildMapButtons(){
+function buildMapButtons(allMapsArr, activeMapsArr, brokenLinkMapsArr, landMapsArr, hybridMapsArr, waterMapsArr, removedMapsArr, shouldFilterMapsArg){
 
     let allMapsBox = document.getElementById('allMapsBox');
 
@@ -835,25 +772,25 @@ function buildMapButtons(){
     goBottomButton.innerHTML = 'Go Bottom';
 
     disableAllButton.addEventListener("click", function () {
-        modifymapPoolToggle("DISABLE_ALL");
+        modifymapPoolToggle(allMapsArr, activeMapsArr, brokenLinkMapsArr, landMapsArr, hybridMapsArr, waterMapsArr, "DISABLE_ALL");
     });
     enableAllButton.addEventListener("click", function () {
-        modifymapPoolToggle("ENABLE_ALL");
+        modifymapPoolToggle(allMapsArr, activeMapsArr, brokenLinkMapsArr, landMapsArr, hybridMapsArr, waterMapsArr, "ENABLE_ALL");
     });
     landMapsButton.addEventListener("click", function () {
-        modifymapPoolToggle("LAND_MAPS");
+        modifymapPoolToggle(allMapsArr, activeMapsArr, brokenLinkMapsArr, landMapsArr, hybridMapsArr, waterMapsArr, "LAND_MAPS");
     });
     hybridMapsButton.addEventListener("click", function () {
-        modifymapPoolToggle("HYBRID_MAPS");
+        modifymapPoolToggle(allMapsArr, activeMapsArr, brokenLinkMapsArr, landMapsArr, hybridMapsArr, waterMapsArr, "HYBRID_MAPS");
     });
     waterMapsButton.addEventListener("click", function () {
-        modifymapPoolToggle("WATER_MAPS");
+        modifymapPoolToggle(allMapsArr, activeMapsArr, brokenLinkMapsArr, landMapsArr, hybridMapsArr, waterMapsArr, "WATER_MAPS");
     });
     hideExtraButton.addEventListener("click", function () {
-        hideExtraMaps();
+        hideExtraMaps(allMapsArr, activeMapsArr, brokenLinkMapsArr, landMapsArr, hybridMapsArr, waterMapsArr, removedMapsArr);
     });
     showExtraButton.addEventListener("click", function () {
-        showExtraMaps();
+        showExtraMaps(allMapsArr, activeMapsArr, brokenLinkMapsArr, landMapsArr, hybridMapsArr, waterMapsArr, removedMapsArr);
     });
     goTopButton.addEventListener("click", function () {
         goToTop();
@@ -870,9 +807,11 @@ function buildMapButtons(){
     searchInput.type = 'text';
     searchInput.placeholder = 'Search by Map Name'
     mapsCountButton.innerHTML = `${activeMaps.length} Selected`;
-    mapsCountButton.addEventListener('click', handleFilterSelectedMaps);
+    mapsCountButton.addEventListener('click', function () {
+        handleFilterSelectedMaps(allMapsArr, activeMapsArr, brokenLinkMapsArr, shouldFilterMapsArg);
+    });
     searchInput.addEventListener("input", function (e) {
-        handleMapSearch(e.target.value);
+        handleMapSearch(allMapsArr, activeMapsArr, brokenLinkMapsArr, e.target.value);
     });
 
     searchBox.append(searchInput, mapsCountButton);
@@ -881,59 +820,9 @@ function buildMapButtons(){
     let allMapsInnerBox = createHtmlElement('div', 'all-maps-inner-box', 'allMapsInnerBox');
     allMapsBox.appendChild(allMapsInnerBox);
 }
-buildMapButtons();
 
-function handleMapSearch(searchValue) {
-    if(!searchValue) displayAllMaps(allMaps, activeMaps, brokenLinkMaps);
-    searchValue = searchValue.trim();
-    let modifiedSearchValue = searchValue.replace(' ', '_');
-    let filteredAllMaps = allMaps.filter(elem => {
-        return elem.toLowerCase().startsWith(modifiedSearchValue.toLowerCase());
-    });
-    displayAllMaps(filteredAllMaps, activeMaps, brokenLinkMaps);
-}
-
-function displayAllMaps(allMapsArr, activeMapsArr, brokenLinkMapsArr) {
-
-    let allMapsInnerBox = document.getElementById("allMapsInnerBox");
-    allMapsInnerBox.innerHTML = '';
-
-    let modifyMapInput = document.getElementById('modifyMapPool');
-    let modifyMapInputValue = modifyMapInput.checked;
-    allMapsArr = allMapsArr.sort();
-    
-    for (let z = 0; z < allMapsArr.length; z++) {
-
-        let mapBox = createHtmlElement('div', 'map-box');
-        allMapsInnerBox.appendChild(mapBox);
-
-        let mapLinkBox = createHtmlElement('a', 'map-link-box');
-
-        if (brokenLinkMapsArr.includes(allMapsArr[z])) mapLinkBox.href = `https://ageofempires.fandom.com/wiki/${allMapsArr[z]}_(map)`;
-        else mapLinkBox.href = `https://ageofempires.fandom.com/wiki/${allMapsArr[z]}`;
-        mapLinkBox.target = "_blank";
-
-        let mapIcon = createHtmlElement('img', 'map-icon-bottom');
-        mapIcon.src = `assets/img/maps/${allMapsArr[z]}.png`;
-        mapIcon.alt = allMapsArr[z];
-        mapLinkBox.appendChild(mapIcon);
-
-        let mapToggleBox = createHtmlElement('div', 'form-switch map-toggle-box');
-        let mapToggleInput = createHtmlElement('input', 'form-check-input form-check-input-map');
-        mapToggleInput.type = "checkbox";
-
-        if (activeMapsArr.includes(allMapsArr[z]) === true) mapToggleInput.checked = true;
-        else mapToggleInput.checked = false;
-
-        mapToggleInput.addEventListener("change", function () {
-            modifyMapPool(activeMapsArr, allMapsArr[z]);
-        });
-        mapToggleBox.appendChild(mapToggleInput);
-
-        mapBox.append(mapLinkBox, mapToggleBox);
-        if (!modifyMapInputValue) mapToggleBox.style.display = "none";
-    }
-}
+let shouldFilterMaps = true;
+buildMapButtons(allMaps, activeMaps, brokenLinkMaps, landMaps, hybridMaps, waterMaps, removedMaps, shouldFilterMaps);
 
 document.getElementById("clearButton").addEventListener('click', function () {
     playAudio("Clear_Teams");
