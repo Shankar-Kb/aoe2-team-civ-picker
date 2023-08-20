@@ -9,12 +9,12 @@ import {
     getPlayerRating,
 } from './utils.js';
 
-let allCivs = ["Britons", "Byzantines", "Celts", "Chinese", "Franks", "Goths", "Japanese", "Mongols", "Persians", "Saracens", "Teutons", "Turks", "Vikings", "Aztecs", "Huns", "Koreans", "Mayans", "Spanish", "Incas", "Hindustanis", "Italians", "Magyars", "Slavs", "Berbers", "Ethiopians", "Malians", "Portuguese", "Burmese", "Khmer", "Malay", "Vietnamese", "Bulgarians", "Cumans", "Lithuanians", "Tatars"];
+let allCivs = ["Britons", "Byzantines", "Celts", "Chinese", "Franks", "Goths", "Japanese", "Mongols", "Persians", "Saracens", "Teutons", "Turks", "Vikings", "Aztecs", "Huns", "Koreans", "Mayans", "Spanish", "Incas", "Hindustanis", "Italians", "Magyars", "Slavs", "Berbers", "Ethiopians", "Malians", "Portuguese", "Burmese", "Khmer", "Malay", "Vietnamese", "Bulgarians", "Cumans", "Lithuanians", "Tatars", "Romans"];
 let dlcCivs = ["Burgundians", "Sicilians", "Bohemians", "Poles", "Bengalis", "Dravidians", "Gurjaras"];
 let greatCivs = ["Britons", "Byzantines", "Celts", "Franks", "Goths", "Mongols", "Persians", "Teutons", "Huns", "Spanish", "Magyars", "Cumans", "Lithuanians"];
 let restCivs = ["Chinese", "Japanese", "Saracens", "Turks", "Vikings", "Aztecs", "Koreans", "Mayans", "Incas", "Hindustanis", "Italians", "Slavs", "Berbers", "Ethiopians", "Malians", "Portuguese", "Burmese", "Khmer", "Malay", "Vietnamese", "Bulgarians", "Tatars"];
 let allCivsWithDlc = [...allCivs, ...dlcCivs];
-let greatCivsWithDlc = [...greatCivs, "Burgundians", "Bohemians", "Poles"];
+let greatCivsWithDlc = [...greatCivs, "Burgundians", "Bohemians", "Poles", "Romans"];
 let restCivsWithDlc = [...restCivs, "Sicilians"];
 let dlcOwners = [];
 let playerColors = ["Blue", "Crimson", "Lime", "Yellow", "Cyan", "Fuchsia", "Grey", "Orange"];
@@ -36,7 +36,7 @@ let liquipediaMapLink = (mapName) => `https://liquipedia.net/ageofempires/${mapN
 let brokenMapLink = (mapName) => `https://ageofempires.fandom.com/wiki/${mapName}_(map)`;
 let mapLink = (mapName) => `https://ageofempires.fandom.com/wiki/${mapName}`;
 
-let brokenLinkCivs = ["Chinese", "Japanese", "Persians", "Aztecs", "Spanish", "Incas", "Portuguese"];
+let brokenLinkCivs = ["Chinese", "Japanese", "Persians", "Aztecs", "Spanish", "Incas", "Portuguese", "Romans"];
 let defaultCivLink = (civName) => `https://ageofempires.fandom.com/wiki/${civName}`;
 let brokenCivLink = (civName) => `https://ageofempires.fandom.com/wiki/${civName}_(Age_of_Empires_II)`;
 let civTreeLink = (civName) => `https://aoe2techtree.net/#${civName}`;

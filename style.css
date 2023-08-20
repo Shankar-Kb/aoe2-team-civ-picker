@@ -209,7 +209,7 @@ body{
     border-radius: 5px;
     box-shadow: 0px 0px 3px 0px #191919;
     max-width: 300px;
-    font-size: 24px;
+    font-size: 20px;
     padding: 10px;
     position: sticky;
     top: 10px;
@@ -229,8 +229,8 @@ body{
 
 } */
 .civilization-icon{
-    height: 40px;
-    width: 40px;
+    height: 38px;
+    width: 38px;
 }
 .civilization-name-box, .civilization-name-box:hover, .civilization-name-box:focus, .civilization-name-box:active{
     text-decoration: none;
