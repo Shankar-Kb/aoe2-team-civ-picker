@@ -9,13 +9,15 @@ import {
     getPlayerRating,
 } from './utils.js';
 
-let allCivs = ["Britons", "Byzantines", "Celts", "Chinese", "Franks", "Goths", "Japanese", "Mongols", "Persians", "Saracens", "Teutons", "Turks", "Vikings", "Aztecs", "Huns", "Koreans", "Mayans", "Spanish", "Incas", "Hindustanis", "Italians", "Magyars", "Slavs", "Berbers", "Ethiopians", "Malians", "Portuguese", "Burmese", "Khmer", "Malay", "Vietnamese", "Bulgarians", "Cumans", "Lithuanians", "Tatars", "Romans"];
-let dlcCivs = ["Burgundians", "Sicilians", "Bohemians", "Poles", "Bengalis", "Dravidians", "Gurjaras"];
+let allCivs = ["Britons", "Byzantines", "Celts", "Chinese", "Franks", "Goths", "Japanese", "Mongols", "Persians", "Saracens", "Teutons", "Turks", "Vikings", "Aztecs", "Huns", "Koreans", "Mayans", "Spanish", "Incas", "Hindustanis", "Italians", "Magyars", "Slavs", "Berbers", "Ethiopians", "Malians", "Portuguese", "Burmese", "Khmer", "Malay", "Vietnamese", "Bulgarians", "Cumans", "Lithuanians", "Tatars"];
+let dlcCivs = ["Burgundians", "Sicilians", "Bohemians", "Poles", "Bengalis", "Dravidians", "Gurjaras", "Romans"];
 let greatCivs = ["Britons", "Byzantines", "Celts", "Franks", "Goths", "Mongols", "Persians", "Teutons", "Huns", "Spanish", "Magyars", "Cumans", "Lithuanians"];
 let restCivs = ["Chinese", "Japanese", "Saracens", "Turks", "Vikings", "Aztecs", "Koreans", "Mayans", "Incas", "Hindustanis", "Italians", "Slavs", "Berbers", "Ethiopians", "Malians", "Portuguese", "Burmese", "Khmer", "Malay", "Vietnamese", "Bulgarians", "Tatars"];
 let allCivsWithDlc = [...allCivs, ...dlcCivs];
-let greatCivsWithDlc = [...greatCivs, "Burgundians", "Bohemians", "Poles", "Romans"];
-let restCivsWithDlc = [...restCivs, "Sicilians"];
+let dlcGreatCivs = ["Burgundians", "Bohemians", "Poles", "Romans"];
+let dlcRestCivs = ["Sicilians"];
+let greatCivsWithDlc = [...greatCivs, ...dlcGreatCivs];
+let restCivsWithDlc = [...restCivs, ...dlcRestCivs];
 let dlcOwners = [];
 let playerColors = ["Blue", "Crimson", "Lime", "Yellow", "Cyan", "Fuchsia", "Grey", "Orange"];
 
@@ -49,8 +51,8 @@ function handleFreeDlcEvent() {
     freeDlcEvent = document.getElementById("freeDlcEventCheckbox").checked;
     if (freeDlcEvent) {
         allCivs = allCivs.concat(dlcCivs);
-        greatCivs = greatCivs.concat("Burgundians", "Bohemians", "Poles");
-        restCivs = restCivs.concat("Sicilians");
+        greatCivs = greatCivs.concat(dlcGreatCivs);
+        restCivs = restCivs.concat(dlcRestCivs);
         dlcCivs.splice(0, dlcCivs.length);
     }
     else if (!freeDlcEvent) location.reload();
@@ -65,16 +67,21 @@ let myInit = {
 };
 let playerDataRequest = new Request("./player-data.json", myInit);
 async function getData() {
-    if (Object.keys(playerData.length > 0))
-        for (let key in playerData) delete playerData[key];
+    try {
+        if (Object.keys(playerData.length > 0))
+            for (let key in playerData) delete playerData[key];
 
-    let resp = await fetch(playerDataRequest);
-    playerData = await resp.json();
-    if (!freeDlcEvent) {
-        for (let player in playerData) {
-            if (playerData[player].dlc_civs.length > 0)
-                dlcOwners.push(player);
+        let resp = await fetch(playerDataRequest);
+        playerData = await resp.json();
+        if (!freeDlcEvent) {
+            for (let player in playerData) {
+                if (playerData[player].dlc_civs.length > 0)
+                    dlcOwners.push(player);
+            }
         }
+    }
+    catch (error) {
+        console.error(error);
     }
 }
 getData();
@@ -130,7 +137,7 @@ async function displayGeneratedTeams(teamOnePlayersArr, teamTwoPlayersArr, teamO
         civIconBox.target = "_blank";
 
         let playerRating = "";
-        if (displayRating) playerRating = await getPlayerRating(playerName);
+        if (displayRating) playerRating = await getPlayerRating(playerName, playerData);
 
         let playerTextBox = createHtmlElement('div', 'player-text-box');
         let randomNumber = Math.floor(Math.random() * (10000 - 1 + 1) + 1);

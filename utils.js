@@ -106,7 +106,7 @@ function swapPlayers(playerNamesArr, swapDepthArg, swapModeArg) {
     return teamOnePlayers.concat(teamTwoPlayers);
 }
 
-async function getPlayerRating(playerName) {
+async function getPlayerRating(playerName, playerData) {
 
     let leaderBoardId = 0;
     let steamId = playerData[playerName.toLowerCase()].id;
